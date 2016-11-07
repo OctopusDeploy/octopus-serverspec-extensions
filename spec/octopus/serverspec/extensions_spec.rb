@@ -1,11 +1,7 @@
-# require "spec_helper"
+require "spec_helper"
 
-# describe Octopus::Serverspec::Extensions do
-#   it "has a version number" do
-#     expect(Octopus::Serverspec::Extensions::VERSION).not_to be nil
-#   end
-
-#   it "does something useful" do
-#     expect(false).to eq(true)
-#   end
-# end
+describe OctopusServerSpecExtensions do
+  it "has a version number" do
+    expect(OctopusServerSpecExtensions::VERSION).not_to be nil
+  end
+end

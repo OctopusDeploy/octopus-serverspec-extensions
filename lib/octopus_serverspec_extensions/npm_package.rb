@@ -1,3 +1,6 @@
+require 'serverspec'
+require 'serverspec/type/base'
+
 module Serverspec::Type
   class NpmPackage < Base
 
