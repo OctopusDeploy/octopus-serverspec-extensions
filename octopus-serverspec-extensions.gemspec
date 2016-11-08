@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "octopus-serverspec-extensions"
   spec.version       = OctopusServerSpecExtensions::VERSION
   spec.authors       = ["Matt Richardson"]
-
+  spec.email         = "devops@octopus.com"
   spec.summary       = %q{SeverSpec extensions for Windows}
   spec.description   = %q{SeverSpec extensions for Windows, adding support for chocolatey packages, npm packages, service accounts and more.}
   spec.homepage      = "https://github.com/octopus-deploy/octopus-serverspec-extensions"
