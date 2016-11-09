@@ -12,7 +12,9 @@ module Serverspec::Type
     def has_property?(propertyName, propertyValue)
       properties = {}
       IO.foreach(@name) do |line|
+        if (!line.start_with?('#'))
           properties[$1.strip] = $2 if line =~ /([^=]*)=(.*)/
+        end
       end
 
       properties[propertyName] == propertyValue
