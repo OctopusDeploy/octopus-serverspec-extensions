@@ -9,7 +9,7 @@ module Serverspec::Type
       @runner = Specinfra::Runner
     end
 
-    def have_property?(propertyName, propertyValue)
+    def has_property?(propertyName, propertyValue)
       properties = {}
       IO.foreach(file) do |line|
         properties[$1.strip] = $2 if line =~ /([^=]*)=(.*)\/\/(.*)/ || line =~ /([^=]*)=(.*)/
