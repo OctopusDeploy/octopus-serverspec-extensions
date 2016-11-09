@@ -11,8 +11,8 @@ module Serverspec::Type
 
     def has_property?(propertyName, propertyValue)
       properties = {}
-        properties[$1.strip] = $2 if line =~ /([^=]*)=(.*)\/\/(.*)/ || line =~ /([^=]*)=(.*)/
       IO.foreach(@name) do |line|
+          properties[$1.strip] = $2 if line =~ /([^=]*)=(.*)/
       end
 
       properties[propertyName] == propertyValue
