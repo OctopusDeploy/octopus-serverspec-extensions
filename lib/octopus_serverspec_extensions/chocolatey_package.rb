@@ -9,6 +9,7 @@ module Serverspec::Type
       @runner = Specinfra::Runner
     end
 
+    #todo: support version
     def installed?(provider, version)
       command_result = @runner.run_command("choco list -l -r #{name}")
 
