@@ -19,7 +19,7 @@ module Serverspec::Type
       url = "#{serverUrl}/api/machines/all?api-key=#{apiKey}"
       resp = Net::HTTP.get_response(URI.parse(url))
       @body = JSON.parse(resp.body)
-      thumbprint = `"c:\\program files\\Octopus Deploy\\Tentacle\\Tentacle.exe" --console --show-thumbprint --nologo --thumbprint-only`.strip
+      thumbprint = `"c:\\program files\\Octopus Deploy\\Tentacle\\Tentacle.exe" --console --show-thumbprint --nologo`.strip.gsub('The thumbprint of this Tentacle is: ', '')
       @machine = @body.select {|e| e["Thumbprint"] == thumbprint}.first
     end
 
