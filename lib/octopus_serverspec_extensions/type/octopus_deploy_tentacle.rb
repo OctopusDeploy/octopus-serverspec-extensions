@@ -33,7 +33,7 @@ module Serverspec::Type
     end
 
     def online?
-      @machine["Status"] == "Online"
+      @machine["Status"] == "Online" || @machine["Status"] == "CalamariNeedsUpgrade"
     end
 
     def in_environment?(environment_name)
