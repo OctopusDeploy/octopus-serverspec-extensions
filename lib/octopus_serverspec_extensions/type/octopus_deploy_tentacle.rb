@@ -10,7 +10,7 @@ module Serverspec::Type
     @serverUrl = nil
     @apiKey = nil
 
-    def initialize(serverUrl, apiKey)
+    def initialize(serverUrl, apiKey, instance)
       @name = "Octopus Deploy Tentacle"
       @runner = Specinfra::Runner
       @serverUrl = serverUrl
@@ -19,7 +19,12 @@ module Serverspec::Type
       url = "#{serverUrl}/api/machines/all?api-key=#{apiKey}"
       resp = Net::HTTP.get_response(URI.parse(url))
       @body = JSON.parse(resp.body)
-      thumbprint = `"c:\\program files\\Octopus Deploy\\Tentacle\\Tentacle.exe" --console --show-thumbprint --nologo`.strip.gsub('The thumbprint of this Tentacle is: ', '')
+      if (instance.nil?)
+        thumbprint = `"c:\\program files\\Octopus Deploy\\Tentacle\\Tentacle.exe" --console --show-thumbprint --nologo`.strip.gsub('The thumbprint of this Tentacle is: ', '')
+      else
+        @name = instance
+        thumbprint = `"c:\\program files\\Octopus Deploy\\Tentacle\\Tentacle.exe" --console --show-thumbprint --nologo --instance #{instance}`.strip.gsub('The thumbprint of this Tentacle is: ', '')
+      end
       @machine = @body.select {|e| e["Thumbprint"] == thumbprint}.first
     end
 
@@ -45,9 +50,10 @@ module Serverspec::Type
     end
   end
 
-  def octopus_deploy_tentacle(serverUrl, apiKey)
-    OctopusDeployTentacle.new(serverUrl, apiKey)
+  def octopus_deploy_tentacle(serverUrl, apiKey, instance)
+    OctopusDeployTentacle.new(serverUrl, apiKey, instance)
   end
+
 end
 
 include Serverspec::Type
