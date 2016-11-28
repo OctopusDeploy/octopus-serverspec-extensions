@@ -37,8 +37,8 @@ module Serverspec::Type
     def online?
       return nil if @machine.nil?
       @machine = poll_until_machine_has_completed_healthcheck(@serverUrl, @apiKey, @machine["Thumbprint"])
-      puts "Expected status 'Online' or 'CalamariNeedsUpgrade' for Tentacle #{@name}, but got '#{@machine["Status"]}'" if (@machine["Status"] != "Online" && @machine["Status"] != "CalamariNeedsUpgrade")
-      @machine["Status"] == "Online" || @machine["Status"] == "CalamariNeedsUpgrade"
+      puts "Expected status 'Online|CalamariNeedsUpgrade|NeedsUpgrade' for Tentacle #{@name}, but got '#{@machine["Status"]}'" if (@machine["Status"] != "Online" && @machine["Status"] != "CalamariNeedsUpgrade")
+      @machine["Status"] == "Online" || @machine["Status"] == "CalamariNeedsUpgrade" || @machine["Status"] == "NeedsUpgrade"
     end
 
     def in_environment?(environment_name)
