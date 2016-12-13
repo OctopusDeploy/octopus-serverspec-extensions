@@ -47,13 +47,13 @@ module Serverspec::Type
       resp = Net::HTTP.get_response(URI.parse(url))
       environments = JSON.parse(resp.body)
       environment_id = environments.select {|e| e["Name"] == environment_name}.first["Id"]
-      !@machine["EnvironmentIds"].select {|e| e == environment_id}.nil?
+      !@machine["EnvironmentIds"].select {|e| e == environment_id}.empty?
     end
 
     def has_role?(role_name)
       return false if @machine.nil?
       roles = @machine["Roles"]
-      !roles.select {|e| e == role_name}.nil?
+      !roles.select {|e| e == role_name}.empty?
     end
 
     def listening_tentacle?
