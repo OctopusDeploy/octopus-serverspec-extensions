@@ -9,7 +9,6 @@ module Serverspec::Type
       @runner = Specinfra::Runner
     end
 
-    #todo: support version
     def installed?(provider, version)
       command_result = @runner.run_command("npm list -g #{name}")
 
@@ -22,7 +21,11 @@ module Serverspec::Type
         h
       end
 
-      !software[name.downcase].nil?
+      if (version.nil?)
+        !software[name.downcase].nil?
+      else
+        software[name.downcase] == version
+      end
     end
   end
 
