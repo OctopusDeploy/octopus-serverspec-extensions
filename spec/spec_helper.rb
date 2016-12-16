@@ -8,7 +8,7 @@ set :backend, :cmd
 set :os, :family => 'windows'
 
 RSpec.configure do |c|
-  if (ENV['tc_project_name'] && !ENV['tc_project_name'].empty?) then
+  if (ENV['TEAMCITY_PROJECT_NAME'] && !ENV['TEAMCITY_PROJECT_NAME'].empty?) then
     c.add_formatter Spec::Runner::Formatter::TeamcityFormatter
   end
 end
