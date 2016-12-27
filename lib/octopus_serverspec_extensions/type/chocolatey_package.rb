@@ -12,7 +12,7 @@ module Serverspec::Type
     def installed?(provider, version)
       command_result = @runner.run_command("choco list -l -r #{name}")
 
-      software = command_result.stdout.split("\r\n").each_with_object({}) do |s, h|
+      software = command_result.stdout.gsub("\r\n", "\n").split("\n").each_with_object({}) do |s, h|
         v, k = s.split('|')
         h[String(v).strip.downcase] = String(k).strip.downcase
         h
