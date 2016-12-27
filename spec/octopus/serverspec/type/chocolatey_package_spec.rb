@@ -11,7 +11,7 @@ describe ChocolateyPackage do
 
     expect(runner).to receive(:run_command).with("choco list -l -r netfx-4.6.2-devpack").and_return(result)
 
-    expect(package.installed?(nil, nil)).to be true
+    expect(package.installed?("netfx-4.6.2-devpack", nil)).to be true
   end
 
   it "can parse multiple lines in output (if output uses LF)" do
@@ -31,8 +31,8 @@ describe ChocolateyPackage do
 
     expect(runner).to receive(:run_command).twice.with("choco list -l -r netfx-4.6.2-devpack").and_return(result)
 
-    expect(package.installed?(nil, "4.6.01590.0")).to be true
-    expect(package.installed?(nil, "1.5")).to be false
+    expect(package.installed?("netfx-4.6.2-devpack", "4.6.01590.0")).to be true
+    expect(package.installed?("netfx-4.6.2-devpack", "1.5")).to be false
   end
 
   it "doesn't find non installed package" do
@@ -42,8 +42,8 @@ describe ChocolateyPackage do
 
     expect(runner).to receive(:run_command).twice.with("choco list -l -r not-installed-package").and_return(result)
 
-    expect(package.installed?(nil, nil)).to be false
-    expect(package.installed?(nil, "1.5")).to be false
+    expect(package.installed?("not-installed-package", nil)).to be false
+    expect(package.installed?("not-installed-package", "1.5")).to be false
   end
 
 end
