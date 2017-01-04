@@ -56,6 +56,11 @@ module Serverspec::Type
       !roles.select {|e| e == role_name}.empty?
     end
 
+    def has_name?(name)
+      return false if @machine.nil?
+      @machine["Name"] == name
+    end
+
     def listening_tentacle?
       return false if @machine.nil?
       puts "Expected CommunicationStyle 'TentaclePassive' for Tentacle #{@name}, but got '#{@machine["EndPoint"]["CommunicationStyle"]}'" if (@machine["EndPoint"]["CommunicationStyle"] != "TentaclePassive")
