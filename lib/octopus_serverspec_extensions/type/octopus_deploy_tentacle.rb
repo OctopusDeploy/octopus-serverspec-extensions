@@ -56,7 +56,7 @@ module Serverspec::Type
       !roles.select {|e| e == role_name}.empty?
     end
 
-    def has_name?(name)
+    def has_display_name?(name)
       return false if @machine.nil?
       @machine["Name"] == name
     end
