@@ -8,3 +8,4 @@
 /spec/reports/
 /tmp/
 octopus-serverspec-extensions-*.gem
+vendor/
