@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.summary       = %q{SeverSpec extensions for Windows}
   spec.description   = %q{SeverSpec extensions for Windows, adding support for chocolatey packages, npm packages, service accounts and more.}
   spec.homepage      = "https://github.com/octopus-deploy/octopus-serverspec-extensions"
-  spec.license       = "Apache 2.0"
+  spec.license       = "Apache-2.0"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
