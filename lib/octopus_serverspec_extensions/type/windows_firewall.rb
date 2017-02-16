@@ -9,8 +9,8 @@ module Serverspec::Type
     end
 
     def has_open_port?(port)
-      command_result = @runner.run_command("$portFilter = (Get-NetFirewallPortFilter | Where-Object { $_.LocalPort -Eq #{port} -and $_.Protocol -eq 'TCP' }); if ($null -eq $portfilter) { return $false } ; $rule = Get-NetFirewallRule -AssociatedNetFirewallPortFilter $portfilter; \"$($rule.Enabled)|$($rule.PrimaryStatus)\"")
-      command_result.stdout.gsub(/\n/, '') == "True|OK"
+      command_result = @runner.run_command("((New-Object -comObject HNetCfg.FwPolicy2).rules | where-object { $_.LocalPorts -eq #{port} -and $_.Action -eq 1}).Enabled")
+      command_result.stdout.gsub(/\n/, '') == "True"
     end
 
     def enabled?
