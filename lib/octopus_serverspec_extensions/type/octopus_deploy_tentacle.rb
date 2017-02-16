@@ -50,6 +50,21 @@ module Serverspec::Type
       !@machine["EnvironmentIds"].select {|e| e == environment_id}.empty?
     end
 
+    def has_tenant?(tenant_name)
+      return false if @machine.nil?
+      url = "#{@serverUrl}/api/tenants/all?api-key=#{@apiKey}"
+      resp = Net::HTTP.get_response(URI.parse(url))
+      tenants = JSON.parse(resp.body)
+      tenant_id = tenants.select {|e| e["Name"] == tenant_name}.first["Id"]
+      !@machine["TenantIds"].select {|e| e == tenant_id}.empty?
+    end
+
+    def has_tenant_tag?(tag_set, tag)
+      return false if @machine.nil?
+      tenant_tags = @machine["TenantTags"]
+      !tenant_tags.select {|e| e == "#{tag_set}/#{tag}"}.empty?
+    end
+
     def has_role?(role_name)
       return false if @machine.nil?
       roles = @machine["Roles"]
