@@ -20,7 +20,7 @@ module Serverspec::Type
       @state = data[headers.index{|x|x=="Status"}]
       @user_id = data[headers.index{|x|x=="Run As User"}]
       @run_level = data[headers.index{|x|x=="Logon Mode"}]
-      @schedule_type = data[headers.index{|x|x=="Schedule Type"}]
+      @schedule_type = data[headers.index{|x|x=="Schedule Type"}].strip
       @repeat_every = data[headers.index{|x|x=="Repeat: Every"}]
     end
   end
