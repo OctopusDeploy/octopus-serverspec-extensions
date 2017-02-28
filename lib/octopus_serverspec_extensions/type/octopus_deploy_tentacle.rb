@@ -84,14 +84,14 @@ module Serverspec::Type
 
     def listening_tentacle?
       return false if @machine.nil?
-      puts "Expected CommunicationStyle 'TentaclePassive' for Tentacle #{@name}, but got '#{@machine["EndPoint"]["CommunicationStyle"]}'" if (@machine["EndPoint"]["CommunicationStyle"] != "TentaclePassive")
-      @machine["EndPoint"]["CommunicationStyle"] == "TentaclePassive"
+      puts "Expected CommunicationStyle 'TentaclePassive' for Tentacle #{@name}, but got '#{@machine["Endpoint"]["CommunicationStyle"]}'" if (@machine["Endpoint"]["CommunicationStyle"] != "TentaclePassive")
+      @machine["Endpoint"]["CommunicationStyle"] == "TentaclePassive"
     end
 
     def polling_tentacle?
       return false if @machine.nil?
-      puts "Expected CommunicationStyle 'TentacleActive' for Tentacle #{@name}, but got '#{@machine["EndPoint"]["CommunicationStyle"]}'" if (@machine["EndPoint"]["CommunicationStyle"] != "TentacleActive")
-      @machine["EndPoint"]["CommunicationStyle"] == "TentacleActive"
+      puts "Expected CommunicationStyle 'TentacleActive' for Tentacle #{@name}, but got '#{@machine["Endpoint"]["CommunicationStyle"]}'" if (@machine["Endpoint"]["CommunicationStyle"] != "TentacleActive")
+      @machine["Endpoint"]["CommunicationStyle"] == "TentacleActive"
     end
 
     def exists?
