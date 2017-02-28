@@ -78,7 +78,8 @@ module Serverspec::Type
 
     def has_endpoint?(uri)
       return false if @machine.nil?
-      @machine["Uri"] == uri
+      puts "Expected uri '#{uri}' for Tentacle #{@name}, but got '#{@machine["Uri"]}'" unless (@machine["Uri"].casecmp(uri) == 0)
+      @machine["Uri"].casecmp(uri) == 0
     end
 
     def listening_tentacle?
