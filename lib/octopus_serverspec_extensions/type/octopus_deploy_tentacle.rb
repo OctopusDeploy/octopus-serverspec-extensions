@@ -76,6 +76,11 @@ module Serverspec::Type
       @machine["Name"] == name
     end
 
+    def has_endpoint?(uri)
+      return false if @machine.nil?
+      @machine["Uri"] == uri
+    end
+
     def listening_tentacle?
       return false if @machine.nil?
       puts "Expected CommunicationStyle 'TentaclePassive' for Tentacle #{@name}, but got '#{@machine["EndPoint"]["CommunicationStyle"]}'" if (@machine["EndPoint"]["CommunicationStyle"] != "TentaclePassive")
