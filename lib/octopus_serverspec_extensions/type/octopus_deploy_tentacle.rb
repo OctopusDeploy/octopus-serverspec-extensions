@@ -65,6 +65,15 @@ module Serverspec::Type
       !tenant_tags.select {|e| e == "#{tag_set}/#{tag}"}.empty?
     end
 
+	def has_policy?(policy_name)
+      return false if @machine.nil?
+      url = "#{@serverUrl}/api/machinepolicies/all?api-key=#{@apiKey}"
+      resp = Net::HTTP.get_response(URI.parse(url))
+      policies = JSON.parse(resp.body)
+      policy_id = policies.select {|e| e["Name"] == policy_name}.first["Id"]
+      !@machine["MachinePolicyId"] == policy_id
+    end
+	
     def has_role?(role_name)
       return false if @machine.nil?
       roles = @machine["Roles"]
