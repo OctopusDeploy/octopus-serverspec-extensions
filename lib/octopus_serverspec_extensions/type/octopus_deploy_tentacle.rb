@@ -71,7 +71,7 @@ module Serverspec::Type
       resp = Net::HTTP.get_response(URI.parse(url))
       policies = JSON.parse(resp.body)
       policy_id = policies.select {|e| e["Name"] == policy_name}.first["Id"]
-      !@machine["MachinePolicyId"] == policy_id
+      @machine["MachinePolicyId"] == policy_id
     end
 
     def has_role?(role_name)
