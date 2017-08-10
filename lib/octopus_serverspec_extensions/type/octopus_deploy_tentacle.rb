@@ -25,7 +25,7 @@ module Serverspec::Type
       end
 
       if (exists?)
-        thumbprint = `"c:\\program files\\Octopus Deploy\\Tentacle\\Tentacle.exe" --console --show-thumbprint --nologo --instance #{instance}`.strip.gsub('The thumbprint of this Tentacle is: ', '')
+        thumbprint = `"c:\\program files\\Octopus Deploy\\Tentacle\\Tentacle.exe" show-thumbprint --console --nologo --instance #{instance}`.strip.gsub('The thumbprint of this Tentacle is: ', '')
         @machine = get_machine_via_api(serverUrl, apiKey, thumbprint)
       end
     end
