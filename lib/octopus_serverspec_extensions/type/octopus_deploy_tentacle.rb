@@ -29,6 +29,7 @@ module Serverspec::Type
         thumbprint = thumbprint.gsub('==== ShowThumbprintCommand starting ====', '').strip
         thumbprint = thumbprint.gsub('The thumbprint of this Tentacle is: ', '').strip
         thumbprint = thumbprint.gsub('==== ShowThumbprintCommand completed ====', '').strip
+        thumbprint = thumbprint.gsub('==== ShowThumbprintCommand ====', '').strip
         puts "tentacle thumbprint is #{thumbprint}"
         @machine = get_machine_via_api(serverUrl, apiKey, thumbprint)
       else
