@@ -24,7 +24,7 @@ module Serverspec::Type
         return
       end
 
-      @environment = get_environment_via_api(serverUrl, apiKey, thumbprint)
+      @environment = get_environment_via_api(serverUrl, apiKey, environment_name)
     end
 
     def exists?
