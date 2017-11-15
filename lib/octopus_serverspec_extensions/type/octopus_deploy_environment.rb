@@ -32,7 +32,7 @@ module Serverspec::Type
     end
   end
 
-  def octopus_deploy_tentacle(serverUrl, apiKey, environment_name)
+  def octopus_deploy_environment(serverUrl, apiKey, environment_name)
     OctopusDeployEnvironment.new(serverUrl, apiKey, environment_name)
   end
 
