@@ -1,5 +1,18 @@
 RSpec::Matchers.define :have_version do |version|
   match do |file|
+    get_version(file) == version
+  end
+
+  failure_message do |file|
+    "Expected file '#{file.name}' to have version '#{version}' but it had version '#{get_version}' instead"
+  end
+
+  failure_message_when_negated do |file|
+    "Expected file '#{file.name}' to not have version '#{version}' but it did"
+  end
+
+  private
+  def get_version(file)
     version_dll = Fiddle.dlopen('version.dll')
 
     s=''
@@ -18,6 +31,6 @@ RSpec::Matchers.define :have_version do |version|
     rstring = result.unpack('v*').map{|s| s.chr if s<256}*''
     r = /FileVersion..(.*?)\000/.match(rstring)
 
-    r[1] == version
+    r[1]
   end
 end
