@@ -13,7 +13,7 @@ module Serverspec::Type
       command_result.stdout.gsub(/\n/, '').match /Get-DSCConfiguration succeeded/
     end
 
-    def able_to_test_dsc_configuration?
+    def applied_dsc_configuration_successfully?
       command_result = @runner.run_command('$ProgressPreference = "SilentlyContinue"; try { if (-not (Test-DSCConfiguration -ErrorAction Stop)) { write-output "Test-DSCConfiguration returned false"; exit 1 } write-output "Test-DSCConfiguration succeeded"; exit 0 } catch { write-output "Test-DSCConfiguration failed"; write-output $_; exit 2 }')
       command_result.stdout.gsub(/\n/, '').match /Test-DSCConfiguration succeeded/
     end
