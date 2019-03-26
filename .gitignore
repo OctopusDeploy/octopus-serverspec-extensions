@@ -9,3 +9,4 @@
 /tmp/
 octopus-serverspec-extensions-*.gem
 vendor/
+/.idea/
