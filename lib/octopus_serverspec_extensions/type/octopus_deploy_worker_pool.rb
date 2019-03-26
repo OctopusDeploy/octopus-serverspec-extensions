@@ -42,7 +42,6 @@ module Serverspec::Type
   def get_worker_pool_via_api(serverUrl, apiKey, worker_pool_name)
     worker_pool = nil
     url = "#{serverUrl}/api/workerpools/all?api-key=#{apiKey}"
-    puts url
 
     begin
       resp = Net::HTTP.get_response(URI.parse(url))
