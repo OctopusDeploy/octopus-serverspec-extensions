@@ -1,0 +1,38 @@
+[
+  {
+    "Id": "WorkerPools-1",
+    "Name": "Default Worker Pool",
+    "Description": "Default pool of workers",
+    "IsDefault": true,
+    "SortOrder": 0,
+    "SpaceId": "Spaces-1",
+    "Links": {
+      "Self": "/api/Spaces-1/workerpools/WorkerPools-1",
+      "Workers": "/api/Spaces-1/workerpools/WorkerPools-1/workers{?skip,take,partialName,isDisabled,healthStatuses,commStyles}"
+    }
+  },
+  {
+    "Id": "WorkerPools-2",
+    "Name": "Second Worker Pool",
+    "Description": "I was the second pool added to this server",
+    "IsDefault": false,
+    "SortOrder": 1,
+    "SpaceId": "Spaces-1",
+    "Links": {
+      "Self": "/api/Spaces-1/workerpools/WorkerPools-2",
+      "Workers": "/api/Spaces-1/workerpools/WorkerPools-2/workers{?skip,take,partialName,isDisabled,healthStatuses,commStyles}"
+    }
+  },
+  {
+    "Id": "WorkerPools-3",
+    "Name": "Third Worker Pool",
+    "Description": "Of all the pools, I got the bronze",
+    "IsDefault": false,
+    "SortOrder": 2,
+    "SpaceId": "Spaces-1",
+    "Links": {
+      "Self": "/api/Spaces-1/workerpools/WorkerPools-3",
+      "Workers": "/api/Spaces-1/workerpools/WorkerPools-3/workers{?skip,take,partialName,isDisabled,healthStatuses,commStyles}"
+    }
+  }
+]

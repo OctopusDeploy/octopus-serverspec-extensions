@@ -16,19 +16,20 @@ module Serverspec::Type
       @apiKey = apiKey
 
       if (serverUrl.nil?)
-        puts "'serverUrl' was not provided. Unable to connect to Octopus server to validate configuration."
-        return
+        raise "'serverUrl' was not provided. Unable to connect to Octopus server to validate configuration."
       end
       if (apiKey.nil?)
-        puts "'apiKey' was not provided. Unable to connect to Octopus server to validate configuration."
-        return
+        raise "'apiKey' was not provided. Unable to connect to Octopus server to validate configuration."
+      end
+      if (worker_pool_name.nil?)
+        raise "'worker_pool_name' was not provided. Unable to connect to Octopus server to validate configuration."
       end
 
       @worker_pool = get_worker_pool_via_api(serverUrl, apiKey, worker_pool_name)
     end
 
     def exists?
-      !@worker_pool.nil?
+      (!@worker_pool.nil?) && (@worker_pool != [])
     end
   end
 
@@ -41,6 +42,7 @@ module Serverspec::Type
   def get_worker_pool_via_api(serverUrl, apiKey, worker_pool_name)
     worker_pool = nil
     url = "#{serverUrl}/api/workerpools/all?api-key=#{apiKey}"
+    puts url
 
     begin
       resp = Net::HTTP.get_response(URI.parse(url))
@@ -48,6 +50,7 @@ module Serverspec::Type
       worker_pool = body.select {|i| i['Name'] == worker_pool_name } unless body.nil?
     rescue => e
       puts "Unable to connect to #{url}: #{e}"
+      raise
     end
 
     worker_pool
