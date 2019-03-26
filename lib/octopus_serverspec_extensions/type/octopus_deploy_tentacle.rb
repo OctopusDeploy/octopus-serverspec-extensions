@@ -64,6 +64,15 @@ module Serverspec::Type
       !@machine["EnvironmentIds"].select {|e| e == environment_id}.empty?
     end
 
+    def in_space?(space_name)
+      return false if @machine.nil?
+      url = "#{@serverUrl}/api/spaces/all?api-key=#{@apiKey}"
+      resp = Net::HTTP.get_response(URI.parse(url))
+      spaces = JSON.parse(resp.body)
+      space_id = spaces.select {|e| e["Name"] == space_name}.first["Id"]
+      !@machine["SpaceIds"].select {|e| e == space_id}.empty?
+    end
+
     def has_tenant?(tenant_name)
       return false if @machine.nil?
       url = "#{@serverUrl}/api/tenants/all?api-key=#{@apiKey}"
