@@ -33,7 +33,7 @@ module Serverspec::Type
   end
 
   def octopus_deploy_worker_pool(serverUrl, apiKey, worker_pool_name)
-    OctopusDeployworker_pool.new(serverUrl, apiKey, worker_pool_name)
+    OctopusDeployWorkerPool.new(serverUrl, apiKey, worker_pool_name)
   end
 
   private
