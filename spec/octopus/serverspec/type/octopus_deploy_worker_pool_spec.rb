@@ -42,7 +42,7 @@ describe OctopusDeployWorkerPool do
     it "doesn't crash badly if handed a bad URL" do
         stub_request(:get, "https://octopus.example.com/api/workerpools/all?api-key=API-1234567890").to_raise(StandardError)
 
-        expect { OctopusDeployWorkerPool.new("https://octopus.example.com", "API-1234567890", "Second Worker Pool") }.to raise_error
+        expect { OctopusDeployWorkerPool.new("https://octopus.example.com", "API-1234567890", "Second Worker Pool") }.to raise_error(StandardError)
     end
 
 end

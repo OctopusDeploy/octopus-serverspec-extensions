@@ -49,6 +49,7 @@ module Serverspec::Type
       environment = body['Items'].first unless body.nil?
     rescue => e
       puts "Unable to connect to #{url}: #{e}"
+      raise
     end
 
     environment
