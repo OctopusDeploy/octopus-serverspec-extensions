@@ -5,7 +5,6 @@ describe OctopusDeployWorkerPool do
 
     let(:runner) { double ("runner")}
 
-
     it "throws if `serverUrl` not supplied" do
         expect { OctopusDeployWorkerPool.new(nil, "someapikey", "my new worker pool") }.
             to raise_error(/serverUrl/)
