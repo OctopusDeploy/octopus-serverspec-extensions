@@ -16,19 +16,20 @@ module Serverspec::Type
       @apiKey = apiKey
 
       if (serverUrl.nil?)
-        puts "'serverUrl' was not provided. Unable to connect to Octopus server to validate configuration."
-        return
+        raise "'serverUrl' was not provided. Unable to connect to Octopus server to validate configuration."
       end
       if (apiKey.nil?)
-        puts "'apiKey' was not provided. Unable to connect to Octopus server to validate configuration."
-        return
+        raise "'apiKey' was not provided. Unable to connect to Octopus server to validate configuration."
+      end
+      if (environment_name.nil?)
+        raise "'environment_name' was not provided. Unable to connect to Octopus server to validate configuration."
       end
 
       @environment = get_environment_via_api(serverUrl, apiKey, environment_name)
     end
 
     def exists?
-      !@environment.nil?
+      (!@environment.nil?) && (@environment != [])
     end
   end
 
@@ -47,7 +48,7 @@ module Serverspec::Type
       body = JSON.parse(resp.body)
       environment = body['Items'].first unless body.nil?
     rescue => e
-      puts "Unable to connect to #{url}: #{e}"
+      raise "Unable to connect to #{url}: #{e}"
     end
 
     environment

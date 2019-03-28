@@ -10,3 +10,4 @@
 octopus-serverspec-extensions-*.gem
 vendor/
 /.idea/
+publish.ps1
