@@ -48,8 +48,7 @@ module Serverspec::Type
       body = JSON.parse(resp.body)
       environment = body['Items'].first unless body.nil?
     rescue => e
-      puts "Unable to connect to #{url}: #{e}"
-      raise
+      raise "Unable to connect to #{url}: #{e}"
     end
 
     environment

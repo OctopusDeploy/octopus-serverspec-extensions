@@ -20,30 +20,28 @@ describe OctopusDeployEnvironment do
             to raise_error(/environment_name/)
     end
 
-    examplejsonpath = 'spec/octopus/serverspec/json/envfound.json'
-    examplejson = File.open(examplejsonpath)
+    example_environment_found_response = File.open('spec/octopus/serverspec/json/envfound.json')
 
     it "handles environment found" do
         stub_request(:get, "https://octopus.example.com/api/environments?name=The-Env&api-key=API-1234567890").
-            to_return(status: 200, body: examplejson, headers: {})
+            to_return(status: 200, body: example_environment_found_response, headers: {})
         ef = OctopusDeployEnvironment.new("https://octopus.example.com", "API-1234567890", "The-Env")
         expect(ef.exists?).to be true
     end
 
-    examplejsonpath2 = 'spec/octopus/serverspec/json/envnotfound.json'
-    examplejson2 = File.open(examplejsonpath2) # you get an IOError if you reuse the earlier File.open()
+    example_environment_note_found_response = File.open('spec/octopus/serverspec/json/envnotfound.json') # you get an IOError if you reuse the earlier File.open()
 
     it "handles environment not found" do
         stub_request(:get, "https://octopus2.example.com/api/environments?name=Not-an-Env&api-key=API-0987654321").
-            to_return(status: 200, body: examplejson2, headers: {})
+            to_return(status: 200, body: example_environment_note_found_response, headers: {})
         enf = OctopusDeployEnvironment.new("https://octopus2.example.com", "API-0987654321", "Not-an-Env")
         expect(enf.exists?).to be false
     end
 
     it "doesn't crash badly if handed a bad URL" do
-        stub_request(:get, "https://octopus.example.com/api/environments?name=The-Env&api-key=API-1234567890").to_raise(StandardError)
+        stub_request(:get, "https://nonexistentdomain.com/api/environments?name=The-Env&api-key=API-1234567890").to_raise(SocketError)
 
-        expect { OctopusDeployEnvironment.new("https://octopus.example.com", "API-1234567890", "The-Env") }.to raise_error(StandardError)
+        expect { OctopusDeployEnvironment.new("https://nonexistentdomain.com", "API-1234567890", "The-Env") }.to raise_error(StandardError)
     end
 
 end

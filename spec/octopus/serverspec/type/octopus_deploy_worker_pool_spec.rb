@@ -20,29 +20,28 @@ describe OctopusDeployWorkerPool do
             to raise_error(/worker_pool_name/)
     end
 
-    examplejsonpath = 'spec/octopus/serverspec/json/workerpoolsall.json'
-    examplejson = File.open(examplejsonpath)
+    example_worker_pool_response = File.open('spec/octopus/serverspec/json/workerpoolsall.json')
 
     it "handles worker pool found" do
         stub_request(:get, "https://octopus.example.com/api/workerpools/all?api-key=API-1234567890").
-            to_return(status: 200, body: examplejson, headers: {})
+            to_return(status: 200, body: example_worker_pool_response, headers: {})
         wp = OctopusDeployWorkerPool.new("https://octopus.example.com", "API-1234567890", "Second Worker Pool")
         expect(wp.exists?).to be true
     end
 
-    examplejson2 = File.open(examplejsonpath) # you get an IOError if you reuse the earlier File.open()
+    example_worker_pool_response_2 = File.open('spec/octopus/serverspec/json/workerpoolsall.json') # you get an IOError if you reuse the earlier File.open()
 
     it "handles worker pool not found" do
         stub_request(:get, "https://octopus2.example.com/api/workerpools/all?api-key=API-0987654321").
-            to_return(status: 200, body: examplejson2, headers: {})
+            to_return(status: 200, body: example_worker_pool_response_2, headers: {})
         wp = OctopusDeployWorkerPool.new("https://octopus2.example.com", "API-0987654321", "Ninth Worker Pool")
         expect(wp.exists?).to be false
     end
 
     it "doesn't crash badly if handed a bad URL" do
-        stub_request(:get, "https://octopus.example.com/api/workerpools/all?api-key=API-1234567890").to_raise(StandardError)
+        stub_request(:get, "https://nonexistentdomain.com/api/workerpools/all?api-key=API-1234567890").to_raise(SocketError)
 
-        expect { OctopusDeployWorkerPool.new("https://octopus.example.com", "API-1234567890", "Second Worker Pool") }.to raise_error(StandardError)
+        expect { OctopusDeployWorkerPool.new("https://nonexistentdomain.com", "API-1234567890", "Second Worker Pool") }.to raise_error(StandardError)
     end
 
 end

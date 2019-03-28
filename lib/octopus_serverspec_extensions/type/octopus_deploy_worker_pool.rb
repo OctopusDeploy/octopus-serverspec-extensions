@@ -48,8 +48,7 @@ module Serverspec::Type
       body = JSON.parse(resp.body)
       worker_pool = body.select {|i| i['Name'] == worker_pool_name } unless body.nil?
     rescue => e
-      puts "Unable to connect to #{url}: #{e}"
-      raise
+      raise "Unable to connect to #{url}: #{e}"
     end
 
     worker_pool
