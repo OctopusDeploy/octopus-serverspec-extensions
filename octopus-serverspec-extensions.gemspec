@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = OctopusServerSpecExtensions::VERSION
   spec.authors       = ["Matt Richardson"]
   spec.email         = "devops@octopus.com"
-  spec.summary       = %q{SeverSpec extensions for Windows}
-  spec.description   = %q{SeverSpec extensions for Windows, adding support for chocolatey packages, npm packages, service accounts and more.}
+  spec.summary       = %q{ServerSpec extensions for Octopus Deploy}
+  spec.description   = %q{ServerSpec extensions for Octopus Deploy, adds support for Octopus Deploy objects and including some common windows objects.}
   spec.homepage      = "https://github.com/octopus-deploy/octopus-serverspec-extensions"
   spec.license       = "Apache-2.0"
 
@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "serverspec", "~> 2"
   spec.add_dependency "specinfra", "~> 2"
   spec.add_dependency 'rspec', '~> 3.0'
-  spec.add_dependency 'json', '~> 2.2'
+  spec.add_dependency 'json', '~> 2.1.0'
 
   spec.add_development_dependency "bundler", "~> 1.13"
   spec.add_development_dependency "rake", "~> 10.0"
