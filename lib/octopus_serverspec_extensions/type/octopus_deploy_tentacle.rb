@@ -67,7 +67,7 @@ module Serverspec::Type
 
     def in_environment?(environment_name)
       return false if @machine.nil?
-      url = "#{@serverUrl}/api/#{spaceFragment}environments/all?api-key=#{@apiKey}"
+      url = "#{@serverUrl}/api/#{@spaceFragment}environments/all?api-key=#{@apiKey}"
       resp = Net::HTTP.get_response(URI.parse(url))
       environments = JSON.parse(resp.body)
       environment_id = environments.select {|e| e["Name"] == environment_name}.first["Id"]
@@ -77,7 +77,7 @@ module Serverspec::Type
     def in_space?(space_name)
       return false if @machine.nil?
       return false if @serverSupportsSpaces
-      url = "#{@serverUrl}/api/#{spaceFragment}spaces/all?api-key=#{@apiKey}"
+      url = "#{@serverUrl}/api/#{@spaceFragment}spaces/all?api-key=#{@apiKey}"
       resp = Net::HTTP.get_response(URI.parse(url))
       spaces = JSON.parse(resp.body)
       space_id = spaces.select {|e| e["Name"] == space_name}.first["Id"]
@@ -86,7 +86,7 @@ module Serverspec::Type
 
     def has_tenant?(tenant_name)
       return false if @machine.nil?
-      url = "#{@serverUrl}/api/#{spaceFragment}tenants/all?api-key=#{@apiKey}"
+      url = "#{@serverUrl}/api/#{@spaceFragment}tenants/all?api-key=#{@apiKey}"
       resp = Net::HTTP.get_response(URI.parse(url))
       tenants = JSON.parse(resp.body)
       tenant_id = tenants.select {|e| e["Name"] == tenant_name}.first["Id"]
@@ -101,7 +101,7 @@ module Serverspec::Type
 
     def has_policy?(policy_name)
       return false if @machine.nil?
-      url = "#{@serverUrl}/api/#{spaceFragment}machinepolicies/all?api-key=#{@apiKey}"
+      url = "#{@serverUrl}/api/#{@spaceFragment}machinepolicies/all?api-key=#{@apiKey}"
       resp = Net::HTTP.get_response(URI.parse(url))
       policies = JSON.parse(resp.body)
       policy_id = policies.select {|e| e["Name"] == policy_name}.first["Id"]
@@ -163,7 +163,7 @@ module Serverspec::Type
 
   def poll_until_machine_has_completed_healthcheck(serverUrl, apiKey, thumbprint)
     machine = nil
-    url = "#{serverUrl}/api/#{spaceFragment}machines/all?api-key=#{apiKey}"
+    url = "#{serverUrl}/api/#{@spaceFragment}machines/all?api-key=#{apiKey}"
 
     now = Time.now
     counter = 1
@@ -187,7 +187,7 @@ module Serverspec::Type
 
   def get_machine_via_api(serverUrl, apiKey, thumbprint)
     machine = nil
-    url = "#{serverUrl}/api/#{spaceFragment}machines/all?api-key=#{apiKey}"
+    url = "#{serverUrl}/api/#{@spaceFragment}machines/all?api-key=#{apiKey}"
 
     begin
       resp = Net::HTTP.get_response(URI.parse(url))
