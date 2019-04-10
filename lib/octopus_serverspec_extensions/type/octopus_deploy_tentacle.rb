@@ -125,6 +125,11 @@ module Serverspec::Type
       @machine["Uri"].casecmp(uri) == 0
     end
 
+    def has_tenanted_deployment_participation?(mode)
+      return false if @machine.nil?
+      @machine["TenantedDeploymentParticipation"] == mode
+    end
+
     def listening_tentacle?
       return false if @machine.nil?
       puts "Expected CommunicationStyle 'TentaclePassive' for Tentacle #{@name}, but got '#{@machine["Endpoint"]["CommunicationStyle"]}'" if (@machine["Endpoint"]["CommunicationStyle"] != "TentaclePassive")
