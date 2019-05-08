@@ -104,7 +104,7 @@ describe OctopusDeployProjectGroup do
 
 
       wp = OctopusDeployProjectGroup.new("https://octopus2.example.com", "API-0987654321", "Octopus Projects", "Spaces-1")
-      expect(wp.has_description?("This is an example Azure Subscription")).to be true
+      expect(wp.has_description?("This is a group of Octopus-related Projects")).to be true
     end
 
   end

@@ -26,7 +26,7 @@
   {
     "Id": "ProjectGroups-22",
     "Name": "Octopus Projects",
-    "Description": null,
+    "Description": "This is a group of Octopus-related Projects",
     "EnvironmentIds": [],
     "RetentionPolicyId": null,
     "SpaceId": "Spaces-1",
