@@ -53,7 +53,7 @@ module Serverspec::Type
       resp = Net::HTTP.get_response(URI.parse(url))
       spaces = JSON.parse(resp.body)
       space_id = spaces.select {|e| e["Name"] == space_name}.first["Id"]
-      @machine["SpaceId"] == space_id
+      @projectgroup["SpaceId"] == space_id
     end
 
     def in_environment?(environment_name)
