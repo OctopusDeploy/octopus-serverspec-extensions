@@ -68,10 +68,10 @@ describe OctopusDeployProjectGroup do
     it "handles projectgroup found" do
       stub_request(:get, "https://octopus.example.com/api/").
           to_return(status: 200, body: ex_supports_spaces, headers: {})
-      stub_request(:get, "https://octopus.example.com/api/Spaces-1/projectgroups/all?api-key=API-1234567890").
+      stub_request(:get, "https://octopus.example.com/api/Spaces-2/projectgroups/all?api-key=API-1234567890").
           to_return(status: 200, body: ex_projectgroup_found_response, headers: {})
 
-      wp = OctopusDeployProjectGroup.new("https://octopus.example.com", "API-1234567890", "Octopus Projects")
+      wp = OctopusDeployProjectGroup.new("https://octopus.example.com", "API-1234567890", "Octopus Projects", "Spaces-2")
 
       expect(wp.exists?).to be true
     end
