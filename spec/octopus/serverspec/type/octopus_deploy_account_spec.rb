@@ -20,6 +20,20 @@ describe OctopusDeployAccount do
         to raise_error(/account_name/)
   end
 
+  ex_does_not_support_spaces = File.read('spec/octopus/serverspec/json/apidoesnotsupportspaces.json')
+  ex_acc_found_response = File.read('spec/octopus/serverspec/json/accountsall.json')
+
+  it "throws correctly if we ask for a non-supported account type" do
+    stub_request(:get, "https://octopus.example.com/api/").
+        to_return(status: 200, body: ex_does_not_support_spaces, headers: {})
+    stub_request(:get, "https://octopus.example.com/api/accounts/all?api-key=API-1234567890").
+        to_return(status: 200, body: ex_acc_found_response, headers: {})
+
+    wp = OctopusDeployAccount.new("https://octopus.example.com", "API-1234567890", "exampleorganisation-azure")
+    expect { wp.is_account_type?("NonExistentAccountType") }.to raise_error(/NonExistentAccountType/)
+    expect(wp.is_account_type?( "AzureSubscription" )).to be true
+  end
+
   context "Server does not support spaces" do
 
     ex_does_not_support_spaces = File.read('spec/octopus/serverspec/json/apidoesnotsupportspaces.json')
@@ -69,6 +83,7 @@ describe OctopusDeployAccount do
           to_return(status: 200, body: ex_account_found_response, headers: {})
 
       wp = OctopusDeployAccount.new("https://octopus.example.com", "API-1234567890", "exampleorganisation-azure")
+
       expect(wp.exists?).to be true
     end
 
@@ -90,6 +105,17 @@ describe OctopusDeployAccount do
       stub_request(:get, "https://nonexistentdomain.com/api/Spaces-1/accounts/all?api-key=API-1234567890").to_raise(SocketError)
 
       expect { OctopusDeployAccount.new("https://nonexistentdomain.com", "API-1234567890", "exampleorganisation-azure") }.to raise_error(StandardError)
+    end
+
+    it "Correctly checks the 'description' field" do
+      stub_request(:get, "https://octopus2.example.com/api/").
+          to_return(status: 200, body: ex_supports_spaces, headers: {})
+      stub_request(:get, "https://octopus2.example.com/api/Spaces-1/accounts/all?api-key=API-0987654321").
+          to_return(status: 200, body: ex_account_notfound_response, headers: {})
+
+
+      wp = OctopusDeployAccount.new("https://octopus2.example.com", "API-0987654321", "exampleorganisation-azure", "Spaces-1")
+      expect(wp.has_description?("This is an example Azure Subscription")).to be true
     end
 
   end

@@ -11,7 +11,7 @@
     "ServiceManagementEndpointBaseUri": "",
     "ServiceManagementEndpointSuffix": null,
     "Name": "exampleorganisation-azure",
-    "Description": null,
+    "Description": "This is an example Azure Subscription",
     "EnvironmentIds": [],
     "TenantedDeploymentParticipation": "Untenanted",
     "TenantIds": [],
