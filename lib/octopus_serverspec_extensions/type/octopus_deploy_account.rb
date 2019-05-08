@@ -105,7 +105,7 @@ module Serverspec::Type
       raise "get_account_via_api: Unable to connect to #{url}: #{e}"
     end
 
-    account[0] # it's an array, we need the first object from it
+    account[0] # it's an array, and we need the first object from it
   end
 
   def check_supports_spaces(serverUrl)
