@@ -66,8 +66,8 @@ module Serverspec::Type
     end
   end
 
-  def octopus_deploy_projectgroup(serverUrl, apiKey, projectgroup_name)
-    OctopusDeployProjectGroup.new(serverUrl, apiKey, projectgroup_name)
+  def octopus_deploy_projectgroup(serverUrl, apiKey, projectgroup_name, spaceID)
+    OctopusDeployProjectGroup.new(serverUrl, apiKey, projectgroup_name, spaceID)
   end
 
   private
