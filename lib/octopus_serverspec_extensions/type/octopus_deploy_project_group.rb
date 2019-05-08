@@ -55,15 +55,6 @@ module Serverspec::Type
       space_id = spaces.select {|e| e["Name"] == space_name}.first["Id"]
       @projectgroup["SpaceId"] == space_id
     end
-
-    def in_environment?(environment_name)
-      return false if @projectgroup.nil?
-      url = "#{@serverUrl}/api/#{@spaceFragment}environments/all?api-key=#{@apiKey}"
-      resp = Net::HTTP.get_response(URI.parse(url))
-      environments = JSON.parse(resp.body)
-      environment_id = environments.select {|e| e["Name"] == environment_name}.first["Id"]
-      !@projectgroup["EnvironmentIds"].select {|e| e == environment_id}.empty?
-    end
   end
 
   def octopus_deploy_projectgroup(serverUrl, apiKey, projectgroup_name, spaceID)
