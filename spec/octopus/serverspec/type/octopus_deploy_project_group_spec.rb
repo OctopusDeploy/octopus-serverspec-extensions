@@ -64,16 +64,22 @@ describe OctopusDeployProjectGroup do
 
     ex_supports_spaces = File.read('spec/octopus/serverspec/json/apisupportsspaces.json')
     ex_projectgroup_found_response = File.read('spec/octopus/serverspec/json/projectgroupsall.json')
+    ex_spaces_all = File.read('spec/octopus/serverspec/json/spacesall.json')
 
-    it "handles projectgroup found" do
+    it "handles project group found" do
       stub_request(:get, "https://octopus.example.com/api/").
           to_return(status: 200, body: ex_supports_spaces, headers: {})
       stub_request(:get, "https://octopus.example.com/api/Spaces-2/projectgroups/all?api-key=API-1234567890").
           to_return(status: 200, body: ex_projectgroup_found_response, headers: {})
+      stub_request(:get, "https://octopus.example.com/api/Spaces/all?api-key=API-1234567890").
+          to_return(status: 200, body: ex_spaces_all, headers: {})
 
-      wp = OctopusDeployProjectGroup.new("https://octopus.example.com", "API-1234567890", "Octopus Projects", "Spaces-2")
 
-      expect(wp.exists?).to be true
+      pg = OctopusDeployProjectGroup.new("https://octopus.example.com", "API-1234567890", "Octopus Projects", "Spaces-2")
+      expect(pg.exists?).to be true
+
+      pg_by_name = OctopusDeployProjectGroup.new("https://octopus.example.com", "API-1234567890", "Octopus Projects", nil, "Octopus")
+      expect(pg_by_name.exists?).to be true
     end
 
     ex_projectgroup_notfound_response = File.read('spec/octopus/serverspec/json/projectgroupsall.json')
