@@ -73,12 +73,12 @@ module Serverspec::Type
     begin
       resp = Net::HTTP.get_response(URI.parse(url))
       body = JSON.parse(resp.body)
-      projectgroup = body.select {|i| i['Name'] == projectgroup_name } unless body.nil?
+      projectgroup = body.select {|i| i['Name'] == projectgroup_name }.first unless body.nil?
     rescue => e
       raise "get_projectgroup_via_api: Unable to connect to #{url}: #{e}"
     end
 
-    projectgroup[0] # it's an array, and we need the first object from it
+    projectgroup
   end
 
   def check_supports_spaces(serverUrl)
