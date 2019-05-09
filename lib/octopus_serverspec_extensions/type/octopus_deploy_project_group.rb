@@ -45,16 +45,6 @@ module Serverspec::Type
       return false if @projectgroup.nil?
       @projectgroup["Description"] == projectgroup_description
     end
-
-    def in_space?(space_name)
-      return false if @projectgroup.nil?
-      return false if @serverSupportsSpaces
-      url = "#{@serverUrl}/api/#{@spaceFragment}spaces/all?api-key=#{@apiKey}"
-      resp = Net::HTTP.get_response(URI.parse(url))
-      spaces = JSON.parse(resp.body)
-      space_id = spaces.select {|e| e["Name"] == space_name}.first["Id"]
-      @projectgroup["SpaceId"] == space_id
-    end
   end
 
   def octopus_deploy_projectgroup(serverUrl, apiKey, projectgroup_name, spaceID)
