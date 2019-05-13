@@ -1,0 +1,47 @@
+[
+  {
+    "Id": "Spaces-1",
+    "Name": "Default",
+    "Description": null,
+    "IsDefault": true,
+    "TaskQueueStopped": false,
+    "SpaceManagersTeams": [
+      "teams-administrators",
+      "teams-managers",
+      "teams-spacemanagers-Spaces-1"
+    ],
+    "SpaceManagersTeamMembers": [
+      "Users-1",
+      "Users-21",
+      "Users-22",
+      "Users-61",
+      "Users-81"
+    ],
+    "Links": {
+      "Self": "/api/spaces/Spaces-1",
+      "SpaceHome": "/api/Spaces-1",
+      "Web": "/app#/spaces/Spaces-1",
+      "Logo": "/api/spaces/Spaces-1/logo?cb=2019.4.5"
+    }
+  },
+  {
+    "Id": "Spaces-2",
+    "Name": "Octopus",
+    "Description": null,
+    "IsDefault": false,
+    "TaskQueueStopped": false,
+    "SpaceManagersTeams": [
+      "teams-spacemanagers-Spaces-2",
+      "teams-administrators"
+    ],
+    "SpaceManagersTeamMembers": [
+      "Users-1"
+    ],
+    "Links": {
+      "Self": "/api/spaces/Spaces-2",
+      "SpaceHome": "/api/Spaces-2",
+      "Web": "/app#/spaces/Spaces-2",
+      "Logo": "/api/spaces/Spaces-2/logo?cb=2019.4.5"
+    }
+  }
+]
