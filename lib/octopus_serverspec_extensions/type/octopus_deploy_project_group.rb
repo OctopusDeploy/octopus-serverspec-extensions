@@ -11,12 +11,11 @@ module Serverspec::Type
     @spaceId = nil
     @spaceFragment = ""
 
-    def initialize(serverUrl, apiKey, projectgroup_name, space_id = nil, space_name = nil)
+    def initialize(serverUrl, apiKey, projectgroup_name, space_name = nil)
       @name = "Octopus Deploy Project Group #{projectgroup_name}"
       @runner = Specinfra::Runner
       @serverUrl = serverUrl
       @apiKey = apiKey
-      @spaceId = space_id
 
 
       if serverUrl.nil?
@@ -34,14 +33,10 @@ module Serverspec::Type
       if @serverSupportsSpaces
         # set the spaceId correctly
 
-        if space_id.nil? and space_name.nil?
-          space_id = 'Spaces-1' # default to Spaces-1
-        end
-
-        if space_id.nil? and !space_name.nil?
-          @spaceId = get_space_id?(space_name)
+        if space_name.nil?
+          @spaceId = 'Spaces-1' # default to Spaces-1
         else
-          @spaceId = space_id
+          @spaceId = get_space_id?(space_name)
         end
 
         @spaceFragment = "#{@spaceId}/"
@@ -60,8 +55,8 @@ module Serverspec::Type
     end
   end
 
-  def octopus_deploy_projectgroup(serverUrl, apiKey, projectgroup_name, spaceID = nil, spaceName = nil)
-    OctopusDeployProjectGroup.new(serverUrl, apiKey, projectgroup_name, spaceID, spaceName)
+  def octopus_deploy_projectgroup(serverUrl, apiKey, projectgroup_name, spaceName = nil)
+    OctopusDeployProjectGroup.new(serverUrl, apiKey, projectgroup_name, spaceName)
   end
 
   private
