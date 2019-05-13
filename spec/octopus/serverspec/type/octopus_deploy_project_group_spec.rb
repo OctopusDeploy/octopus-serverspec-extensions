@@ -25,13 +25,13 @@ describe OctopusDeployProjectGroup do
     ex_does_not_support_spaces = File.read('spec/octopus/serverspec/json/apidoesnotsupportspaces.json')
     ex_pg_found_response = File.read('spec/octopus/serverspec/json/projectgroupsall.json')
 
-    it "handles projectgroup found" do
+    it "handles projectgroup found, in a specific space" do
       stub_request(:get, "https://octopus.example.com/api/").
           to_return(status: 200, body: ex_does_not_support_spaces, headers: {})
       stub_request(:get, "https://octopus.example.com/api/projectgroups/all?api-key=API-1234567890").
           to_return(status: 200, body: ex_pg_found_response, headers: {})
 
-      pg = OctopusDeployProjectGroup.new("https://octopus.example.com", "API-1234567890", "Octopus Projects")
+      pg = OctopusDeployProjectGroup.new("https://octopus.example.com", "API-1234567890", "Octopus Projects", nil, "Octopus")
       expect(pg.exists?).to be true
     end
 

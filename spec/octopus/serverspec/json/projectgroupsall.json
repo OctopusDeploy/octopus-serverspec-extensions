@@ -29,7 +29,7 @@
     "Description": "This is a group of Octopus-related Projects",
     "EnvironmentIds": [],
     "RetentionPolicyId": null,
-    "SpaceId": "Spaces-1",
+    "SpaceId": "Spaces-2",
     "Links": {
       "Self": "/api/Spaces-1/projectgroups/ProjectGroups-22",
       "Projects": "/api/Spaces-1/projectgroups/ProjectGroups-22/projects"
