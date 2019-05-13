@@ -12,6 +12,12 @@ module Serverspec::Type
     @spaceId = nil
     @spaceFragment = ""
 
+    AZURE = 'AzureSubscription'.freeze
+    AWS = 'AmazonWebServicesAccount'.freeze
+    SSH = 'SshKeypair'.freeze
+    TOKEN = 'Token'.freeze
+    USERNAME = 'UsernamePassword'.freeze
+
     def initialize(serverUrl, apiKey, account_name, space_name = nil)
       @name = "Octopus Deploy Account #{account_name}"
       @runner = Specinfra::Runner
@@ -67,11 +73,24 @@ module Serverspec::Type
     def is_azure_account?
       return false if @account.nil?
       @account["AccountType"] == "AzureSubscription"
+      # should also have a subscription number, but Octopus manages validation on this
     end
 
     def is_aws_account?
       return false if @account.nil?
       @account["AccountType"] == "AmazonWebServicesAccount"
+    end
+
+    def is_ssh_key_pair?
+
+    end
+
+    def is_username_password?
+
+    end
+
+    def is_token?
+
     end
 
     def in_space?(space_name)
@@ -92,6 +111,15 @@ module Serverspec::Type
       environment_id = environments.select {|e| e["Name"] == environment_name}.first["Id"]
       !@account["EnvironmentIds"].select {|e| e == environment_id}.empty?
     end
+
+    def has_tenant_mode?(tenant_mode)
+
+    end
+
+    def has_property?(property_name, expected_value)
+      return false if @account.nil?
+      @account[property_name] == expected_value
+    end
   end
 
   def octopus_deploy_account(serverUrl, apiKey, account_name)
@@ -107,12 +135,12 @@ module Serverspec::Type
     begin
       resp = Net::HTTP.get_response(URI.parse(url))
       body = JSON.parse(resp.body)
-      account = body.select {|i| i['Name'] == account_name } unless body.nil?
+      account = body.select {|i| i['Name'] == account_name }.first unless body.nil?
     rescue => e
       raise "get_account_via_api: Unable to connect to #{url}: #{e}"
     end
 
-    account[0] # it's an array, and we need the first object from it
+    account
   end
 
   def check_supports_spaces(serverUrl)
