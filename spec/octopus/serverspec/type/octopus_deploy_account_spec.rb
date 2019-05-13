@@ -75,6 +75,7 @@ describe OctopusDeployAccount do
 
     ex_supports_spaces = File.read('spec/octopus/serverspec/json/apisupportsspaces.json')
     ex_account_found_response = File.read('spec/octopus/serverspec/json/accountsall.json')
+    ex_spaces_all = File.read('spec/octopus/serverspec/json/spacesall.json')
 
     it "handles account found" do
       stub_request(:get, "https://octopus.example.com/api/").
@@ -110,12 +111,14 @@ describe OctopusDeployAccount do
     it "Correctly checks the 'description' field" do
       stub_request(:get, "https://octopus2.example.com/api/").
           to_return(status: 200, body: ex_supports_spaces, headers: {})
-      stub_request(:get, "https://octopus2.example.com/api/Spaces-1/accounts/all?api-key=API-0987654321").
+      stub_request(:get, "https://octopus2.example.com/api/Spaces/all?api-key=API-0987654321").
+          to_return(status: 200, body: ex_spaces_all, headers: {})
+      stub_request(:get, "https://octopus2.example.com/api/Spaces-2/accounts/all?api-key=API-0987654321").
           to_return(status: 200, body: ex_account_notfound_response, headers: {})
 
 
-      wp = OctopusDeployAccount.new("https://octopus2.example.com", "API-0987654321", "exampleorganisation-azure", "Spaces-1")
-      expect(wp.has_description?("This is an example Azure Subscription")).to be true
+      wp = OctopusDeployAccount.new("https://octopus2.example.com", "API-0987654321", "exampleorganisation2-azure", "Octopus")
+      expect(wp.has_description?("This is an example Azure Subscription in Space 2")).to be true
     end
 
   end

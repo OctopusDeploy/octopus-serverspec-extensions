@@ -12,12 +12,11 @@ module Serverspec::Type
     @spaceId = nil
     @spaceFragment = ""
 
-    def initialize(serverUrl, apiKey, account_name, spaceID = 'Spaces-1')
+    def initialize(serverUrl, apiKey, account_name, space_name = nil)
       @name = "Octopus Deploy Account #{account_name}"
       @runner = Specinfra::Runner
       @serverUrl = serverUrl
       @apiKey = apiKey
-      @spaceId = spaceID
 
       if serverUrl.nil?
         raise "'serverUrl' was not provided. Unable to connect to Octopus server to validate configuration."
@@ -32,6 +31,14 @@ module Serverspec::Type
       @serverSupportsSpaces = check_supports_spaces(serverUrl)
 
       if @serverSupportsSpaces
+        # set the spaceId correctly
+
+        if space_name.nil?
+          @spaceId = 'Spaces-1' # default to Spaces-1
+        else
+          @spaceId = get_space_id?(space_name)
+        end
+
         @spaceFragment = "#{@spaceId}/"
       end
 
@@ -119,6 +126,15 @@ module Serverspec::Type
     end
 
     false
+  end
+
+  def get_space_id?(space_name)
+    return false if @serverSupportsSpaces.nil?
+    url = "#{@serverUrl}/api/Spaces/all?api-key=#{@apiKey}"
+    resp = Net::HTTP.get_response(URI.parse(url))
+    spaces = JSON.parse(resp.body)
+    space_id = spaces.select {|e| e["Name"] == space_name}.first["Id"]
+    space_id
   end
 
 end
