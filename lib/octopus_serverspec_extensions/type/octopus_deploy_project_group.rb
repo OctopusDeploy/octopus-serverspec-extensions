@@ -67,7 +67,7 @@ module Serverspec::Type
   private
 
   def get_projectgroup_via_api(serverUrl, apiKey, projectgroup_name)
-    projectgroup = nil
+    pg = nil
     url = "#{serverUrl}/api/#{@spaceFragment}projectgroups/all?api-key=#{apiKey}"
 
     begin
