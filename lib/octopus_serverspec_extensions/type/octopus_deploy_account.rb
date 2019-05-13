@@ -93,16 +93,6 @@ module Serverspec::Type
 
     end
 
-    def in_space?(space_name)
-      return false if @account.nil?
-      return false if @serverSupportsSpaces
-      url = "#{@serverUrl}/api/#{@spaceFragment}spaces/all?api-key=#{@apiKey}"
-      resp = Net::HTTP.get_response(URI.parse(url))
-      spaces = JSON.parse(resp.body)
-      space_id = spaces.select {|e| e["Name"] == space_name}.first["Id"]
-      @machine["SpaceId"] == space_id
-    end
-
     def in_environment?(environment_name)
       return false if @account.nil?
       url = "#{@serverUrl}/api/#{@spaceFragment}environments/all?api-key=#{@apiKey}"
