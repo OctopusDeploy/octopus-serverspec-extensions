@@ -20,7 +20,7 @@ describe OctopusDeployWorkerPool do
             to raise_error(/worker_pool_name/)
     end
 
-    example_worker_pool_response = File.open('spec/octopus/serverspec/json/workerpoolsall.json')
+    example_worker_pool_response = get_api_example('/api/workerpools/all')
 
     it "handles worker pool found" do
         stub_request(:get, "https://octopus.example.com/api/workerpools/all?api-key=API-1234567890").
@@ -29,11 +29,9 @@ describe OctopusDeployWorkerPool do
         expect(wp.exists?).to be true
     end
 
-    example_worker_pool_response_2 = File.open('spec/octopus/serverspec/json/workerpoolsall.json') # you get an IOError if you reuse the earlier File.open()
-
     it "handles worker pool not found" do
         stub_request(:get, "https://octopus2.example.com/api/workerpools/all?api-key=API-0987654321").
-            to_return(status: 200, body: example_worker_pool_response_2, headers: {})
+            to_return(status: 200, body: example_worker_pool_response, headers: {})
         wp = OctopusDeployWorkerPool.new("https://octopus2.example.com", "API-0987654321", "Ninth Worker Pool")
         expect(wp.exists?).to be false
     end

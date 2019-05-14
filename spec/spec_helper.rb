@@ -12,3 +12,9 @@ RSpec.configure do |c|
     c.add_formatter Spec::Runner::Formatter::TeamcityFormatter
   end
 end
+
+def get_api_example(api_path)
+  file_path = "./spec/octopus/serverspec/json#{api_path}.json"
+  raise "API Example #{api_path} not found in file #{file_path}" if !File.exists?(file_path)
+  File.read(file_path)
+end

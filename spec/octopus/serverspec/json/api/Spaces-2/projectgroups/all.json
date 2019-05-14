@@ -1,0 +1,62 @@
+[
+  {
+    "Id": "ProjectGroups-15",
+    "Name": "All Projects",
+    "Description": null,
+    "EnvironmentIds": [],
+    "RetentionPolicyId": null,
+    "SpaceId": "Spaces-2",
+    "Links": {
+      "Self": "/api/Spaces-2/projectgroups/ProjectGroups-15",
+      "Projects": "/api/Spaces-2/projectgroups/ProjectGroups-15/projects"
+    }
+  },
+  {
+    "Id": "ProjectGroups-25",
+    "Name": "A second Project Group in space 2",
+    "Description": null,
+    "EnvironmentIds": [],
+    "RetentionPolicyId": null,
+    "SpaceId": "Spaces-2",
+    "Links": {
+      "Self": "/api/Spaces-2/projectgroups/ProjectGroups-25",
+      "Projects": "/api/Spaces-2/projectgroups/ProjectGroups-25/projects"
+    }
+  },
+  {
+    "Id": "ProjectGroups-27",
+    "Name": "Octopus Projects",
+    "Description": "This is a group of Octopus-related Projects",
+    "EnvironmentIds": [],
+    "RetentionPolicyId": null,
+    "SpaceId": "Spaces-2",
+    "Links": {
+      "Self": "/api/Spaces-2/projectgroups/ProjectGroups-27",
+      "Projects": "/api/Spaces-2/projectgroups/ProjectGroups-27/projects"
+    }
+  },
+  {
+    "Id": "ProjectGroups-46",
+    "Name": "DSC",
+    "Description": null,
+    "EnvironmentIds": [],
+    "RetentionPolicyId": null,
+    "SpaceId": "Spaces-2",
+    "Links": {
+      "Self": "/api/Spaces-2/projectgroups/ProjectGroups-46",
+      "Projects": "/api/Spaces-2/projectgroups/ProjectGroups-46/projects"
+    }
+  },
+  {
+    "Id": "ProjectGroups-89",
+    "Name": "Step Templates",
+    "Description": "Octopus Step Template Testing in Space 2",
+    "EnvironmentIds": [],
+    "RetentionPolicyId": null,
+    "SpaceId": "Spaces-2",
+    "Links": {
+      "Self": "/api/Spaces-2/projectgroups/ProjectGroups-89",
+      "Projects": "/api/Spaces-2/projectgroups/ProjectGroups-89/projects"
+    }
+  }
+]
