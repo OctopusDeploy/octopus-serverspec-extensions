@@ -1,0 +1,38 @@
+[
+  {
+    "Id": "WorkerPools-4",
+    "Name": "Default Worker Pool",
+    "Description": "Default pool of workers in space 2",
+    "IsDefault": true,
+    "SortOrder": 0,
+    "SpaceId": "Spaces-2",
+    "Links": {
+      "Self": "/api/Spaces-2/workerpools/WorkerPools-4",
+      "Workers": "/api/Spaces-2/workerpools/WorkerPools-4/workers{?skip,take,partialName,isDisabled,healthStatuses,commStyles}"
+    }
+  },
+  {
+    "Id": "WorkerPools-5",
+    "Name": "Second Worker Pool",
+    "Description": "I was the second pool added to space 2",
+    "IsDefault": false,
+    "SortOrder": 1,
+    "SpaceId": "Spaces-2",
+    "Links": {
+      "Self": "/api/Spaces-2/workerpools/WorkerPools-5",
+      "Workers": "/api/Spaces-2/workerpools/WorkerPools-5/workers{?skip,take,partialName,isDisabled,healthStatuses,commStyles}"
+    }
+  },
+  {
+    "Id": "WorkerPools-6",
+    "Name": "Third Worker Pool",
+    "Description": "Of all the pools in space 2, I got the bronze",
+    "IsDefault": false,
+    "SortOrder": 2,
+    "SpaceId": "Spaces-2",
+    "Links": {
+      "Self": "/api/Spaces-2/workerpools/WorkerPools-6",
+      "Workers": "/api/Spaces-2/workerpools/WorkerPools-6/workers{?skip,take,partialName,isDisabled,healthStatuses,commStyles}"
+    }
+  }
+]

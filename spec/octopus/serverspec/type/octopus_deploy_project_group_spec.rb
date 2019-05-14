@@ -22,8 +22,8 @@ describe OctopusDeployProjectGroup do
 
   context "Server does not support spaces" do
 
-    ex_does_not_support_spaces = File.read('spec/octopus/serverspec/json/apidoesnotsupportspaces.json')
-    ex_pg_found_response = File.read('spec/octopus/serverspec/json/projectgroupsall.json')
+    ex_does_not_support_spaces = get_api_example('/api/2018.7.9')
+    ex_pg_found_response = get_api_example('/api/projectgroups/all')
 
     it "handles projectgroup found, in a specific space" do
       stub_request(:get, "https://octopus.example.com/api/").
@@ -35,7 +35,7 @@ describe OctopusDeployProjectGroup do
       expect(pg.exists?).to be true
     end
 
-    ex_pg_notfound_response = File.read('spec/octopus/serverspec/json/projectgroupsall.json')
+    ex_pg_notfound_response = get_api_example('/api/projectgroups/all')
 
     it "handles projectgroup not found" do
       stub_request(:get, "https://octopus2.example.com/api/").
@@ -59,9 +59,9 @@ describe OctopusDeployProjectGroup do
 
   context "Server supports spaces" do
 
-    ex_supports_spaces = File.read('spec/octopus/serverspec/json/apisupportsspaces.json')
-    ex_pg_found = File.read('spec/octopus/serverspec/json/projectgroupsall.json')
-    ex_spaces_all = File.read('spec/octopus/serverspec/json/spacesall.json')
+    ex_supports_spaces = get_api_example('/api/2019.4.5')
+    ex_pg_found = get_api_example('/api/Spaces-2/projectgroups/all')
+    ex_spaces_all = get_api_example('/api/spaces/all')
 
     it "handles project group found, space name supplied" do
       stub_request(:get, "https://octopus.example.com/api/").
@@ -77,11 +77,13 @@ describe OctopusDeployProjectGroup do
 
     end
 
+    ex_pg_found_space_one = get_api_example('/api/Spaces-1/projectgroups/all')
+
     it "resolves the default space if we don't supply it" do
       stub_request(:get, "https://octopus.example.com/api/").
           to_return(status: 200, body: ex_supports_spaces, headers: {})
       stub_request(:get, "https://octopus.example.com/api/Spaces-1/projectgroups/all?api-key=API-1234567890").
-          to_return(status: 200, body: ex_pg_found, headers: {})
+          to_return(status: 200, body: ex_pg_found_space_one, headers: {})
       stub_request(:get, "https://octopus.example.com/api/Spaces/all?api-key=API-1234567890").
           to_return(status: 200, body: ex_spaces_all, headers: {})
 
@@ -90,7 +92,7 @@ describe OctopusDeployProjectGroup do
       expect(pg.exists?).to be true
     end
 
-    ex_pg_notfound_response = File.read('spec/octopus/serverspec/json/projectgroupsall.json')
+    ex_pg_notfound_response = get_api_example('/api/Spaces-1/projectgroups/all')
 
     it "handles projectgroup not found, space name not supplied (default space)" do
       stub_request(:get, "https://octopus2.example.com/api/").

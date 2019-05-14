@@ -20,8 +20,7 @@ describe OctopusDeployEnvironment do
             to raise_error(/environment_name/)
     end
 
-    example_environment_found_response = File.open('spec/octopus/serverspec/json/envfound.json')
-
+    example_environment_found_response = get_api_example('/api/environments/the-env')
     it "handles environment found" do
         stub_request(:get, "https://octopus.example.com/api/environments?name=The-Env&api-key=API-1234567890").
             to_return(status: 200, body: example_environment_found_response, headers: {})
@@ -29,11 +28,11 @@ describe OctopusDeployEnvironment do
         expect(ef.exists?).to be true
     end
 
-    example_environment_note_found_response = File.open('spec/octopus/serverspec/json/envnotfound.json') # you get an IOError if you reuse the earlier File.open()
+    example_environment_not_found_response = get_api_example('/api/environments/not-the-env')
 
     it "handles environment not found" do
         stub_request(:get, "https://octopus2.example.com/api/environments?name=Not-an-Env&api-key=API-0987654321").
-            to_return(status: 200, body: example_environment_note_found_response, headers: {})
+            to_return(status: 200, body: example_environment_not_found_response, headers: {})
         enf = OctopusDeployEnvironment.new("https://octopus2.example.com", "API-0987654321", "Not-an-Env")
         expect(enf.exists?).to be false
     end

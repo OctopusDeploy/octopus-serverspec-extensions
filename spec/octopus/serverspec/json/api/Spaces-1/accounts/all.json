@@ -1,0 +1,58 @@
+[
+  {
+    "AccountType": "AzureSubscription",
+    "SubscriptionNumber": "a749feda-5d83-4472-a682-306f1ff8c4c7",
+    "CertificateBytes": {
+      "HasValue": true,
+      "NewValue": null
+    },
+    "CertificateThumbprint": "68BCDFDEAD283712343E3C77A64610DE38BB3806",
+    "AzureEnvironment": "",
+    "ServiceManagementEndpointBaseUri": "",
+    "ServiceManagementEndpointSuffix": null,
+    "Name": "exampleorganisation-azure",
+    "Description": "This is an example Azure Subscription in Space 1",
+    "EnvironmentIds": [],
+    "TenantedDeploymentParticipation": "Untenanted",
+    "TenantIds": [],
+    "TenantTags": [],
+    "SpaceId": "Spaces-1",
+    "Id": "azuresubscription-exampleorganisation",
+    "LastModifiedOn": null,
+    "LastModifiedBy": null,
+    "Links": {
+      "Self": "/api/Spaces-1/accounts/azuresubscription-exampleorganisation",
+      "Usages": "/api/Spaces-1/accounts/azuresubscription-exampleorganisation/usages",
+      "PublicKey": "/api/Spaces-1/accounts/azuresubscription-exampleorganisation/pk",
+      "StorageAccounts": "/api/Spaces-1/accounts/azuresubscription-exampleorganisation/storageAccounts",
+      "WebSites": "/api/Spaces-1/accounts/azuresubscription-exampleorganisation/websites",
+      "WebSiteSlots": "/api/Spaces-1/accounts/azuresubscription-exampleorganisation/{resourceGroupName}/websites/{webSiteName}/slots"
+    }
+  },
+  {
+    "AccountType": "AmazonWebServicesAccount",
+    "AccessKey": "AKIAIYPESB5I8DMNAQUQ",
+    "SecretKey": {
+      "HasValue": true,
+      "NewValue": null
+    },
+    "Name": "exampleorganisation-aws",
+    "Description": "The exampleorganisation AWS account",
+    "EnvironmentIds": [
+      "Environments-1",
+      "Environments-2",
+      "Environments-21"
+    ],
+    "TenantedDeploymentParticipation": "Untenanted",
+    "TenantIds": [],
+    "TenantTags": [],
+    "SpaceId": "Spaces-1",
+    "Id": "amazonwebservicesaccount-exampleorganisation-aws-spaces-1",
+    "LastModifiedOn": null,
+    "LastModifiedBy": null,
+    "Links": {
+      "Self": "/api/Spaces-1/accounts/amazonwebservicesaccount-exampleorganisation-aws-spaces-1",
+      "Usages": "/api/Spaces-1/accounts/amazonwebservicesaccount-exampleorganisation-aws-spaces-1/usages"
+    }
+  }
+]
