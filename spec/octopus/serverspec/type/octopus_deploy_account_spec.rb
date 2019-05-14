@@ -20,7 +20,7 @@ describe OctopusDeployAccount do
         to raise_error(/account_name/)
   end
 
-  ex_does_not_support_spaces = get_api_example('/api/2018.4.5')
+  ex_does_not_support_spaces = get_api_example('/api/2018.7.9')
   ex_acc_found_response = get_api_example('/api/accounts/all')
 
   it "throws correctly if we ask for a non-supported account type" do
@@ -36,7 +36,7 @@ describe OctopusDeployAccount do
 
   context "Server does not support spaces" do
 
-    ex_does_not_support_spaces = get_api_example('/api/2018.4.5')
+    ex_does_not_support_spaces = get_api_example('/api/2018.7.9')
     ex_acc_found_response = get_api_example('/api/accounts/all')
 
     it "handles account found" do

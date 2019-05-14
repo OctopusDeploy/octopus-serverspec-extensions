@@ -22,7 +22,7 @@ describe OctopusDeployProjectGroup do
 
   context "Server does not support spaces" do
 
-    ex_does_not_support_spaces = get_api_example('/api/2018.4.5')
+    ex_does_not_support_spaces = get_api_example('/api/2018.7.9')
     ex_pg_found_response = get_api_example('/api/projectgroups/all')
 
     it "handles projectgroup found, in a specific space" do
