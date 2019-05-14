@@ -12,11 +12,13 @@ module Serverspec::Type
     @spaceId = nil
     @spaceFragment = ""
 
+    # constants for account types
     AZURE = 'AzureSubscription'.freeze
     AWS = 'AmazonWebServicesAccount'.freeze
     SSH = 'SshKeypair'.freeze
     TOKEN = 'Token'.freeze
     USERNAME = 'UsernamePassword'.freeze
+    ACCOUNTTYPES = [AZURE, AWS, SSH, TOKEN, USERNAME]
 
     def initialize(serverUrl, apiKey, account_name, space_name = nil)
       @name = "Octopus Deploy Account #{account_name}"
@@ -61,8 +63,7 @@ module Serverspec::Type
     end
 
     def is_account_type?(account_type_name)
-      accounttypes = ['SshKeyPair', 'UsernamePassword', 'AzureSubscription', 'Token', 'AmazonWebServicesAccount']
-      if !accounttypes.include? account_type_name
+      if !ACCOUNTTYPES.include? account_type_name
         raise("'#{account_type_name}' is not a valid account type")
       end
       return false if @account.nil?
@@ -72,25 +73,28 @@ module Serverspec::Type
 
     def is_azure_account?
       return false if @account.nil?
-      @account["AccountType"] == "AzureSubscription"
+      @account["AccountType"] == AZURE
       # should also have a subscription number, but Octopus manages validation on this
     end
 
     def is_aws_account?
       return false if @account.nil?
-      @account["AccountType"] == "AmazonWebServicesAccount"
+      @account["AccountType"] == AWS
     end
 
     def is_ssh_key_pair?
-
+      return false if @account.nil?
+      @account["AccountType"] == SSH
     end
 
     def is_username_password?
-
+      return false if @account.nil?
+      @account["AccountType"] == USERNAME
     end
 
     def is_token?
-
+      return false if @account.nil?
+      @account["AccountType"] == TOKEN
     end
 
     def in_environment?(environment_name)
@@ -102,8 +106,9 @@ module Serverspec::Type
       !@account["EnvironmentIds"].select {|e| e == environment_id}.empty?
     end
 
-    def has_tenant_mode?(tenant_mode)
-
+    def has_tenanted_deployment_participation?(mode)
+      return false if @machine.nil?
+      @machine["TenantedDeploymentParticipation"] == mode # copied directly from tentacle
     end
 
     def has_property?(property_name, expected_value)
