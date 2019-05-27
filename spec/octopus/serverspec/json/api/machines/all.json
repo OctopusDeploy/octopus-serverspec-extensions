@@ -95,7 +95,7 @@
       "Environments-1"
     ],
     "Roles": [
-      "Test-Tentacle"
+      "Listening-Tentacle"
     ],
     "TenantedDeploymentParticipation": "TenantedOrUntenanted",
     "TenantIds": [
@@ -144,7 +144,7 @@
       "Environments-1"
     ],
     "Roles": [
-      "Test-Tentacle"
+      "Polling-Tentacle"
     ],
     "TenantedDeploymentParticipation": "Untenanted",
     "TenantIds": [],

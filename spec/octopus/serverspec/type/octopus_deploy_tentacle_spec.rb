@@ -142,6 +142,25 @@ describe OctopusDeployTentacle do
       expect(pt.has_endpoint?("https://vagrant-1803:10933/")).to be false
     end
 
+    # .has_role
+    it "can detect a role correctly" do
+      allow_any_instance_of(OctopusDeployTentacle).to receive(:`).and_return("D577F1B4D70D24E1356EF5B75CD7542BB049A073")
+      stub_request(:get, "https://octopus.example.com/api/Spaces-1/machines/all?api-key=API-1234567890").
+          to_return(status: 200, body: example_tentacle_response, headers: {})
+      lt = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacle')
+      expect(lt.has_role?("Listening-Tentacle")).to be true
+    end
+
+    it "can detect role missing" do
+      allow_any_instance_of(OctopusDeployTentacle).to receive(:`).and_return("2926388491F714807F0B181B38DBB9AA1EF946DC")
+      stub_request(:get, "https://octopus.example.com/api/Spaces-1/machines/all?api-key=API-1234567890").
+          to_return(status: 200, body: example_tentacle_response, headers: {})
+
+      pt = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'PollingTentacle')
+      expect(pt.has_role?("Listening-Tentacle")).to be false
+    end
+
+
   end
 
   # if the spaces support works, then a subset of those tests for not-spaces
