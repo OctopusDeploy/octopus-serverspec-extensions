@@ -20,12 +20,10 @@ module Serverspec::Type
       @spaceId = spaceId
 
       if (serverUrl.nil?)
-        puts "'serverUrl' was not provided. Unable to connect to Octopus server to validate configuration."
-        return
+        raise "'serverUrl' was not provided. Unable to connect to Octopus server to validate configuration."
       end
       if (apiKey.nil?)
-        puts "'apiKey' was not provided. Unable to connect to Octopus server to validate configuration."
-        return
+        raise "'apiKey' was not provided. Unable to connect to Octopus server to validate configuration."
       end
 
       if (exists?)
@@ -43,7 +41,7 @@ module Serverspec::Type
 
         @machine = get_machine_via_api(serverUrl, apiKey, thumbprint)
       else
-        puts "tentacle.exe does not exist"
+        raise "tentacle.exe does not exist"
       end
     end
 
