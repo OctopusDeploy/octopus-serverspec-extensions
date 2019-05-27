@@ -105,7 +105,7 @@
       "Hosting/Cloud"
     ],
     "SpaceId": "Spaces-1",
-    "Name": "My Listening Tentacle",
+    "Name": "ListeningTentacle",
     "Thumbprint": "D577F1B4D70D24E1356EF5B75CD7542BB049A073",
     "Uri": "https://vagrant-1803:10933/",
     "IsDisabled": false,
@@ -150,7 +150,7 @@
     "TenantIds": [],
     "TenantTags": [],
     "SpaceId": "Spaces-1",
-    "Name": "VAGRANT-1803_PollingTentacle",
+    "Name": "PollingTentacle",
     "Thumbprint": "2926388491F714807F0B181B38DBB9AA1EF946DC",
     "Uri": null,
     "IsDisabled": false,
