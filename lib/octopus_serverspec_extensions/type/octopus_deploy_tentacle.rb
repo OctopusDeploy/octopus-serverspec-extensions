@@ -75,7 +75,7 @@ module Serverspec::Type
     def in_space?(space_name)
       return false if @machine.nil?
       return false if @serverSupportsSpaces
-      url = "#{@serverUrl}/api/#{@spaceFragment}spaces/all?api-key=#{@apiKey}"
+      url = "#{@serverUrl}/api/spaces/all?api-key=#{@apiKey}"
       resp = Net::HTTP.get_response(URI.parse(url))
       spaces = JSON.parse(resp.body)
       space_id = spaces.select {|e| e["Name"] == space_name}.first["Id"]
