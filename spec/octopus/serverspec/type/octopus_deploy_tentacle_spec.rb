@@ -97,7 +97,47 @@ describe OctopusDeployTentacle do
       expect(lt.polling_tentacle?).to be false
     end
 
+    # .has_tenant_tag
+    it "can detect a tenant tag correctly" do
+      allow_any_instance_of(OctopusDeployTentacle).to receive(:`).and_return("D577F1B4D70D24E1356EF5B75CD7542BB049A073")
+      stub_request(:get, "https://octopus.example.com/api/Spaces-1/machines/all?api-key=API-1234567890").
+          to_return(status: 200, body: example_tentacle_response, headers: {})
+      lt = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacle')
+      expect(lt.has_tenant_tag?("Hosting","Cloud")).to be true
+    end
+
+    it "can detect tenant tag missing" do
+      allow_any_instance_of(OctopusDeployTentacle).to receive(:`).and_return("2926388491F714807F0B181B38DBB9AA1EF946DC")
+      stub_request(:get, "https://octopus.example.com/api/Spaces-1/machines/all?api-key=API-1234567890").
+          to_return(status: 200, body: example_tentacle_response, headers: {})
+
+      pt = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'PollingTentacle')
+      expect(pt.has_tenant_tag?("Hosting", "Cloud")).to be false
+    end
+
+    # .has_endpoint
+
+    it "can detect an endpoint correctly" do
+      allow_any_instance_of(OctopusDeployTentacle).to receive(:`).and_return("D577F1B4D70D24E1356EF5B75CD7542BB049A073")
+      stub_request(:get, "https://octopus.example.com/api/Spaces-1/machines/all?api-key=API-1234567890").
+          to_return(status: 200, body: example_tentacle_response, headers: {})
+      lt = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacle')
+      expect(lt.has_endpoint?("https://vagrant-1803:10933/")).to be true
+    end
+
+    it "can detect endpoint incorrect" do
+      allow_any_instance_of(OctopusDeployTentacle).to receive(:`).and_return("2926388491F714807F0B181B38DBB9AA1EF946DC")
+      stub_request(:get, "https://octopus.example.com/api/Spaces-1/machines/all?api-key=API-1234567890").
+          to_return(status: 200, body: example_tentacle_response, headers: {})
+
+      pt = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'PollingTentacle')
+      expect(pt.has_endpoint?("https://vagrant-1803:10933/")).to be false
+    end
+
   end
+
+  # if the spaces support works, then a subset of those tests for not-spaces
+  # should be all that's required - as they both pass through the same code
 
   context "server does not support spaces" do
     ex_does_not_support_spaces = get_api_example('/api/2018.7.9')
