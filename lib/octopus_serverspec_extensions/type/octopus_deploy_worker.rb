@@ -89,7 +89,7 @@ module Serverspec::Type
 
     def has_endpoint?(uri)
       return false if @worker.nil?
-      puts "Expected uri '#{uri}' for Tentacle #{@name}, but got '#{@worker["Uri"]}'" unless (@worker["Uri"].casecmp(uri) == 0)
+      puts "Expected uri '#{uri}' for Worker #{@name}, but got '#{@worker["Uri"]}'" unless (@worker["Uri"].casecmp(uri) == 0)
       @worker["Uri"].casecmp(uri) == 0
     end
 
