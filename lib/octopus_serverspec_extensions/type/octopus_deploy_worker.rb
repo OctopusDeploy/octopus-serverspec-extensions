@@ -75,7 +75,7 @@ module Serverspec::Type
 
     def has_policy?(policy_name)
       return false if @worker.nil?
-      url = "#{@serverUrl}/api/#{@spaceFragment}workerpolicies/all?api-key=#{@apiKey}"
+      url = "#{@serverUrl}/api/#{@spaceFragment}machinepolicies/all?api-key=#{@apiKey}"
       resp = Net::HTTP.get_response(URI.parse(url))
       policies = JSON.parse(resp.body)
       policy_id = policies.select {|e| e["Name"] == policy_name}.first["Id"]
