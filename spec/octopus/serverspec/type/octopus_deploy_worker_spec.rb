@@ -72,7 +72,32 @@ describe OctopusDeployWorker do
       expect(nt.online?).to be true
     end
 
-    # has_endpoint
+    # .has_endpoint
+
+    it "can detect an endpoint correctly" do
+      allow_any_instance_of(OctopusDeployWorker).to receive(:`).and_return("D7E6B4CEEE0960CE944B92432605A2BAF14C7405")
+      stub_request(:get, "https://octopus.example.com/api/Spaces-1/workers/all?api-key=API-1234567890").
+          to_return(status: 200, body: example_worker_response, headers: {})
+      lt = OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'VAGRANTBOX')
+      expect(lt.has_endpoint?("https://vagrantbox:10937/")).to be true
+    end
+
+    it "can detect an incorrect endpoint" do
+      allow_any_instance_of(OctopusDeployWorker).to receive(:`).and_return("D577F1B4D70D24E1356EF5B75CD7542BB049A073")
+      stub_request(:get, "https://octopus.example.com/api/Spaces-1/workers/all?api-key=API-1234567890").
+          to_return(status: 200, body: example_worker_response, headers: {})
+      lt = OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacle')
+      expect(lt.has_endpoint?("https://vagrantbox:10937/")).to be false
+    end
+
+    it "can handle null endpoint from a polling tentacle" do
+      allow_any_instance_of(OctopusDeployWorker).to receive(:`).and_return("3F098A11B3F8D42C228A3DB03A902BA92BE8514A")
+      stub_request(:get, "https://octopus.example.com/api/Spaces-1/workers/all?api-key=API-1234567890").
+          to_return(status: 200, body: example_worker_response, headers: {})
+
+      pt = OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'VAGRANTBOX-POLLING')
+      expect(pt.has_endpoint?("https://vagrant-1803:10933/")).to be false
+    end
 
 
   end

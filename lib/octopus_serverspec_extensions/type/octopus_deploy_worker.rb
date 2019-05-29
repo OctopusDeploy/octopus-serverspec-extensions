@@ -89,6 +89,7 @@ module Serverspec::Type
 
     def has_endpoint?(uri)
       return false if @worker.nil?
+      return false if @worker["Uri"].nil? # polling tentacles have null endpoint. catch that.
       puts "Expected uri '#{uri}' for Worker #{@name}, but got '#{@worker["Uri"]}'" unless (@worker["Uri"].casecmp(uri) == 0)
       @worker["Uri"].casecmp(uri) == 0
     end
