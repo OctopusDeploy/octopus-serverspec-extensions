@@ -33,6 +33,8 @@ describe OctopusDeployWorker do
           to_return(status: 200, body: ex_supports_spaces, headers: {})
     end
 
+
+    # registered_with_the_server
     it "returns false if the worker is not registered to the server" do
       allow_any_instance_of(OctopusDeployWorker).to receive(:`).and_return("4BD377BF21A882251B9A5A492889555377A58E07")
       stub_request(:get, "https://octopus.example.com/api/Spaces-1/workers/all?api-key=API-1234567890").
@@ -51,13 +53,66 @@ describe OctopusDeployWorker do
       expect(nt.registered_with_the_server?).to be true
     end
 
-    it "can resolve a worker in space 2" do
+    it "can resolve a known worker in space 2" do
       allow_any_instance_of(OctopusDeployWorker).to receive(:`).and_return("C1CCB36BA1FE29A890605FD00C08FFEDE4118A38")
       stub_request(:get, "https://octopus.example.com/api/Spaces-2/workers/all?api-key=API-1234567890").
           to_return(status: 200, body: example_worker_response_two, headers: {})
 
       nt = OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'VAGRANTBOX2', 'Spaces-2')
       expect(nt.registered_with_the_server?).to be true
+    end
+
+    # .online?
+    it "returns true for a worker that's known to be online" do
+      allow_any_instance_of(OctopusDeployWorker).to receive(:`).and_return("D7E6B4CEEE0960CE944B92432605A2BAF14C7405")
+      stub_request(:get, "https://octopus.example.com/api/Spaces-1/workers/all?api-key=API-1234567890").
+          to_return(status: 200, body: example_worker_response, headers: {})
+
+      nt = OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'VAGRANTBOX')
+      expect(nt.online?).to be true
+    end
+
+    # has_endpoint
+
+
+  end
+
+  context "server does not support spaces" do
+    ex_does_not_support_spaces = get_api_example('/api/2018.7.9')
+
+    before(:each) do
+      allow(File).to receive(:exists?).and_return(true)
+      stub_request(:get, "https://octopus.example.com/api/").
+          to_return(status: 200, body: ex_does_not_support_spaces, headers: {})
+    end
+
+    # .registered_with_the_server()
+    it "returns false if the worker is not registered to the server" do
+      allow_any_instance_of(OctopusDeployWorker).to receive(:`).and_return("B6465C274B07791E096915B3C6F035980D8FFDD9")
+      stub_request(:get, "https://octopus.example.com/api/workers/all?api-key=API-1234567890").
+          to_return(status: 200, body: example_worker_response, headers: {})
+
+      nt = OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'WorkerThatDoesNotExist')
+      expect(nt.registered_with_the_server?).to be false
+    end
+
+    it "returns true if the worker is registered to the server" do
+      allow_any_instance_of(OctopusDeployWorker).to receive(:`).and_return("D7E6B4CEEE0960CE944B92432605A2BAF14C7405")
+      stub_request(:get, "https://octopus.example.com/api/workers/all?api-key=API-1234567890").
+          to_return(status: 200, body: example_worker_response, headers: {})
+
+      nt = OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'VAGRANTBOX')
+      expect(nt.registered_with_the_server?).to be true
+    end
+
+    # .online?
+    it "returns true for a machine that's known to be online" do
+      allow_any_instance_of(OctopusDeployWorker).to receive(:`).and_return("D7E6B4CEEE0960CE944B92432605A2BAF14C7405")
+      stub_request(:get, "https://octopus.example.com/api/workers/all?api-key=API-1234567890").
+          to_return(status: 200, body: example_worker_response, headers: {})
+
+      nt = OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'VAGRANTBOX')
+      expect(nt.online?).to be true
     end
 
   end
