@@ -151,7 +151,7 @@ module Serverspec::Type
   end
 
   def worker_healthcheck_outstanding(worker)
-    worker["StatusSummary"] == "This worker was recently added. Please perform a health check."
+    worker["StatusSummary"] == "This machine was recently added. Please perform a health check."
   end
 
   def get_worker_via_api(serverUrl, apiKey, thumbprint)
