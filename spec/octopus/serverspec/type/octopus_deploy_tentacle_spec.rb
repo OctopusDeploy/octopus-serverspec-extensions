@@ -69,7 +69,7 @@ describe OctopusDeployTentacle do
         stub_request(:get, "https://octopus.example.com/api/Spaces-1/machines/all?api-key=API-1234567890").
             to_return(status: 200, body: example_tentacle_response, headers: {})
         lt = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacle')
-        expect(lt.listening_tentacle?).to be true
+        expect(lt.is_listening?).to be true
       end
 
       it "returns false for a known polling tentacle" do
@@ -78,7 +78,7 @@ describe OctopusDeployTentacle do
             to_return(status: 200, body: example_tentacle_response, headers: {})
 
         pt = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'PollingTentacle')
-        expect(pt.listening_tentacle?).to be false
+        expect(pt.is_listening?).to be false
       end
     end
 
@@ -89,7 +89,7 @@ describe OctopusDeployTentacle do
             to_return(status: 200, body: example_tentacle_response, headers: {})
 
         pt = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'PollingTentacle')
-        expect(pt.polling_tentacle?).to be true
+        expect(pt.is_polling?).to be true
       end
 
       it "returns false for a known listening tentacle" do
@@ -97,7 +97,7 @@ describe OctopusDeployTentacle do
         stub_request(:get, "https://octopus.example.com/api/Spaces-1/machines/all?api-key=API-1234567890").
             to_return(status: 200, body: example_tentacle_response, headers: {})
         lt = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacle')
-        expect(lt.polling_tentacle?).to be false
+        expect(lt.is_polling?).to be false
       end
     end
 

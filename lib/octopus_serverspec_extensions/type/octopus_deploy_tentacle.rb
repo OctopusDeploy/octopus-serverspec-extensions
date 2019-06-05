@@ -129,13 +129,13 @@ module Serverspec::Type
       @machine["TenantedDeploymentParticipation"] == mode
     end
 
-    def listening_tentacle?
+    def is_listening?
       return false if @machine.nil?
       puts "Expected CommunicationStyle 'TentaclePassive' for Tentacle #{@name}, but got '#{@machine["Endpoint"]["CommunicationStyle"]}'" if (@machine["Endpoint"]["CommunicationStyle"] != "TentaclePassive")
       @machine["Endpoint"]["CommunicationStyle"] == "TentaclePassive"
     end
 
-    def polling_tentacle?
+    def is_polling?
       return false if @machine.nil?
       puts "Expected CommunicationStyle 'TentacleActive' for Tentacle #{@name}, but got '#{@machine["Endpoint"]["CommunicationStyle"]}'" if (@machine["Endpoint"]["CommunicationStyle"] != "TentacleActive")
       @machine["Endpoint"]["CommunicationStyle"] == "TentacleActive"
