@@ -40,8 +40,8 @@ describe OctopusDeployWorker do
         stub_request(:get, "https://octopus.example.com/api/Spaces-1/workers/all?api-key=API-1234567890").
             to_return(status: 200, body: example_worker_response, headers: {})
 
-        nt = OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'VAGRANTBOX')
-        expect(nt.registered_with_the_server?).to be false
+        nonexistent_worker = OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'VAGRANTBOX')
+        expect(nonexistent_worker.registered_with_the_server?).to be false
       end
 
       it "returns true if the tentacle is registered to the server" do
@@ -49,8 +49,8 @@ describe OctopusDeployWorker do
         stub_request(:get, "https://octopus.example.com/api/Spaces-1/workers/all?api-key=API-1234567890").
             to_return(status: 200, body: example_worker_response, headers: {})
 
-        nt = OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'VAGRANTBOX')
-        expect(nt.registered_with_the_server?).to be true
+        existent_worker = OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'VAGRANTBOX')
+        expect(existent_worker.registered_with_the_server?).to be true
       end
 
       it "can resolve a known worker in space 2" do
@@ -58,8 +58,8 @@ describe OctopusDeployWorker do
         stub_request(:get, "https://octopus.example.com/api/Spaces-2/workers/all?api-key=API-1234567890").
             to_return(status: 200, body: example_worker_response_two, headers: {})
 
-        nt = OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'VAGRANTBOX2', 'Spaces-2')
-        expect(nt.registered_with_the_server?).to be true
+        existent_worker = OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'VAGRANTBOX2', 'Spaces-2')
+        expect(existent_worker.registered_with_the_server?).to be true
       end
     end
 
@@ -69,8 +69,8 @@ describe OctopusDeployWorker do
         stub_request(:get, "https://octopus.example.com/api/Spaces-1/workers/all?api-key=API-1234567890").
             to_return(status: 200, body: example_worker_response, headers: {})
 
-        nt = OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'VAGRANTBOX')
-        expect(nt.online?).to be true
+        existent_worker = OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'VAGRANTBOX')
+        expect(existent_worker.online?).to be true
       end
     end
 
@@ -80,16 +80,16 @@ describe OctopusDeployWorker do
         allow_any_instance_of(OctopusDeployWorker).to receive(:`).and_return("D7E6B4CEEE0960CE944B92432605A2BAF14C7405")
         stub_request(:get, "https://octopus.example.com/api/Spaces-1/workers/all?api-key=API-1234567890").
             to_return(status: 200, body: example_worker_response, headers: {})
-        lt = OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'VAGRANTBOX')
-        expect(lt.has_endpoint?("https://vagrantbox:10937/")).to be true
+        existent_worker= OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'VAGRANTBOX')
+        expect(existent_worker.has_endpoint?("https://vagrantbox:10937/")).to be true
       end
 
       it "can detect an incorrect endpoint" do
         allow_any_instance_of(OctopusDeployWorker).to receive(:`).and_return("D577F1B4D70D24E1356EF5B75CD7542BB049A073")
         stub_request(:get, "https://octopus.example.com/api/Spaces-1/workers/all?api-key=API-1234567890").
             to_return(status: 200, body: example_worker_response, headers: {})
-        lt = OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacle')
-        expect(lt.has_endpoint?("https://vagrantbox:10937/")).to be false
+        incorrect_worker = OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacle')
+        expect(incorrect_worker.has_endpoint?("https://vagrantbox:10937/")).to be false
       end
 
       it "can handle null endpoint from a polling tentacle" do
@@ -97,8 +97,8 @@ describe OctopusDeployWorker do
         stub_request(:get, "https://octopus.example.com/api/Spaces-1/workers/all?api-key=API-1234567890").
             to_return(status: 200, body: example_worker_response, headers: {})
 
-        pt = OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'VAGRANTBOX-POLLING')
-        expect(pt.has_endpoint?("https://vagrant-1803:10933/")).to be false
+        polling_worker = OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'VAGRANTBOX-POLLING')
+        expect(polling_worker.has_endpoint?("https://vagrant-1803:10933/")).to be false
       end
     end
   end
@@ -118,8 +118,8 @@ describe OctopusDeployWorker do
         stub_request(:get, "https://octopus.example.com/api/workers/all?api-key=API-1234567890").
             to_return(status: 200, body: example_worker_response, headers: {})
 
-        nt = OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'WorkerThatDoesNotExist')
-        expect(nt.registered_with_the_server?).to be false
+        nonexistent_worker = OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'WorkerThatDoesNotExist')
+        expect(nonexistent_worker.registered_with_the_server?).to be false
       end
 
       it "returns true if the worker is registered to the server" do
@@ -127,8 +127,8 @@ describe OctopusDeployWorker do
         stub_request(:get, "https://octopus.example.com/api/workers/all?api-key=API-1234567890").
             to_return(status: 200, body: example_worker_response, headers: {})
 
-        nt = OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'VAGRANTBOX')
-        expect(nt.registered_with_the_server?).to be true
+        existent_worker = OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'VAGRANTBOX')
+        expect(existent_worker.registered_with_the_server?).to be true
       end
     end
 
@@ -138,8 +138,8 @@ describe OctopusDeployWorker do
         stub_request(:get, "https://octopus.example.com/api/workers/all?api-key=API-1234567890").
             to_return(status: 200, body: example_worker_response, headers: {})
 
-        nt = OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'VAGRANTBOX')
-        expect(nt.online?).to be true
+        existent_worker = OctopusDeployWorker.new('https://octopus.example.com', 'API-1234567890', 'VAGRANTBOX')
+        expect(existent_worker.online?).to be true
       end
     end
   end

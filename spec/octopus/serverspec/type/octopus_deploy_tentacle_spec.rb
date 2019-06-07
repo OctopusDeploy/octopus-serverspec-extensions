@@ -38,8 +38,8 @@ describe OctopusDeployTentacle do
         stub_request(:get, "https://octopus.example.com/api/Spaces-1/machines/all?api-key=API-1234567890").
             to_return(status: 200, body: example_tentacle_response, headers: {})
 
-        nt = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacleThatDoesNotExist')
-        expect(nt.registered_with_the_server?).to be false
+        nonexistent_tentacle = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacleThatDoesNotExist')
+        expect(nonexistent_tentacle.registered_with_the_server?).to be false
       end
 
       it "returns true if the tentacle is registered to the server" do
@@ -47,8 +47,8 @@ describe OctopusDeployTentacle do
         stub_request(:get, "https://octopus.example.com/api/Spaces-1/machines/all?api-key=API-1234567890").
             to_return(status: 200, body: example_tentacle_response, headers: {})
 
-        nt = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacleWithThumbprintWithoutAutoRegister')
-        expect(nt.registered_with_the_server?).to be true
+        unregistered_tentacle = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacleWithThumbprintWithoutAutoRegister')
+        expect(unregistered_tentacle.registered_with_the_server?).to be true
       end
     end
 
@@ -58,8 +58,8 @@ describe OctopusDeployTentacle do
         stub_request(:get, "https://octopus.example.com/api/Spaces-1/machines/all?api-key=API-1234567890").
             to_return(status: 200, body: example_tentacle_response, headers: {})
 
-        nt = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacleWithThumbprintWithoutAutoRegister')
-        expect(nt.online?).to be true
+        unregistered_tentacle = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacleWithThumbprintWithoutAutoRegister')
+        expect(unregistered_tentacle.online?).to be true
       end
     end
 
@@ -68,8 +68,8 @@ describe OctopusDeployTentacle do
         allow_any_instance_of(OctopusDeployTentacle).to receive(:`).and_return("D577F1B4D70D24E1356EF5B75CD7542BB049A073")
         stub_request(:get, "https://octopus.example.com/api/Spaces-1/machines/all?api-key=API-1234567890").
             to_return(status: 200, body: example_tentacle_response, headers: {})
-        lt = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacle')
-        expect(lt.is_listening?).to be true
+        listening_tentacle = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacle')
+        expect(listening_tentacle.is_listening? ).to be true
       end
 
       it "returns false for a known polling tentacle" do
@@ -77,8 +77,8 @@ describe OctopusDeployTentacle do
         stub_request(:get, "https://octopus.example.com/api/Spaces-1/machines/all?api-key=API-1234567890").
             to_return(status: 200, body: example_tentacle_response, headers: {})
 
-        pt = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'PollingTentacle')
-        expect(pt.is_listening?).to be false
+        polling_tentacle = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'PollingTentacle')
+        expect(polling_tentacle.is_listening?).to be false
       end
     end
 
@@ -88,16 +88,16 @@ describe OctopusDeployTentacle do
         stub_request(:get, "https://octopus.example.com/api/Spaces-1/machines/all?api-key=API-1234567890").
             to_return(status: 200, body: example_tentacle_response, headers: {})
 
-        pt = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'PollingTentacle')
-        expect(pt.is_polling?).to be true
+        polling_tentacle = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'PollingTentacle')
+        expect(polling_tentacle.is_polling?).to be true
       end
 
       it "returns false for a known listening tentacle" do
         allow_any_instance_of(OctopusDeployTentacle).to receive(:`).and_return("D577F1B4D70D24E1356EF5B75CD7542BB049A073")
         stub_request(:get, "https://octopus.example.com/api/Spaces-1/machines/all?api-key=API-1234567890").
             to_return(status: 200, body: example_tentacle_response, headers: {})
-        lt = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacle')
-        expect(lt.is_polling?).to be false
+        listening_tentacle = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacle')
+        expect(listening_tentacle.is_polling?).to be false
       end
     end
 
@@ -106,8 +106,8 @@ describe OctopusDeployTentacle do
         allow_any_instance_of(OctopusDeployTentacle).to receive(:`).and_return("D577F1B4D70D24E1356EF5B75CD7542BB049A073")
         stub_request(:get, "https://octopus.example.com/api/Spaces-1/machines/all?api-key=API-1234567890").
             to_return(status: 200, body: example_tentacle_response, headers: {})
-        lt = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacle')
-        expect(lt.has_tenant_tag?("Hosting","Cloud")).to be true
+        listening_tentacle = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacle')
+        expect(listening_tentacle.has_tenant_tag?("Hosting","Cloud")).to be true
       end
 
       it "can detect tenant tag missing" do
@@ -115,8 +115,8 @@ describe OctopusDeployTentacle do
         stub_request(:get, "https://octopus.example.com/api/Spaces-1/machines/all?api-key=API-1234567890").
             to_return(status: 200, body: example_tentacle_response, headers: {})
 
-        pt = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'PollingTentacle')
-        expect(pt.has_tenant_tag?("Hosting", "Cloud")).to be false
+        polling_tentacle = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'PollingTentacle')
+        expect(polling_tentacle.has_tenant_tag?("Hosting", "Cloud")).to be false
       end
     end
 
@@ -125,16 +125,16 @@ describe OctopusDeployTentacle do
         allow_any_instance_of(OctopusDeployTentacle).to receive(:`).and_return("D577F1B4D70D24E1356EF5B75CD7542BB049A073")
         stub_request(:get, "https://octopus.example.com/api/Spaces-1/machines/all?api-key=API-1234567890").
             to_return(status: 200, body: example_tentacle_response, headers: {})
-        lt = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacle')
-        expect(lt.has_endpoint?("https://vagrant-1803:10933/")).to be true
+        listening_tentacle = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacle')
+        expect(listening_tentacle.has_endpoint?("https://vagrant-1803:10933/")).to be true
       end
 
       it "can detect an incorrect endpoint" do
         allow_any_instance_of(OctopusDeployTentacle).to receive(:`).and_return("D577F1B4D70D24E1356EF5B75CD7542BB049A073")
         stub_request(:get, "https://octopus.example.com/api/Spaces-1/machines/all?api-key=API-1234567890").
             to_return(status: 200, body: example_tentacle_response, headers: {})
-        lt = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacle')
-        expect(lt.has_endpoint?("https://vagrant-1803:10935/")).to be false
+        listening_tentacle = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacle')
+        expect(listening_tentacle.has_endpoint?("https://vagrant-1803:10935/")).to be false
       end
 
       it "can handle null endpoint from a polling tentacle" do
@@ -142,8 +142,8 @@ describe OctopusDeployTentacle do
         stub_request(:get, "https://octopus.example.com/api/Spaces-1/machines/all?api-key=API-1234567890").
             to_return(status: 200, body: example_tentacle_response, headers: {})
 
-        pt = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'PollingTentacle')
-        expect(pt.has_endpoint?("https://vagrant-1803:10933/")).to be false
+        polling_tentacle = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'PollingTentacle')
+        expect(polling_tentacle.has_endpoint?("https://vagrant-1803:10933/")).to be false
       end
     end
 
@@ -152,8 +152,8 @@ describe OctopusDeployTentacle do
         allow_any_instance_of(OctopusDeployTentacle).to receive(:`).and_return("D577F1B4D70D24E1356EF5B75CD7542BB049A073")
         stub_request(:get, "https://octopus.example.com/api/Spaces-1/machines/all?api-key=API-1234567890").
             to_return(status: 200, body: example_tentacle_response, headers: {})
-        lt = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacle')
-        expect(lt.has_role?("Listening-Tentacle")).to be true
+        listening_tentacle = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacle')
+        expect(listening_tentacle.has_role?("Listening-Tentacle")).to be true
       end
 
       it "can detect role missing" do
@@ -161,8 +161,8 @@ describe OctopusDeployTentacle do
         stub_request(:get, "https://octopus.example.com/api/Spaces-1/machines/all?api-key=API-1234567890").
             to_return(status: 200, body: example_tentacle_response, headers: {})
 
-        pt = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'PollingTentacle')
-        expect(pt.has_role?("Listening-Tentacle")).to be false
+        polling_tentacle = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'PollingTentacle')
+        expect(polling_tentacle.has_role?("Listening-Tentacle")).to be false
       end
     end
   end
@@ -185,8 +185,8 @@ describe OctopusDeployTentacle do
         stub_request(:get, "https://octopus.example.com/api/machines/all?api-key=API-1234567890").
             to_return(status: 200, body: example_tentacle_response, headers: {})
 
-        nt = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacleThatDoesNotExist')
-        expect(nt.registered_with_the_server?).to be false
+        nonexistent_tentacle = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacleThatDoesNotExist')
+        expect(nonexistent_tentacle.registered_with_the_server?).to be false
       end
 
       it "returns true if the tentacle is registered to the server" do
@@ -194,8 +194,8 @@ describe OctopusDeployTentacle do
         stub_request(:get, "https://octopus.example.com/api/machines/all?api-key=API-1234567890").
             to_return(status: 200, body: example_tentacle_response, headers: {})
 
-        nt = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacleWithThumbprintWithoutAutoRegister')
-        expect(nt.registered_with_the_server?).to be true
+        unregistered_tentacle = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacleWithThumbprintWithoutAutoRegister')
+        expect(unregistered_tentacle.registered_with_the_server?).to be true
       end
     end
 
@@ -205,8 +205,8 @@ describe OctopusDeployTentacle do
         stub_request(:get, "https://octopus.example.com/api/machines/all?api-key=API-1234567890").
             to_return(status: 200, body: example_tentacle_response, headers: {})
 
-        nt = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacleWithThumbprintWithoutAutoRegister')
-        expect(nt.online?).to be true
+        unregistered_tentacle = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacleWithThumbprintWithoutAutoRegister')
+        expect(unregistered_tentacle.online?).to be true
       end
     end
   end
