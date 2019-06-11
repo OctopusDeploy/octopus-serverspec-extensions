@@ -1,0 +1,40 @@
+[
+  {
+    "Id": "Workers-123",
+    "WorkerPoolIds": [
+      "WorkerPools-2"
+    ],
+    "SpaceId": "Spaces-2",
+    "Name": "VAGRANTBOX2",
+    "Thumbprint": "C1CCB36BA1FE29A890605FD00C08FFEDE4118A38",
+    "Uri": "https://vagrantbox2:10933/",
+    "IsDisabled": false,
+    "MachinePolicyId": "MachinePolicies-1",
+    "Status": "CalamariNeedsUpgrade",
+    "HealthStatus": "HasWarnings",
+    "HasLatestCalamari": false,
+    "StatusSummary": "Octopus was able to successfully establish a connection with this machine on Monday, 27 May 2019 9:46:00 AM +10:00",
+    "IsInProcess": false,
+    "Endpoint": {
+      "CommunicationStyle": "TentaclePassive",
+      "Uri": "https://vagrantbox2:10933/",
+      "ProxyId": null,
+      "Thumbprint": "C1CCB36BA1FE29A890605FD00C08FFEDE4118A38",
+      "TentacleVersionDetails": {
+        "UpgradeLocked": false,
+        "Version": "4.0.1",
+        "UpgradeSuggested": false,
+        "UpgradeRequired": false
+      },
+      "CertificateSignatureAlgorithm": "sha256RSA",
+      "Id": null,
+      "LastModifiedOn": null,
+      "LastModifiedBy": null,
+      "Links": {}
+    },
+    "Links": {
+      "Self": "/api/Spaces-2/workers/Workers-123",
+      "Connection": "/api/Spaces-2/workers/Workers-123/connection"
+    }
+  }
+]

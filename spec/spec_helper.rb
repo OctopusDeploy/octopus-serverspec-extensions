@@ -11,6 +11,7 @@ RSpec.configure do |c|
   if (ENV['TEAMCITY_PROJECT_NAME'] && !ENV['TEAMCITY_PROJECT_NAME'].empty?) then
     c.add_formatter Spec::Runner::Formatter::TeamcityFormatter
   end
+  c.before { allow($stdout).to receive(:puts) } # suppress 'puts' in the tests, for prettiness
 end
 
 def get_api_example(api_path)

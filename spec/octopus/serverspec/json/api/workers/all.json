@@ -1,0 +1,78 @@
+[
+  {
+    "Id": "Workers-1",
+    "WorkerPoolIds": [
+      "WorkerPools-1"
+    ],
+    "SpaceId": "Spaces-1",
+    "Name": "VAGRANTBOX",
+    "Thumbprint": "D7E6B4CEEE0960CE944B92432605A2BAF14C7405",
+    "Uri": "https://vagrantbox:10937/",
+    "IsDisabled": false,
+    "MachinePolicyId": "MachinePolicies-1",
+    "Status": "CalamariNeedsUpgrade",
+    "HealthStatus": "HasWarnings",
+    "HasLatestCalamari": false,
+    "StatusSummary": "Octopus was able to successfully establish a connection with this machine on Monday, 27 May 2019 9:46:00 AM +10:00",
+    "IsInProcess": false,
+    "Endpoint": {
+      "CommunicationStyle": "TentaclePassive",
+      "Uri": "https://vagrantbox:10937/",
+      "ProxyId": null,
+      "Thumbprint": "D7E6B4CEEE0960CE944B92432605A2BAF14C7405",
+      "TentacleVersionDetails": {
+        "UpgradeLocked": false,
+        "Version": "4.0.1",
+        "UpgradeSuggested": false,
+        "UpgradeRequired": false
+      },
+      "CertificateSignatureAlgorithm": "sha256RSA",
+      "Id": null,
+      "LastModifiedOn": null,
+      "LastModifiedBy": null,
+      "Links": {}
+    },
+    "Links": {
+      "Self": "/api/Spaces-1/workers/Workers-1",
+      "Connection": "/api/Spaces-1/workers/Workers-1/connection"
+    }
+  },
+  {
+    "Id": "Workers-2",
+    "WorkerPoolIds": [
+      "WorkerPools-1"
+    ],
+    "SpaceId": "Spaces-1",
+    "Name": "VAGRANTBOX-POLLING",
+    "Thumbprint": "3F098A11B3F8D42C228A3DB03A902BA92BE8514A",
+    "Uri": null,
+    "IsDisabled": false,
+    "MachinePolicyId": "MachinePolicies-1",
+    "Status": "CalamariNeedsUpgrade",
+    "HealthStatus": "HasWarnings",
+    "HasLatestCalamari": false,
+    "StatusSummary": "Octopus was able to successfully establish a connection with this machine on Monday, 27 May 2019 9:46:00 AM +10:00",
+    "IsInProcess": false,
+    "Endpoint": {
+      "CommunicationStyle": "TentacleActive",
+      "Uri": "poll://qwertyuiop/",
+      "ProxyId": null,
+      "Thumbprint": "3F098A11B3F8D42C228A3DB03A902BA92BE8514A",
+      "TentacleVersionDetails": {
+        "UpgradeLocked": false,
+        "Version": "4.0.1",
+        "UpgradeSuggested": false,
+        "UpgradeRequired": false
+      },
+      "CertificateSignatureAlgorithm": "sha256RSA",
+      "Id": null,
+      "LastModifiedOn": null,
+      "LastModifiedBy": null,
+      "Links": {}
+    },
+    "Links": {
+      "Self": "/api/Spaces-1/workers/Workers-2",
+      "Connection": "/api/Spaces-1/workers/Workers-2/connection"
+    }
+  }
+]
