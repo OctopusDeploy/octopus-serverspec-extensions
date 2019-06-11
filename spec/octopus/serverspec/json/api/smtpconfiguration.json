@@ -1,0 +1,18 @@
+{
+
+  "Id": "smtp",
+  "SmtpHost": "smtp.fictionaldomain.com",
+  "SmtpPort": 25,
+  "SendEmailFrom": "hello@fictionaldomain.com",
+  "SmtpLogin": "username",
+  "EnableSsl": true,
+  "SmtpPassword": {
+    "HasValue": true,
+    "NewValue": null
+  },
+  "NewSmtpPassword": null,
+  "Links": {
+    "Self": "/api/smtpconfiguration",
+    "IsConfigured": "/api/smtpconfiguration/isconfigured"
+  }
+}
