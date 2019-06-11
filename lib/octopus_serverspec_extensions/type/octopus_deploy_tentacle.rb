@@ -20,12 +20,10 @@ module Serverspec::Type
       @spaceId = spaceId
 
       if (serverUrl.nil?)
-        puts "'serverUrl' was not provided. Unable to connect to Octopus server to validate configuration."
-        return
+        raise "'serverUrl' was not provided. Unable to connect to Octopus server to validate configuration."
       end
       if (apiKey.nil?)
-        puts "'apiKey' was not provided. Unable to connect to Octopus server to validate configuration."
-        return
+        raise "'apiKey' was not provided. Unable to connect to Octopus server to validate configuration."
       end
 
       if (exists?)
@@ -43,7 +41,7 @@ module Serverspec::Type
 
         @machine = get_machine_via_api(serverUrl, apiKey, thumbprint)
       else
-        puts "tentacle.exe does not exist"
+        raise "tentacle.exe does not exist"
       end
     end
 
@@ -77,7 +75,7 @@ module Serverspec::Type
     def in_space?(space_name)
       return false if @machine.nil?
       return false if @serverSupportsSpaces
-      url = "#{@serverUrl}/api/#{@spaceFragment}spaces/all?api-key=#{@apiKey}"
+      url = "#{@serverUrl}/api/spaces/all?api-key=#{@apiKey}"
       resp = Net::HTTP.get_response(URI.parse(url))
       spaces = JSON.parse(resp.body)
       space_id = spaces.select {|e| e["Name"] == space_name}.first["Id"]
@@ -121,6 +119,7 @@ module Serverspec::Type
 
     def has_endpoint?(uri)
       return false if @machine.nil?
+      return false if @machine["Uri"].nil? # polling tentacles have null endpoint. catch that.
       puts "Expected uri '#{uri}' for Tentacle #{@name}, but got '#{@machine["Uri"]}'" unless (@machine["Uri"].casecmp(uri) == 0)
       @machine["Uri"].casecmp(uri) == 0
     end
@@ -130,13 +129,13 @@ module Serverspec::Type
       @machine["TenantedDeploymentParticipation"] == mode
     end
 
-    def listening_tentacle?
+    def is_listening?
       return false if @machine.nil?
       puts "Expected CommunicationStyle 'TentaclePassive' for Tentacle #{@name}, but got '#{@machine["Endpoint"]["CommunicationStyle"]}'" if (@machine["Endpoint"]["CommunicationStyle"] != "TentaclePassive")
       @machine["Endpoint"]["CommunicationStyle"] == "TentaclePassive"
     end
 
-    def polling_tentacle?
+    def is_polling?
       return false if @machine.nil?
       puts "Expected CommunicationStyle 'TentacleActive' for Tentacle #{@name}, but got '#{@machine["Endpoint"]["CommunicationStyle"]}'" if (@machine["Endpoint"]["CommunicationStyle"] != "TentacleActive")
       @machine["Endpoint"]["CommunicationStyle"] == "TentacleActive"

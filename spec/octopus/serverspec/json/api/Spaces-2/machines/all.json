@@ -1,0 +1,185 @@
+[
+  {
+    "Id": "Machines-15",
+    "EnvironmentIds": [
+      "Environments-50"
+    ],
+    "Roles": [
+      "Test-Tentacle"
+    ],
+    "TenantedDeploymentParticipation": "Untenanted",
+    "TenantIds": [],
+    "TenantTags": [],
+    "SpaceId": "Spaces-2",
+    "Name": "ListeningTentacleWithCustomAccountSpaceTwo",
+    "Thumbprint": "71F3850B321B94968DE50AF6D687D71D110CEFFA",
+    "Uri": "https://vagrant-1803:10936/",
+    "IsDisabled": false,
+    "MachinePolicyId": "MachinePolicies-1",
+    "Status": "CalamariNeedsUpgrade",
+    "HealthStatus": "HasWarnings",
+    "HasLatestCalamari": false,
+    "StatusSummary": "Octopus was able to successfully establish a connection with this machine on Monday, 27 May 2019 10:46:08 AM +10:00",
+    "IsInProcess": false,
+    "Endpoint": {
+      "CommunicationStyle": "TentaclePassive",
+      "Uri": "https://vagrant-1803:10936/",
+      "ProxyId": null,
+      "Thumbprint": "71F3850B321B94968DE50AF6D687D71D110CEFFA",
+      "TentacleVersionDetails": {
+        "UpgradeLocked": false,
+        "Version": "4.0.1",
+        "UpgradeSuggested": false,
+        "UpgradeRequired": false
+      },
+      "CertificateSignatureAlgorithm": "sha256RSA",
+      "Id": null,
+      "LastModifiedOn": null,
+      "LastModifiedBy": null,
+      "Links": {}
+    },
+    "Links": {
+      "Self": "/api/Spaces-2/machines/Machines-15",
+      "Connection": "/api/Spaces-2/machines/Machines-15/connection",
+      "TasksTemplate": "/api/Spaces-2/machines/Machines-15/tasks{?skip,take}"
+    }
+  },
+  {
+    "Id": "Machines-18",
+    "EnvironmentIds": [
+      "Environments-50"
+    ],
+    "Roles": [
+      "Test-Tentacle"
+    ],
+    "TenantedDeploymentParticipation": "Untenanted",
+    "TenantIds": [],
+    "TenantTags": [],
+    "SpaceId": "Spaces-2",
+    "Name": "ListeningTentacleWithThumbprintWithoutAutoRegister",
+    "Thumbprint": "BBE2917D326CBA5CC702340EEFD2D029A1F77D45",
+    "Uri": "https://localhost:10935/",
+    "IsDisabled": false,
+    "MachinePolicyId": "MachinePolicies-1",
+    "Status": "CalamariNeedsUpgrade",
+    "HealthStatus": "HasWarnings",
+    "HasLatestCalamari": false,
+    "StatusSummary": "Octopus was able to successfully establish a connection with this machine on Monday, 27 May 2019 10:46:07 AM +10:00",
+    "IsInProcess": false,
+    "Endpoint": {
+      "CommunicationStyle": "TentaclePassive",
+      "Uri": "https://localhost:10935/",
+      "ProxyId": null,
+      "Thumbprint": "BBE2917D326CBA5CC702340EEFD2D029A1F77D45",
+      "TentacleVersionDetails": {
+        "UpgradeLocked": false,
+        "Version": "4.0.1",
+        "UpgradeSuggested": false,
+        "UpgradeRequired": false
+      },
+      "CertificateSignatureAlgorithm": "sha256RSA",
+      "Id": null,
+      "LastModifiedOn": null,
+      "LastModifiedBy": null,
+      "Links": {}
+    },
+    "Links": {
+      "Self": "/api/Spaces-2/machines/Machines-18",
+      "Connection": "/api/Spaces-2/machines/Machines-18/connection",
+      "TasksTemplate": "/api/Spaces-2/machines/Machines-18/tasks{?skip,take}"
+    }
+  },
+  {
+    "Id": "Machines-21",
+    "EnvironmentIds": [
+      "Environments-50"
+    ],
+    "Roles": [
+      "Listening-Tentacle"
+    ],
+    "TenantedDeploymentParticipation": "TenantedOrUntenanted",
+    "TenantIds": [
+      "Tenants-1"
+    ],
+    "TenantTags": [
+      "Hosting/Cloud"
+    ],
+    "SpaceId": "Spaces-2",
+    "Name": "ListeningTentacle",
+    "Thumbprint": "B2CDDA168D843B34A706A0A1CED82C2571A56FE3",
+    "Uri": "https://vagrant-1803:10933/",
+    "IsDisabled": false,
+    "MachinePolicyId": "MachinePolicies-2",
+    "Status": "CalamariNeedsUpgrade",
+    "HealthStatus": "HasWarnings",
+    "HasLatestCalamari": false,
+    "StatusSummary": "Octopus was able to successfully establish a connection with this machine on Monday, 27 May 2019 10:46:06 AM +10:00",
+    "IsInProcess": false,
+    "Endpoint": {
+      "CommunicationStyle": "TentaclePassive",
+      "Uri": "https://vagrant-1803:10933/",
+      "ProxyId": null,
+      "Thumbprint": "B2CDDA168D843B34A706A0A1CED82C2571A56FE3",
+      "TentacleVersionDetails": {
+        "UpgradeLocked": false,
+        "Version": "4.0.1",
+        "UpgradeSuggested": false,
+        "UpgradeRequired": false
+      },
+      "CertificateSignatureAlgorithm": "sha256RSA",
+      "Id": null,
+      "LastModifiedOn": null,
+      "LastModifiedBy": null,
+      "Links": {}
+    },
+    "Links": {
+      "Self": "/api/Spaces-2/machines/Machines-21",
+      "Connection": "/api/Spaces-2/machines/Machines-1/connection",
+      "TasksTemplate": "/api/Spaces-2/machines/Machines-1/tasks{?skip,take}"
+    }
+  },
+  {
+    "Id": "Machines-22",
+    "EnvironmentIds": [
+      "Environments-50"
+    ],
+    "Roles": [
+      "Polling-Tentacle"
+    ],
+    "TenantedDeploymentParticipation": "Untenanted",
+    "TenantIds": [],
+    "TenantTags": [],
+    "SpaceId": "Spaces-2",
+    "Name": "PollingTentacle",
+    "Thumbprint": "88C450A2820FB35573E743401B3C656F1BCC838E",
+    "Uri": null,
+    "IsDisabled": false,
+    "MachinePolicyId": "MachinePolicies-1",
+    "Status": "CalamariNeedsUpgrade",
+    "HealthStatus": "HasWarnings",
+    "HasLatestCalamari": false,
+    "StatusSummary": "Octopus was able to successfully establish a connection with this machine on Monday, 27 May 2019 10:46:06 AM +10:00",
+    "IsInProcess": false,
+    "Endpoint": {
+      "CommunicationStyle": "TentacleActive",
+      "Uri": "poll://g68ky5wn3gsy8zj57z6e/",
+      "Thumbprint": "88C450A2820FB35573E743401B3C656F1BCC838E",
+      "TentacleVersionDetails": {
+        "UpgradeLocked": false,
+        "Version": "4.0.1",
+        "UpgradeSuggested": false,
+        "UpgradeRequired": false
+      },
+      "CertificateSignatureAlgorithm": "sha256RSA",
+      "Id": null,
+      "LastModifiedOn": null,
+      "LastModifiedBy": null,
+      "Links": {}
+    },
+    "Links": {
+      "Self": "/api/Spaces-2/machines/Machines-22",
+      "Connection": "/api/Spaces-2/machines/Machines-2/connection",
+      "TasksTemplate": "/api/Spaces-2/machines/Machines-2/tasks{?skip,take}"
+    }
+  }
+]
