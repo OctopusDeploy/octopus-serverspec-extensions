@@ -94,13 +94,13 @@ module Serverspec::Type
       @worker["Uri"].casecmp(uri) == 0
     end
 
-    def is_listening?
+    def listening?
       return false if @worker.nil?
       puts "Expected CommunicationStyle 'TentaclePassive' for Tentacle #{@name}, but got '#{@worker["Endpoint"]["CommunicationStyle"]}'" if (@worker["Endpoint"]["CommunicationStyle"] != "TentaclePassive")
       @worker["Endpoint"]["CommunicationStyle"] == "TentaclePassive"
     end
 
-    def is_polling?
+    def polling?
       return false if @worker.nil?
       puts "Expected CommunicationStyle 'TentacleActive' for Tentacle #{@name}, but got '#{@worker["Endpoint"]["CommunicationStyle"]}'" if (@worker["Endpoint"]["CommunicationStyle"] != "TentacleActive")
       @worker["Endpoint"]["CommunicationStyle"] == "TentacleActive"

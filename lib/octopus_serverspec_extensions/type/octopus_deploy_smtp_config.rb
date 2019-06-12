@@ -38,21 +38,23 @@ module Serverspec::Type
 
     end
 
-    def octopus_deploy_smtp_config(serverUrl, apiKey)
-      OctopusDeploySmtpConfig.new(serverUrl, apiKey)
-    end
+    def octopus_deploy_smtp_config(server_url, api_key)
 
-    def octopus_deploy_smtp_config
-      # no endpoint and key supplied, get creds from the environment
-      server_url = ENV['OCTOPUS_CLI_SERVER']
-      api_key = ENV['OCTOPUS_CLI_API_KEY']
+      if(server_url.nil?)
+        server_url = ENV['OCTOPUS_CLI_SERVER']
+      end
+
+      if(api_key.nil?)
+        api_key = ENV['OCTOPUS_CLI_API_KEY']
+      end
 
       OctopusDeploySmtpConfig.new(server_url, api_key)
+    end
     end
 
     private
 
-    def get_smtp_config_via_api(serverUrl, apiKey, projectgroup_name)
+    def get_smtp_config_via_api(serverUrl, apiKey)
       pg = nil
       url = "#{serverUrl}/smtpconfiguration?api-key=#{apiKey}"
 
@@ -67,7 +69,6 @@ module Serverspec::Type
       smtp
     end
 
-  end
 end
 
 include Serverspec::Type
