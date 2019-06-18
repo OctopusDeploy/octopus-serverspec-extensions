@@ -44,7 +44,7 @@ module Serverspec::Type
         raise "get_smtp_config_via_api: Unable to connect to #{url}: #{e}"
       end
 
-      smtp["IsConfigured"] == true
+      smtp["IsConfigured"]
 
     end
 
@@ -95,10 +95,7 @@ module Serverspec::Type
       smtp
     end
 
-    def get_env_var(name)
-      raise 'env var not found' if ENV[name].nil?
-      ENV[name]
-    end
+
   end
 end
 
