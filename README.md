@@ -1,5 +1,7 @@
 # Octopus::Serverspec::Extensions
 
+[![Gem Version](https://badge.fury.io/rb/octopus-serverspec-extensions.svg)](https://badge.fury.io/rb/octopus-serverspec-extensions)
+
 SeverSpec extensions for Windows, adding support for chocolatey packages, npm packages, service accounts and more.
 
 ## Installation
@@ -18,9 +20,57 @@ Or install it yourself as:
 
     $ gem install octopus-serverspec-extensions
 
-## Usage
+## Example Usage
 
-TODO: Write usage instructions here
+```
+describe octopus_deploy_tentacle("https://myoctopus.dns", ENV['OctopusApiKey'], "Tentacle") do
+  it { should exist }
+  it { should be_registered_with_the_server }
+  it { should be_online }
+  it { should be_listening_tentacle }
+  it { should be_in_environment('Production') }
+  it { should have_role('my-application-role') }
+  it { should have_policy('Production Cloud Target Policy') }
+end
+```
+
+## Types
+
+`octopus_deploy_account`
+
+Describes an Octopus Account resource - an AWS, Azure, or SSH account [docs](doc/octopus_deploy_account.md)
+
+`octopus_deploy_environment`
+
+Describes an Octopus Environment Resource [docs]()
+
+`octopus_deploy_project_group`
+
+Describes an Octopus Project Group Resource
+
+`octopus_deploy_smtp_config`
+
+Describes Octopus Server-Level SMTP Configuration
+
+`octopus_deploy_team`
+
+Describes Octopus Team (or User Group)
+
+`octopus_deploy_tentacle`
+
+Describes the state of a Tentacle agent
+
+`octopus_deploy_user`
+
+Describes a User login account
+
+`octopus_deploy_worker`
+
+Describes the Worker agent resource
+
+`octopus_deploy_worker_pool`
+
+Describes a Pool of Worker agents
 
 ## Development
 

@@ -94,13 +94,13 @@ module Serverspec::Type
       @worker["Uri"].casecmp(uri) == 0
     end
 
-    def listening?
+    def listening_worker?
       return false if @worker.nil?
       puts "Expected CommunicationStyle 'TentaclePassive' for Tentacle #{@name}, but got '#{@worker["Endpoint"]["CommunicationStyle"]}'" if (@worker["Endpoint"]["CommunicationStyle"] != "TentaclePassive")
       @worker["Endpoint"]["CommunicationStyle"] == "TentaclePassive"
     end
 
-    def polling?
+    def polling_worker?
       return false if @worker.nil?
       puts "Expected CommunicationStyle 'TentacleActive' for Tentacle #{@name}, but got '#{@worker["Endpoint"]["CommunicationStyle"]}'" if (@worker["Endpoint"]["CommunicationStyle"] != "TentacleActive")
       @worker["Endpoint"]["CommunicationStyle"] == "TentacleActive"
@@ -128,6 +128,15 @@ module Serverspec::Type
     end
 
     return false
+  end
+
+  def get_space_id?(space_name)
+    return false if @serverSupportsSpaces.nil?
+    url = "#{@serverUrl}/api/Spaces/all?api-key=#{@apiKey}"
+    resp = Net::HTTP.get_response(URI.parse(url))
+    spaces = JSON.parse(resp.body)
+    space_id = spaces.select {|e| e["Name"] == space_name}.first["Id"]
+    space_id
   end
 
   def poll_until_worker_has_completed_healthcheck(serverUrl, apiKey, thumbprint)

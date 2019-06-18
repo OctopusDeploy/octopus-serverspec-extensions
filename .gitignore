@@ -11,4 +11,6 @@ octopus-serverspec-extensions-*.gem
 vendor/
 /.idea/
 publish.ps1
+yank.ps1
 /.scratch/
+/spec/octopus/serverspec/live_test.rb

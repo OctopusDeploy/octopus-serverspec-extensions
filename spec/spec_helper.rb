@@ -1,5 +1,6 @@
 require 'serverspec'
 require 'rspec/teamcity'
+require 'webmock/rspec'
 
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require "octopus_serverspec_extensions"
@@ -18,4 +19,11 @@ def get_api_example(api_path)
   file_path = "./spec/octopus/serverspec/json#{api_path}.json"
   raise "API Example #{api_path} not found in file #{file_path}" if !File.exists?(file_path)
   File.read(file_path)
+end
+
+def mock_api_example(api_path)
+  file_path = "./spec/octopus/serverspec/json#{api_path}.json"
+  raise "API Example #{api_path} not found in file #{file_path}" if !File.exists?(file_path)
+  stub_request(:get, "https://octopus.example.com/#{api_path}").
+      to_return(status: 200, body: File.read(file_path), headers: {})
 end
