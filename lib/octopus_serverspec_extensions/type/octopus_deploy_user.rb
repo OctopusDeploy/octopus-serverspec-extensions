@@ -39,7 +39,8 @@ module Serverspec::Type
     end
 
     def is_service_account?
-
+      return false if @userAccount.nil?
+      @userAccount['IsService'] == true
     end
 
     def exists?
@@ -47,19 +48,13 @@ module Serverspec::Type
     end
 
     def active?
-
+      return false if @userAccount.nil?
+      @userAccount['IsActive'] == true
     end
 
     def has_email?(email)
-
-    end
-
-    def has_access_to_space?(space_name)
-
-    end
-
-    def is_in_team?(team_name, space_name)
-
+      return false if @userAccount.nil?
+      @userAccount['EmailAddress'] == email
     end
 
 
