@@ -9,7 +9,10 @@ module Serverspec::Type
     @serverUrl = nil
     @apiKey = nil
 
-    def initialize(serverUrl, apiKey, environment_name)
+    def initialize(*url_and_api_key, environment_name)
+      serverUrl = get_octopus_url(url_and_api_key[0])
+      apiKey = get_octopus_api_key(url_and_api_key[1])
+
       @name = "Octopus Deploy Environment #{environment_name}"
       @runner = Specinfra::Runner
       @serverUrl = serverUrl
@@ -33,7 +36,10 @@ module Serverspec::Type
     end
   end
 
-  def octopus_deploy_environment(serverUrl, apiKey, environment_name)
+  def octopus_deploy_environment(*url_and_api_key, environment_name)
+    serverUrl = get_octopus_url(url_and_api_key[0])
+    apiKey = get_octopus_api_key(url_and_api_key[1])
+
     OctopusDeployEnvironment.new(serverUrl, apiKey, environment_name)
   end
 

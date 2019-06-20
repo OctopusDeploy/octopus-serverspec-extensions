@@ -2,7 +2,10 @@
 
 [![Gem Version](https://badge.fury.io/rb/octopus-serverspec-extensions.svg)](https://badge.fury.io/rb/octopus-serverspec-extensions)
 
-SeverSpec extensions for Windows, adding support for chocolatey packages, npm packages, service accounts and more.
+ServerSpec extensions for Octopus Deploy, adding support for many common Octopus Deploy Objects 
+
+Also includes: chocolatey packages, npm packages, service accounts and more.
+
 
 ## Installation
 
@@ -33,6 +36,18 @@ describe octopus_deploy_tentacle("https://myoctopus.dns", ENV['OctopusApiKey'], 
   it { should have_policy('Production Cloud Target Policy') }
 end
 ```
+
+## Authentication
+
+All the below types can either take a ServerUrl & ApiKey pair, or automatically use the `OCTOPUS_CLI_SERVER` and `OCTOPUS_CLI_API_KEY` environment variables.
+
+specifying explicitly:
+
+`describe octopus_deploy_user("https://myoctopus.dns", "API-O7O8JP5HJOUC6GD7ERDVY6TEO", "MyUserAccount") do`
+
+using the Env Vars:
+
+`describe octopus_deploy_user("MyUserAccount") do`
 
 ## Types
 

@@ -8,21 +8,16 @@ module Serverspec::Type
     @apiKey = nil
     @userAccount = nil
 
-    def initialize(serverUrl, apiKey, userName)
+    def initialize(*url_and_api_key, userName)
+      serverUrl = get_octopus_url(url_and_api_key[0])
+      apiKey = get_octopus_api_key(url_and_api_key[1])
+
       @name = "Octopus Deploy User Account #{serverUrl}"
       @runner = Specinfra::Runner
       @serverUrl = serverUrl
       @apiKey = apiKey
 
-      if(serverUrl.nil?)
-        serverUrl = get_env_var('OCTOPUS_CLI_SERVER').chomp('/')
-      end
-
-      if(apiKey.nil?)
-        apiKey = get_env_var('OCTOPUS_CLI_API_KEY')
-      end
-
-      # is it still nil?
+      # is our auth still nil?
       if (serverUrl.nil?)
         raise "'serverUrl' was not provided. Unable to connect to Octopus server to validate configuration."
       end
@@ -57,11 +52,18 @@ module Serverspec::Type
       @userAccount['EmailAddress'] == email
     end
 
+    def octopus_deploy_user(*url_and_api_key, user_name)
+      serverUrl = get_octopus_url(url_and_api_key[0])
+      apiKey = get_octopus_api_key(url_and_api_key[1])
+      OctopusDeployProjectGroup.new(serverUrl, apiKey, user_name)
+    end
+
 
     private
 
     def get_user_via_api(serverUrl, apiKey, user_name)
-      pg = nil
+      user = nil
+
       url = "#{serverUrl}/api/users/all?api-key=#{apiKey}"
 
       begin

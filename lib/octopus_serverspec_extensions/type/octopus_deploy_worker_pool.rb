@@ -9,7 +9,10 @@ module Serverspec::Type
     @serverUrl = nil
     @apiKey = nil
 
-    def initialize(serverUrl, apiKey, worker_pool_name)
+    def initialize(*url_and_api_key, worker_pool_name)
+      serverUrl = get_octopus_url(url_and_api_key[0])
+      apiKey = get_octopus_api_key(url_and_api_key[1])
+
       @name = "Octopus Deploy Worker Pool #{worker_pool_name}"
       @runner = Specinfra::Runner
       @serverUrl = serverUrl
@@ -33,7 +36,10 @@ module Serverspec::Type
     end
   end
 
-  def octopus_deploy_worker_pool(serverUrl, apiKey, worker_pool_name)
+  def octopus_deploy_worker_pool(*url_and_api_key, worker_pool_name)
+    serverUrl = get_octopus_url(url_and_api_key[0])
+    apiKey = get_octopus_api_key(url_and_api_key[1])
+
     OctopusDeployWorkerPool.new(serverUrl, apiKey, worker_pool_name)
   end
 

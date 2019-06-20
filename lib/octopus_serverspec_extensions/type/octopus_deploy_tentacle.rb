@@ -12,7 +12,14 @@ module Serverspec::Type
     @spaceId = nil
     @spaceFragment = ""
 
-    def initialize(serverUrl, apiKey, instance, spaceId = 'Spaces-1')
+    def initialize(*url_and_api_key, instance, spaceId)
+      serverUrl = get_octopus_url(url_and_api_key[0])
+      apiKey = get_octopus_api_key(url_and_api_key[1])
+
+      if spaceId.nil?
+        spaceId = 'Spaces-1'
+      end
+
       @name = "Octopus Deploy Tentacle #{instance}"
       @runner = Specinfra::Runner
       @serverUrl = serverUrl
@@ -146,7 +153,10 @@ module Serverspec::Type
     end
   end
 
-  def octopus_deploy_tentacle(serverUrl, apiKey, instance)
+  def octopus_deploy_tentacle(*url_and_api_key, instance)
+    serverUrl = get_octopus_url(url_and_api_key[0])
+    apiKey = get_octopus_api_key(url_and_api_key[1])
+
     OctopusDeployTentacle.new(serverUrl, apiKey, instance)
   end
 

@@ -20,18 +20,14 @@ module Serverspec::Type
     USERNAME = 'UsernamePassword'.freeze
     ACCOUNTTYPES = [AZURE, AWS, SSH, TOKEN, USERNAME]
 
-    def initialize(serverUrl, apiKey, account_name, space_name = nil)
+    def initialize(*url_and_api_key, account_name, space_name)
+      serverUrl, apiKey = get_octopus_creds(url_and_api_key)
+
       @name = "Octopus Deploy Account #{account_name}"
       @runner = Specinfra::Runner
       @serverUrl = serverUrl
       @apiKey = apiKey
 
-      if serverUrl.nil?
-        raise "'serverUrl' was not provided. Unable to connect to Octopus server to validate configuration."
-      end
-      if apiKey.nil?
-        raise "'apiKey' was not provided. Unable to connect to Octopus server to validate configuration."
-      end
       if account_name.nil?
         raise "'account_name' was not provided. Unable to connect to Octopus server to validate configuration."
       end
@@ -117,8 +113,11 @@ module Serverspec::Type
     end
   end
 
-  def octopus_deploy_account(serverUrl, apiKey, account_name)
-    OctopusDeployAccount.new(serverUrl, apiKey, account_name)
+  def octopus_deploy_account(*url_and_api_key, account_name, space_name)
+    serverUrl = get_octopus_url(url_and_api_key[0])
+    apiKey = get_octopus_api_key(url_and_api_key[1])
+
+    OctopusDeployAccount.new(serverUrl, apiKey, account_name, space_name)
   end
 
   private

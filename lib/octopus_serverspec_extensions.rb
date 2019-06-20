@@ -19,6 +19,9 @@ require 'octopus_serverspec_extensions/matcher/have_linux_line_endings.rb'
 require 'octopus_serverspec_extensions/version.rb'
 
 # shared
+
+private
+
 def get_env_var(name)
   raise 'non-approved env var' if name != 'OCTOPUS_CLI_API_KEY' && name != 'OCTOPUS_CLI_SERVER'
   raise "env var #{name} not found" if ENV[name].nil?
@@ -26,7 +29,7 @@ def get_env_var(name)
 end
 
 def get_octopus_url(serverUrl)
-  # returns the api key or raises
+  # returns the url or nil
   if serverUrl.nil? then
     serverUrl = get_env_var('OCTOPUS_CLI_SERVER')
   end
@@ -35,9 +38,50 @@ def get_octopus_url(serverUrl)
 end
 
 def get_octopus_api_key(apiKey)
+  # returns the api key or nil
   if apiKey.nil? then
     apiKey = get_env_var('OCTOPUS_CLI_API_KEY')
   end
 
   apiKey
+end
+
+def get_octopus_creds(args)
+  server = args[0]
+  api_key = args[1]
+
+  if args.length != 0 and args.length != 2
+    raise "Supplied credentials invalid. Expected: [url, api_key] Received: #{args}"
+  end
+
+  if server.nil?
+    server = get_env_var('OCTOPUS_CLI_SERVER')
+  end
+
+  if api_key.nil?
+    api_key = get_env_var('OCTOPUS_CLI_API_KEY')
+  end
+
+  # are they still nil? raise an error
+  if api_key.nil? or server.nil?
+    raise "Supplied credentials invalid. One or more of [server, api_key] was null. " +
+              "If you intended to use Environment Variables, please check the value of OCTOPUS_CLI_SERVER and OCTOPUS_CLI_API_KEY"
+  end
+
+  server = server.chomp("/") # remove the trailing slash if it exists
+
+  return [server, api_key]
+end
+
+def check_supports_spaces(serverUrl)
+  begin
+    resp = Net::HTTP.get_response(URI.parse("#{serverUrl}/api/"))
+    body = JSON.parse(resp.body)
+    version = body['Version']
+    return Gem::Version.new(version) > Gem::Version.new('2019.0.0')
+  rescue => e
+    raise "check_supports_spaces: Unable to connect to #{serverUrl}: #{e}"
+  end
+
+  false
 end

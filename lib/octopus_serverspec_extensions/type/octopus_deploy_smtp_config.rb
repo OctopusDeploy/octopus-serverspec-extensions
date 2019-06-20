@@ -9,7 +9,10 @@ module Serverspec::Type
     @apiKey = nil
     @smtpConfig = nil
 
-    def initialize(serverUrl, apiKey)
+    def initialize(*url_and_api_key)
+      serverUrl = get_octopus_url(url_and_api_key[0])
+      apiKey = get_octopus_api_key(url_and_api_key[1])
+
       @name = "Octopus Deploy SMTP Config #{serverUrl}"
       @runner = Specinfra::Runner
       @serverUrl = serverUrl
@@ -69,19 +72,24 @@ module Serverspec::Type
       @smtpConfig["SmtpLogin"] == username && @smtpConfig["SmtpPassword"]["HasValue"]
     end
 
-    def has_from_address?(fromaddress)
+    def has_from_address?(from_address)
       false if @smtpConfig.nil?
-      @smtpConfig["SendEmailFrom"] == fromaddress
+      @smtpConfig["SendEmailFrom"] == from_address
     end
 
     # ctor
-    def octopus_deploy_smtp_config(server_url, api_key)
-      OctopusDeploySmtpConfig.new(server_url, api_key)
+    def octopus_deploy_smtp_config(*url_and_api_key)
+      serverUrl = get_octopus_url(url_and_api_key[0])
+      apiKey = get_octopus_api_key(url_and_api_key[1])
+
+      OctopusDeploySmtpConfig.new(serverUrl, apiKey)
     end
 
     private
 
     def get_smtp_config_via_api(serverUrl, apiKey)
+      smtp = nil
+
       url = "#{serverUrl}/api/smtpconfiguration?api-key=#{apiKey}"
 
       begin
@@ -94,8 +102,6 @@ module Serverspec::Type
 
       smtp
     end
-
-
   end
 end
 

@@ -11,7 +11,9 @@ module Serverspec::Type
     @spaceId = nil
     @spaceFragment = ""
 
-    def initialize(serverUrl, apiKey, projectgroup_name, space_name = nil)
+    def initialize(*url_and_api_key, projectgroup_name, space_name)
+      serverUrl, apiKey = get_octopus_creds(url_and_api_key)
+
       @name = "Octopus Deploy Project Group #{projectgroup_name}"
       @runner = Specinfra::Runner
       @serverUrl = serverUrl
@@ -55,8 +57,11 @@ module Serverspec::Type
     end
   end
 
-  def octopus_deploy_projectgroup(serverUrl, apiKey, projectgroup_name, spaceName = nil)
-    OctopusDeployProjectGroup.new(serverUrl, apiKey, projectgroup_name, spaceName)
+  def octopus_deploy_projectgroup(*url_and_api_key, projectgroup_name, space_name)
+    serverUrl = get_octopus_url(url_and_api_key[0])
+    apiKey = get_octopus_api_key(url_and_api_key[1])
+
+    OctopusDeployProjectGroup.new(serverUrl, apiKey, projectgroup_name, space_name)
   end
 
   private
@@ -76,25 +81,15 @@ module Serverspec::Type
     pg
   end
 
-  def check_supports_spaces(serverUrl)
-    begin
-      resp = Net::HTTP.get_response(URI.parse("#{serverUrl}/api/"))
-      body = JSON.parse(resp.body)
-      version = body['Version']
-      return Gem::Version.new(version) > Gem::Version.new('2019.0.0')
-    rescue => e
-      puts "check_supports_spaces: Unable to connect to #{serverUrl}: #{e}"
-    end
-
-    false
-  end
-
   def get_space_id?(space_name)
-    return false if @serverSupportsSpaces.nil?
     url = "#{@serverUrl}/api/Spaces/all?api-key=#{@apiKey}"
-    resp = Net::HTTP.get_response(URI.parse(url))
-    spaces = JSON.parse(resp.body)
-    space_id = spaces.select {|e| e["Name"] == space_name}.first["Id"]
+    begin
+      resp = Net::HTTP.get_response(URI.parse(url))
+      spaces = JSON.parse(resp.body)
+      space_id = spaces.select {|e| e["Name"] == space_name}.first["Id"]
+    rescue
+      raise "get_space_id: unable to connect to #{url}: #{e}"
+    end
     space_id
   end
 

@@ -6,11 +6,17 @@ describe OctopusDeployWorkerPool do
     let(:runner) { double ("runner")}
 
     it "throws if `serverUrl` not supplied" do
+        allow_any_instance_of(OctopusDeployWorkerPool).to receive(:get_env_var).with('OCTOPUS_CLI_API_KEY').and_return(nil)
+        allow_any_instance_of(OctopusDeployWorkerPool).to receive(:get_env_var).with('OCTOPUS_CLI_SERVER').and_return(nil)
+
         expect { OctopusDeployWorkerPool.new(nil, "someapikey", "my new worker pool") }.
             to raise_error(/serverUrl/)
     end
 
     it "throws if `apiKey` not supplied" do
+        allow_any_instance_of(OctopusDeployWorkerPool).to receive(:get_env_var).with('OCTOPUS_CLI_API_KEY').and_return(nil)
+        allow_any_instance_of(OctopusDeployWorkerPool).to receive(:get_env_var).with('OCTOPUS_CLI_SERVER').and_return(nil)
+
         expect { OctopusDeployWorkerPool.new("https://someserver.com", nil, "my new worker pool") }.
             to raise_error(/apiKey/)
     end
