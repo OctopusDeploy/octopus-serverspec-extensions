@@ -58,8 +58,7 @@ module Serverspec::Type
   end
 
   def octopus_deploy_projectgroup(*url_and_api_key, projectgroup_name, space_name)
-    serverUrl = get_octopus_url(url_and_api_key[0])
-    apiKey = get_octopus_api_key(url_and_api_key[1])
+    serverUrl, apiKey = get_octopus_creds(url_and_api_key)
 
     OctopusDeployProjectGroup.new(serverUrl, apiKey, projectgroup_name, space_name)
   end
