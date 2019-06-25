@@ -49,6 +49,8 @@ using the Env Vars:
 
 `describe octopus_deploy_user("MyUserAccount") do`
 
+See also [Authentication](doc/authentication.md).
+
 ## Types
 
 `octopus_deploy_account`
@@ -57,35 +59,39 @@ Describes an Octopus Account resource - an AWS, Azure, or SSH account [docs](doc
 
 `octopus_deploy_environment`
 
-Describes an Octopus Environment Resource [docs]()
+Describes an Octopus Environment Resource [docs](doc/octopus_deploy_environment.md)
 
 `octopus_deploy_project_group`
 
-Describes an Octopus Project Group Resource
+Describes an Octopus Project Group Resource [docs](doc/octopus_deploy_project_group.md)
 
 `octopus_deploy_smtp_config`
 
-Describes Octopus Server-Level SMTP Configuration
+Describes Octopus Server-Level SMTP Configuration [docs](doc/octopus_deploy_smtp_config.md)
+
+`octopus_deploy_space`
+
+Describes an Octopus Space [docs](doc/octopus_deploy_space.md)
 
 `octopus_deploy_team`
 
-Describes Octopus Team (or User Group)
+Describes Octopus Team (or User Group) [docs](doc/octopus_deploy_team.md)
 
 `octopus_deploy_tentacle`
 
-Describes the state of a Tentacle agent
+Describes the state of a Tentacle agent [docs](doc/octopus_deploy_tentacle.md)
 
 `octopus_deploy_user`
 
-Describes a User login account
+Describes a User login account [docs](doc/octopus_deploy_user.md)
 
 `octopus_deploy_worker`
 
-Describes the Worker agent resource
+Describes the Worker agent resource [docs](doc/octopus_deploy_worker.md)
 
 `octopus_deploy_worker_pool`
 
-Describes a Pool of Worker agents
+Describes a Pool of Worker agents [docs](doc/octopus_deploy_worker_pool.md)
 
 ## Development
 

@@ -107,6 +107,16 @@ module Serverspec::Type
       return false if @account.nil?
       @account[property_name] == expected_value
     end
+
+    def in_space(space_name)
+      # allows us to tag .in_space() onto the end of the resource. as in
+      # describe octopus_account("account name").in_space("MyNewSpace") do
+      @spaceId = get_space_id?(space_name)
+      if @accountName.nil?
+        raise "'account_name' was not provided. Unable to connect to Octopus server to validate configuration."
+      end
+      self
+    end
   end
 
   def octopus_deploy_account(*url_and_api_key, account_name)
@@ -119,16 +129,6 @@ module Serverspec::Type
     serverUrl, apiKey = get_octopus_creds(url_and_api_key)
 
     OctopusDeployAccount.new(serverUrl, apiKey, account_name)
-  end
-
-  def in_space(space_name)
-    # allows us to tag .in_space() onto the end of the resource. as in
-    # describe octopus_account("account name").in_space("MyNewSpace") do
-    @spaceId = get_space_id?(space_name)
-    if @accountName.nil?
-      raise "'account_name' was not provided. Unable to connect to Octopus server to validate configuration."
-    end
-    self
   end
 
   private

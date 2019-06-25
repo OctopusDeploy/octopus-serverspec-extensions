@@ -50,14 +50,14 @@ module Serverspec::Type
 
     end
 
-    def uses_ssl?
+    def using_ssl?
       false if @smtpConfig.nil?
       @smtpConfig["EnableSsl"]
     end
 
-    def on_port?(portnumber)
+    def on_port?(port_number)
       false if @smtpConfig.nil?
-      @smtpConfig["SmtpPort"] == portnumber
+      @smtpConfig["SmtpPort"] == port_number
     end
 
     def on_host?(hostname)
@@ -75,6 +75,8 @@ module Serverspec::Type
       false if @smtpConfig.nil?
       @smtpConfig["SendEmailFrom"] == from_address
     end
+  end
+
 
     def octopus_deploy_smtp_config(*url_and_api_key)
       serverUrl, apiKey = get_octopus_creds(url_and_api_key)
@@ -104,6 +106,5 @@ module Serverspec::Type
       smtp
     end
   end
-end
 
 include Serverspec::Type

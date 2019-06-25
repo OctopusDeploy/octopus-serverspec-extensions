@@ -11,7 +11,7 @@ module Serverspec::Type
     def initialize(*url_and_api_key, userName)
       serverUrl, apiKey = get_octopus_creds(url_and_api_key)
 
-      @name = "Octopus Deploy User Account #{serverUrl}"
+      @name = "Octopus Deploy User Account #{userName}"
       @runner = Specinfra::Runner
       @serverUrl = serverUrl
       @apiKey = apiKey
@@ -50,6 +50,8 @@ module Serverspec::Type
       return false if @userAccount.nil?
       @userAccount['EmailAddress'] == email
     end
+  end
+
 
     def octopus_deploy_user(*url_and_api_key, user_name)
       serverUrl, apiKey = get_octopus_creds(url_and_api_key)
@@ -81,6 +83,5 @@ module Serverspec::Type
     end
 
   end
-end
 
 include Serverspec::Type
