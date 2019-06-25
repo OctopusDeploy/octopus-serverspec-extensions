@@ -38,11 +38,14 @@ describe OctopusDeployAccount do
     ex_does_not_support_spaces = get_api_example('/api/2018.7.9')
     ex_acc_found_response = get_api_example('/api/accounts/all')
 
-    it "throws correctly if we ask for a non-supported account type" do
+    before(:each) do
       stub_request(:get, "https://octopus.example.com/api/").
           to_return(status: 200, body: ex_does_not_support_spaces, headers: {})
       stub_request(:get, "https://octopus.example.com/api/accounts/all?api-key=API-1234567890").
           to_return(status: 200, body: ex_acc_found_response, headers: {})
+    end
+
+    it "throws correctly if we ask for a non-supported account type" do
 
       wp = OctopusDeployAccount.new("https://octopus.example.com", "API-1234567890", "exampleorganisation-azure")
       expect { wp.is_account_type?("NonExistentAccountType") }.to raise_error(/NonExistentAccountType/)
@@ -50,20 +53,12 @@ describe OctopusDeployAccount do
     end
 
     it "handles account found" do
-      stub_request(:get, "https://octopus.example.com/api/").
-          to_return(status: 200, body: ex_does_not_support_spaces, headers: {})
-      stub_request(:get, "https://octopus.example.com/api/accounts/all?api-key=API-1234567890").
-          to_return(status: 200, body: ex_acc_found_response, headers: {})
 
       wp = OctopusDeployAccount.new("https://octopus.example.com", "API-1234567890", "exampleorganisation-azure")
       expect(wp.exists?).to be true
     end
 
     it "handles trailing slashes or not trailing slashes on URL" do
-      stub_request(:get, "https://octopus.example.com/api/").
-          to_return(status: 200, body: ex_does_not_support_spaces, headers: {})
-      stub_request(:get, "https://octopus.example.com/api/accounts/all?api-key=API-1234567890").
-          to_return(status: 200, body: ex_acc_found_response, headers: {})
 
       expect { OctopusDeployAccount.new("https://octopus.example.com", "API-1234567890", "exampleorganisation-azure") }.not_to raise_exception
       expect { OctopusDeployAccount.new("https://octopus.example.com/", "API-1234567890", "exampleorganisation-azure") }.not_to raise_exception
@@ -100,13 +95,16 @@ describe OctopusDeployAccount do
     ex_account_found_response = get_api_example('/api/Spaces-1/accounts/all')
     ex_spaces_all = get_api_example('/api/spaces/all')
 
-    it "handles account found" do
+    before(:each) do
       stub_request(:get, "https://octopus.example.com/api/").
           to_return(status: 200, body: ex_supports_spaces, headers: {})
-      stub_request(:get, "https://octopus.example.com/api/Spaces-1/accounts/all?api-key=API-1234567890").
-          to_return(status: 200, body: ex_account_found_response, headers: {})
       stub_request(:get, "https://octopus.example.com/api/Spaces/all?api-key=API-1234567890").
           to_return(status: 200, body: ex_spaces_all, headers: {})
+    end
+
+    it "handles account found" do
+      stub_request(:get, "https://octopus.example.com/api/Spaces-1/accounts/all?api-key=API-1234567890").
+          to_return(status: 200, body: ex_account_found_response, headers: {})
 
       wp = OctopusDeployAccount.new("https://octopus.example.com", "API-1234567890", "exampleorganisation-azure").in_space("Default")
 
@@ -116,14 +114,10 @@ describe OctopusDeployAccount do
     ex_account_notfound_response = get_api_example('/api/Spaces-1/accounts/all')
 
     it "handles account not found" do
-      stub_request(:get, "https://octopus2.example.com/api/").
-          to_return(status: 200, body: ex_supports_spaces, headers: {})
-      stub_request(:get, "https://octopus2.example.com/api/Spaces-1/accounts/all?api-key=API-0987654321").
+      stub_request(:get, "https://octopus.example.com/api/Spaces-1/accounts/all?api-key=API-1234567890").
           to_return(status: 200, body: ex_account_notfound_response, headers: {})
-      stub_request(:get, "https://octopus2.example.com/api/Spaces/all?api-key=API-0987654321").
-          to_return(status: 200, body: ex_spaces_all, headers: {})
 
-      wp = OctopusDeployAccount.new("https://octopus2.example.com", "API-0987654321", "Nonexistent Accoount").in_space('Default')
+      wp = OctopusDeployAccount.new("https://octopus.example.com", "API-1234567890", "Nonexistent Accoount").in_space('Default')
       expect(wp.exists?).to be false
     end
 
@@ -143,15 +137,11 @@ describe OctopusDeployAccount do
     ex_accounts_spaces_two = get_api_example('/api/Spaces-2/accounts/all')
 
     it "Correctly checks the 'description' field" do
-      stub_request(:get, "https://octopus2.example.com/api/").
-          to_return(status: 200, body: ex_supports_spaces, headers: {})
-      stub_request(:get, "https://octopus2.example.com/api/Spaces/all?api-key=API-0987654321").
-          to_return(status: 200, body: ex_spaces_all, headers: {})
-      stub_request(:get, "https://octopus2.example.com/api/Spaces-2/accounts/all?api-key=API-0987654321").
+      stub_request(:get, "https://octopus.example.com/api/Spaces-2/accounts/all?api-key=API-1234567890").
           to_return(status: 200, body: ex_accounts_spaces_two, headers: {})
 
 
-      wp = OctopusDeployAccount.new("https://octopus2.example.com", "API-0987654321", "exampleorganisation-azure").in_space("Octopus")
+      wp = OctopusDeployAccount.new("https://octopus.example.com", "API-1234567890", "exampleorganisation-azure").in_space("Octopus")
       expect(wp.has_description?("This is an example Azure Subscription in Space 2")).to be true
       expect(wp.is_azure_account?).to be true
       expect(wp.is_account_type?(OctopusDeployAccount::AZURE))

@@ -29,6 +29,14 @@ module Serverspec::Type
       OctopusDeployTeam.new(serverUrl, apiKey, team_name, space_name)
     end
 
+    def exists?
+      @team != nil?
+    end
+
+    def in_space(space_name)
+
+    end
+
     private
 
     def get_team_via_api(serverUrl, apiKey, team_name, spaceId)
@@ -40,9 +48,9 @@ module Serverspec::Type
         resp = Net::HTTP.get_response(URI.parse(url))
         body = JSON.parse(resp.body)
         teams = body unless body.nil?
-        team = teams.select {|i| i['Username'] == user_name }.first unless users.nil?
+        team = teams.select {|i| i['Name'] == team_name }.first unless teams.nil?
       rescue => e
-        raise "get_smtp_config_via_api: Unable to connect to #{url}: #{e}"
+        raise "get_team_via_api: Unable to connect to #{url}: #{e}"
       end
 
       team

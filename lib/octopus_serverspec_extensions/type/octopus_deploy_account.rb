@@ -47,10 +47,10 @@ module Serverspec::Type
     def has_description?(account_description)
       load_resource_if_nil()
       return false if @account.nil?
-      @account["Description"] == account_description
+      @account["Description"] == account_description  # this seems to be case sensitive. Is that good?
     end
 
-    def is_account_type?(account_type_name)
+    def account_type?(account_type_name)
       load_resource_if_nil()
       if !ACCOUNT_TYPES.include? account_type_name
         raise("'#{account_type_name}' is not a valid account type")
@@ -60,30 +60,30 @@ module Serverspec::Type
       @account["AccountType"] == account_type_name
     end
 
-    def is_azure_account?
+    def azure_account?
       return false if @account.nil?
-      is_account_type?(AZURE)
+      account_type?(AZURE)
       # should also have a subscription number, but Octopus manages validation on this
     end
 
-    def is_aws_account?
+    def aws_account?
       return false if @account.nil?
-      is_account_type?(AWS)
+      account_type?(AWS)
     end
 
-    def is_ssh_key_pair?
+    def ssh_key_pair?
       return false if @account.nil?
-      is_account_type?(SSH)
+      account_type?(SSH)
     end
 
-    def is_username_password?
+    def username_password?
       return false if @account.nil?
-      is_account_type(USERNAME)
+      account_type?(USERNAME)
     end
 
-    def is_token?
+    def token?
       return false if @account.nil?
-      is_account_type?(TOKEN)
+      account_type?(TOKEN)
     end
 
     def in_environment?(environment_name)
@@ -158,19 +158,6 @@ module Serverspec::Type
     end
 
     account
-  end
-
-  def check_supports_spaces(serverUrl)
-    begin
-      resp = Net::HTTP.get_response(URI.parse("#{serverUrl}/api/"))
-      body = JSON.parse(resp.body)
-      version = body['Version']
-      return Gem::Version.new(version) > Gem::Version.new('2019.0.0')
-    rescue => e
-      raise "check_supports_spaces: Unable to connect to #{serverUrl}: #{e}"
-    end
-
-    false
   end
 
   def get_space_id?(space_name)

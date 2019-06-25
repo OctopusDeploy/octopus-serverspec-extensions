@@ -1,4 +1,3 @@
-require 'serverspec'
 require 'serverspec/type/base'
 require 'net/http'
 require 'json'
@@ -18,19 +17,19 @@ module Serverspec::Type
       @serverUrl = serverUrl
       @apiKey = apiKey
 
-      if(serverUrl.nil?)
+      if serverUrl.nil?
         serverUrl = get_env_var('OCTOPUS_CLI_SERVER').chomp('/') # removes trailing slash if present
       end
 
-      if(apiKey.nil?)
+      if apiKey.nil?
         apiKey = get_env_var('OCTOPUS_CLI_API_KEY')
       end
 
       # is it still nil?
-      if (serverUrl.nil?)
+      if serverUrl.nil?
         raise "'serverUrl' was not provided. Unable to connect to Octopus server to validate configuration."
       end
-      if (apiKey.nil?)
+      if apiKey.nil?
         raise "'apiKey' was not provided. Unable to connect to Octopus server to validate configuration."
       end
 
@@ -53,7 +52,7 @@ module Serverspec::Type
 
     def uses_ssl?
       false if @smtpConfig.nil?
-      @smtpConfig["EnableSsl"] == true
+      @smtpConfig["EnableSsl"]
     end
 
     def on_port?(portnumber)
@@ -77,12 +76,14 @@ module Serverspec::Type
       @smtpConfig["SendEmailFrom"] == from_address
     end
 
-    # ctor
     def octopus_deploy_smtp_config(*url_and_api_key)
-      serverUrl = get_octopus_url(url_and_api_key[0])
-      apiKey = get_octopus_api_key(url_and_api_key[1])
-
+      serverUrl, apiKey = get_octopus_creds(url_and_api_key)
       OctopusDeploySmtpConfig.new(serverUrl, apiKey)
+    end
+
+    def octopus_smtp_config(*url_and_api_key)
+      serverUrl, apiKey = get_octopus_creds(url_and_api_key)
+      octopus_deploy_smtp_config(serverUrl, apiKey)
     end
 
     private

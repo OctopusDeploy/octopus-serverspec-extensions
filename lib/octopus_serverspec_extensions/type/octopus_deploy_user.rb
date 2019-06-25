@@ -9,8 +9,7 @@ module Serverspec::Type
     @userAccount = nil
 
     def initialize(*url_and_api_key, userName)
-      serverUrl = get_octopus_url(url_and_api_key[0])
-      apiKey = get_octopus_api_key(url_and_api_key[1])
+      serverUrl, apiKey = get_octopus_creds(url_and_api_key)
 
       @name = "Octopus Deploy User Account #{serverUrl}"
       @runner = Specinfra::Runner
@@ -53,11 +52,14 @@ module Serverspec::Type
     end
 
     def octopus_deploy_user(*url_and_api_key, user_name)
-      serverUrl = get_octopus_url(url_and_api_key[0])
-      apiKey = get_octopus_api_key(url_and_api_key[1])
-      OctopusDeployProjectGroup.new(serverUrl, apiKey, user_name)
+      serverUrl, apiKey = get_octopus_creds(url_and_api_key)
+      OctopusDeployUser.new(serverUrl, apiKey, user_name)
     end
 
+    def octopus_user(*url_and_api_key, user_name)
+      serverUrl, apiKey = get_octopus_creds(url_and_api_key)
+      octopus_deploy_user(serverUrl, apiKey, user_name)
+    end
 
     private
 

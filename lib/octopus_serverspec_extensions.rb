@@ -1,14 +1,16 @@
 require 'octopus_serverspec_extensions/type/chocolatey_package.rb'
 require 'octopus_serverspec_extensions/type/npm_package.rb'
 require 'octopus_serverspec_extensions/type/java_property_file.rb'
-require 'octopus_serverspec_extensions/type/octopus_deploy_tentacle.rb'
-require 'octopus_serverspec_extensions/type/octopus_deploy_worker.rb'
+require 'octopus_serverspec_extensions/type/octopus_deploy_account.rb'
 require 'octopus_serverspec_extensions/type/octopus_deploy_environment.rb'
 require 'octopus_serverspec_extensions/type/octopus_deploy_project_group.rb'
-require 'octopus_serverspec_extensions/type/octopus_deploy_worker_pool.rb'
-require 'octopus_serverspec_extensions/type/octopus_deploy_account.rb'
 require 'octopus_serverspec_extensions/type/octopus_deploy_smtp_config.rb'
+require 'octopus_serverspec_extensions/type/octopus_deploy_space.rb'
+require 'octopus_serverspec_extensions/type/octopus_deploy_tentacle.rb'
+require 'octopus_serverspec_extensions/type/octopus_deploy_team.rb'
 require 'octopus_serverspec_extensions/type/octopus_deploy_user.rb'
+require 'octopus_serverspec_extensions/type/octopus_deploy_worker.rb'
+require 'octopus_serverspec_extensions/type/octopus_deploy_worker_pool.rb'
 require 'octopus_serverspec_extensions/type/windows_dsc.rb'
 require 'octopus_serverspec_extensions/type/windows_firewall.rb'
 require 'octopus_serverspec_extensions/type/windows_scheduled_task.rb'
@@ -28,29 +30,29 @@ def get_env_var(name)
   ENV[name]
 end
 
-def get_octopus_url(serverUrl)
+def get_octopus_url(server_url)
   # returns the url or nil
-  if serverUrl.nil? then
-    serverUrl = get_env_var('OCTOPUS_CLI_SERVER')
+  if server_url.nil?
+    server_url = get_env_var('OCTOPUS_CLI_SERVER')
   end
 
-  serverUrl
+  server_url
 end
 
-def get_octopus_api_key(apiKey)
+def get_octopus_api_key(api_key)
   # returns the api key or nil
-  if apiKey.nil? then
-    apiKey = get_env_var('OCTOPUS_CLI_API_KEY')
+  if api_key.nil?
+    api_key = get_env_var('OCTOPUS_CLI_API_KEY')
   end
 
-  apiKey
+  api_key
 end
 
 def get_octopus_creds(args)
   server = args[0]
   api_key = args[1]
 
-  if args.length != 0 and args.length != 2
+  if args.length != 0 && args.length != 2
     raise "Supplied credentials invalid. Expected: [url, api_key] Received: #{args}"
   end
 
@@ -70,18 +72,16 @@ def get_octopus_creds(args)
 
   server = server.chomp("/") # remove the trailing slash if it exists
 
-  return [server, api_key]
+  [server, api_key]
 end
 
-def check_supports_spaces(serverUrl)
+def check_supports_spaces(server_url)
   begin
-    resp = Net::HTTP.get_response(URI.parse("#{serverUrl}/api/"))
+    resp = Net::HTTP.get_response(URI.parse("#{server_url}/api/"))
     body = JSON.parse(resp.body)
     version = body['Version']
     return Gem::Version.new(version) > Gem::Version.new('2019.0.0')
   rescue => e
-    raise "check_supports_spaces: Unable to connect to #{serverUrl}: #{e}"
+    raise "check_supports_spaces: Unable to connect to #{server_url}: #{e}"
   end
-
-  false
 end

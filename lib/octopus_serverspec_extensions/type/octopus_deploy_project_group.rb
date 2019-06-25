@@ -63,6 +63,21 @@ module Serverspec::Type
     OctopusDeployProjectGroup.new(serverUrl, apiKey, projectgroup_name, space_name)
   end
 
+  def octopus_deploy_project_group(*url_and_api_key, projectgroup_name, space_name)
+    url, apikey = get_octopus_creds(url_and_api_key)
+    octopus_deploy_projectgroup(url, apikey, projectgroup_name, space_name)
+  end
+
+  def octopus_project_group(*url_and_api_key, projectgroup_name, space_name)
+    url, apikey = get_octopus_creds(url_and_api_key)
+    octopus_deploy_projectgroup(url, apikey, projectgroup_name, space_name)
+  end
+
+  def octopus_projectgroup(*url_and_api_key, projectgroup_name, space_name)
+    url, apikey = get_octopus_creds(url_and_api_key)
+    octopus_deploy_projectgroup(url, apikey, projectgroup_name, space_name)
+  end
+
   private
 
   def get_projectgroup_via_api(serverUrl, apiKey, projectgroup_name)

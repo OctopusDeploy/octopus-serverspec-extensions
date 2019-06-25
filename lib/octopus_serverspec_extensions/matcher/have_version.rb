@@ -4,7 +4,8 @@ RSpec::Matchers.define :have_version do |version|
   end
 
   failure_message do |file|
-    "Expected file '#{file.name}' to have version '#{version}' but it had version '#{get_version}' instead"
+    found_version = get_version(file)
+    "Expected file '#{file.name}' to have version '#{version}' but it had version '#{found_version}' instead"
   end
 
   failure_message_when_negated do |file|
