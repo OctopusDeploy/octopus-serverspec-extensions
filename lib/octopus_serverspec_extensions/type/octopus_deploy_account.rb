@@ -25,7 +25,6 @@ module Serverspec::Type
     def initialize(*url_and_api_key, account_name)
       server_url, api_key = get_octopus_creds(url_and_api_key)
 
-
       @serverSupportsSpaces = check_supports_spaces(server_url)
 
       @name = "Octopus Deploy Account #{account_name}"
@@ -117,6 +116,14 @@ module Serverspec::Type
       end
       self
     end
+
+    private
+
+    def load_resource_if_nil
+      if @account.nil?
+        @account = get_account_via_api(@serverUrl, @apiKey, @accountName)
+      end
+    end
   end
 
   def octopus_deploy_account(*url_and_api_key, account_name)
@@ -132,12 +139,6 @@ module Serverspec::Type
   end
 
   private
-
-  def load_resource_if_nil
-    if @account.nil?
-      @account = get_account_via_api(@serverUrl, @apiKey, @accountName)
-    end
-  end
 
   def get_account_via_api(serverUrl, apiKey, account_name)
     account = nil

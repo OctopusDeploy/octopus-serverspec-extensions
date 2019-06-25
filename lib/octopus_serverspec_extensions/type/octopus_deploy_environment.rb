@@ -6,39 +6,71 @@ require 'json'
 module Serverspec::Type
   class OctopusDeployEnvironment < Base
     @environment = nil
+    @environment_name = nil
     @serverUrl = nil
     @apiKey = nil
 
     def initialize(*url_and_api_key, environment_name)
-      serverUrl = get_octopus_url(url_and_api_key[0])
-      apiKey = get_octopus_api_key(url_and_api_key[1])
+      serverUrl, apiKey = get_octopus_creds(url_and_api_key)
 
+      @environment_name = environment_name
       @name = "Octopus Deploy Environment #{environment_name}"
       @runner = Specinfra::Runner
       @serverUrl = serverUrl
       @apiKey = apiKey
 
-      if (serverUrl.nil?)
-        raise "'serverUrl' was not provided. Unable to connect to Octopus server to validate configuration."
-      end
-      if (apiKey.nil?)
-        raise "'apiKey' was not provided. Unable to connect to Octopus server to validate configuration."
-      end
+      @serverSupportsSpaces = check_supports_spaces(serverUrl)
+
       if (environment_name.nil?)
         raise "'environment_name' was not provided. Unable to connect to Octopus server to validate configuration."
       end
 
-      @environment = get_environment_via_api(serverUrl, apiKey, environment_name)
     end
 
     def exists?
+      load_resource_if_nil
       (!@environment.nil?) && (@environment != [])
+    end
+
+    def uses_guided_failure?
+      load_resource_if_nil
+      false if @environment.nil?
+      @environment['UseGuidedFailure'] == true
+    end
+
+    def allows_dynamic_infrastructure?
+      load_resource_if_nil
+      false if @environment.nil?
+      @environment['AllowDynamicInfrastructure'] == true
+    end
+
+    def in_space(space_name)
+      # allows us to tag .in_space() onto the end of the resource. as in
+      # describe octopus_account("account name").in_space("MyNewSpace") do
+      @spaceId = get_space_id?(space_name)
+      if @environment_name.nil?
+        raise "'environment_name' was not provided. Unable to connect to Octopus server to validate configuration."
+      end
+      self
+    end
+
+    private
+
+    def load_resource_if_nil
+      if @environment.nil?
+        @environment = get_environment_via_api(@serverUrl, @apiKey, @environment_name)
+      end
     end
   end
 
   def octopus_deploy_environment(*url_and_api_key, environment_name)
-    serverUrl = get_octopus_url(url_and_api_key[0])
-    apiKey = get_octopus_api_key(url_and_api_key[1])
+    serverUrl, apiKey = get_octopus_creds(url_and_api_key)
+
+    OctopusDeployEnvironment.new(serverUrl, apiKey, environment_name)
+  end
+
+  def octopus_environment(*url_and_api_key, environment_name)
+    serverUrl, apiKey = get_octopus_creds(url_and_api_key)
 
     OctopusDeployEnvironment.new(serverUrl, apiKey, environment_name)
   end
