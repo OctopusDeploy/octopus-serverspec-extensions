@@ -49,49 +49,49 @@ using the Env Vars:
 
 `describe octopus_deploy_user("MyUserAccount") do`
 
-See also [Authentication](doc/authentication.md).
+See also [Authentication](docs/authentication.md).
 
 ## Types
 
 `octopus_deploy_account`
 
-Describes an Octopus Account resource - an AWS, Azure, or SSH account [docs](doc/octopus_deploy_account.md)
+Describes an Octopus Account resource - an AWS, Azure, or SSH account [docs](docs/octopus_deploy_account.md)
 
 `octopus_deploy_environment`
 
-Describes an Octopus Environment Resource [docs](doc/octopus_deploy_environment.md)
+Describes an Octopus Environment Resource [docs](docs/octopus_deploy_environment.md)
 
 `octopus_deploy_project_group`
 
-Describes an Octopus Project Group Resource [docs](doc/octopus_deploy_project_group.md)
+Describes an Octopus Project Group Resource [docs](docs/octopus_deploy_project_group.md)
 
 `octopus_deploy_smtp_config`
 
-Describes Octopus Server-Level SMTP Configuration [docs](doc/octopus_deploy_smtp_config.md)
+Describes Octopus Server-Level SMTP Configuration [docs](docs/octopus_deploy_smtp_config.md)
 
 `octopus_deploy_space`
 
-Describes an Octopus Space [docs](doc/octopus_deploy_space.md)
+Describes an Octopus Space [docs](docs/octopus_deploy_space.md)
 
 `octopus_deploy_team`
 
-Describes Octopus Team (or User Group) [docs](doc/octopus_deploy_team.md)
+Describes Octopus Team (or User Group) [docs](docs/octopus_deploy_team.md)
 
 `octopus_deploy_tentacle`
 
-Describes the state of a Tentacle agent [docs](doc/octopus_deploy_tentacle.md)
+Describes the state of a Tentacle agent [docs](docs/octopus_deploy_tentacle.md)
 
 `octopus_deploy_user`
 
-Describes a User login account [docs](doc/octopus_deploy_user.md)
+Describes a User login account [docs](docs/octopus_deploy_user.md)
 
 `octopus_deploy_worker`
 
-Describes the Worker agent resource [docs](doc/octopus_deploy_worker.md)
+Describes the Worker agent resource [docs](docs/octopus_deploy_worker.md)
 
 `octopus_deploy_worker_pool`
 
-Describes a Pool of Worker agents [docs](doc/octopus_deploy_worker_pool.md)
+Describes a Pool of Worker agents [docs](docs/octopus_deploy_worker_pool.md)
 
 ## Development
 

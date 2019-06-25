@@ -9,8 +9,7 @@ module Serverspec::Type
     @smtpConfig = nil
 
     def initialize(*url_and_api_key)
-      serverUrl = get_octopus_url(url_and_api_key[0])
-      apiKey = get_octopus_api_key(url_and_api_key[1])
+      serverUrl, apiKey = get_octopus_creds(url_and_api_key)
 
       @name = "Octopus Deploy SMTP Config #{serverUrl}"
       @runner = Specinfra::Runner

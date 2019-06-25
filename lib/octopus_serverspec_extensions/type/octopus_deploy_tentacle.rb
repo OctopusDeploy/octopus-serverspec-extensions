@@ -162,19 +162,6 @@ module Serverspec::Type
 
   private
 
-  def check_supports_spaces(serverUrl)
-    begin
-      resp = Net::HTTP.get_response(URI.parse("#{serverUrl}/api/"))
-      body = JSON.parse(resp.body)
-      version = body['Version']
-      return Gem::Version.new(version) > Gem::Version.new('2019.0.0')
-    rescue => e
-      puts "Unable to connect to #{serverUrl}: #{e}"
-    end
-
-    return false
-  end
-
   def poll_until_machine_has_completed_healthcheck(serverUrl, apiKey, thumbprint)
     machine = nil
     url = "#{serverUrl}/api/#{@spaceFragment}machines/all?api-key=#{apiKey}"
