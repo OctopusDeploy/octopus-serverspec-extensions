@@ -31,6 +31,16 @@ module Serverspec::Type
     @space.nil? == false
   end
 
+  def default?
+    load_if_required
+    false if @space.nil?
+    @space['IsDefault'] == true
+  end
+
+  def has_running_task_queue?
+    @space['TaskQueueStopped'] == false
+  end
+
   def octopus_deploy_space(*url_and_api_key, space_name)
     serverUrl, apiKey = get_octopus_creds(url_and_api_key)
     OctopusDeploySpace.new(serverUrl, apiKey, space_name)

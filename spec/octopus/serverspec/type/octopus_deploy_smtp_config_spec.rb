@@ -41,7 +41,7 @@ describe OctopusDeploySmtpConfig do
         to_return(status: 200, body: example_smtp_response, headers: {})
 
     my_smtp_config = OctopusDeploySmtpConfig.new('https://octopus.example.com', 'API-1234567890')
-    expect( my_smtp_config.uses_ssl?).to be true
+    expect( my_smtp_config.using_ssl?).to be true
   end
 
   it "should be able to detect isconfigured" do

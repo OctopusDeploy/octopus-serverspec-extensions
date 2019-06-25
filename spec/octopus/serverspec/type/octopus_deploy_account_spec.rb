@@ -48,8 +48,8 @@ describe OctopusDeployAccount do
     it "throws correctly if we ask for a non-supported account type" do
 
       wp = OctopusDeployAccount.new("https://octopus.example.com", "API-1234567890", "exampleorganisation-azure")
-      expect { wp.is_account_type?("NonExistentAccountType") }.to raise_error(/NonExistentAccountType/)
-      expect(wp.is_account_type?( "AzureSubscription" )).to be true
+      expect { wp.account_type?("NonExistentAccountType") }.to raise_error(/NonExistentAccountType/)
+      expect(wp.account_type?( "AzureSubscription" )).to be true
     end
 
     it "handles account found" do
@@ -143,8 +143,8 @@ describe OctopusDeployAccount do
 
       wp = OctopusDeployAccount.new("https://octopus.example.com", "API-1234567890", "exampleorganisation-azure").in_space("Octopus")
       expect(wp.has_description?("This is an example Azure Subscription in Space 2")).to be true
-      expect(wp.is_azure_account?).to be true
-      expect(wp.is_account_type?(OctopusDeployAccount::AZURE))
+      expect(wp.azure_account?).to be true
+      expect(wp.account_type?(OctopusDeployAccount::AZURE))
     end
 
   end
