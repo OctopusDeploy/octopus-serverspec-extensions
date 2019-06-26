@@ -24,13 +24,6 @@ module Serverspec::Type
       @serverUrl = serverUrl
       @apiKey = apiKey
 
-      if (serverUrl.nil?)
-        raise "'serverUrl' was not provided. Unable to connect to Octopus server to validate configuration."
-      end
-      if (apiKey.nil?)
-        raise "'apiKey' was not provided. Unable to connect to Octopus server to validate configuration."
-      end
-
       if (exists?)
         thumbprint = `"c:\\program files\\Octopus Deploy\\Tentacle\\Tentacle.exe" show-thumbprint --console --nologo --instance #{instance}`
         thumbprint = thumbprint.gsub('==== ShowThumbprintCommand starting ====', '').strip
@@ -39,8 +32,6 @@ module Serverspec::Type
         thumbprint = thumbprint.gsub('==== ShowThumbprintCommand ====', '').strip
 
         @serverSupportsSpaces = check_supports_spaces(serverUrl)
-
-
 
         @machine_thumbprint = thumbprint
       else
@@ -229,7 +220,7 @@ module Serverspec::Type
   def get_machine_via_api(serverUrl, apiKey, thumbprint)
     machine = nil
 
-    if (@serverSupportsSpaces)
+    unless @spaceId.nil?
       @spaceFragment = "#{@spaceId}/"
     end
 
