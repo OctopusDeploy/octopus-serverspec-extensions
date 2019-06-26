@@ -32,7 +32,7 @@ module Serverspec::Type
 
     end
 
-    def is_service_account?
+    def service_account?
       return false if @userAccount.nil?
       @userAccount['IsService'] == true
     end
@@ -49,6 +49,11 @@ module Serverspec::Type
     def has_email?(email)
       return false if @userAccount.nil?
       @userAccount['EmailAddress'] == email
+    end
+
+    def has_display_name?(name)
+      return false if @userAccount.nil?
+      @userAccount['DisplayName'] == name
     end
 
     def has_api_key?(purpose)
