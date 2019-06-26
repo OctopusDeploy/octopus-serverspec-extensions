@@ -50,6 +50,27 @@ module Serverspec::Type
       return false if @userAccount.nil?
       @userAccount['EmailAddress'] == email
     end
+
+    def has_api_key?(purpose)
+      # "/api/users/Users-61/apikeys{/id}{?skip,take}"
+      return false if @userAccount.nil?
+
+      user_api_key = nil
+      user_id = @userAccount['Id']
+      url = "#{@serverUrl}/api/users/#{user_id}/apikeys?api-key=#{@apiKey}&take=200"
+
+      begin
+        resp = Net::HTTP.get_response(URI.parse(url))
+        body = JSON.parse(resp.body)
+        keys = body unless body.nil?
+        user_api_key = keys['Items'].select {|i| i['Purpose'] == purpose }.first unless keys.nil?
+
+        rescue => e
+          raise "has_api_key: Unable to connect to #{url}: #{e}"
+      end
+
+      !user_api_key.nil?
+    end
   end
 
 
