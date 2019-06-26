@@ -74,6 +74,7 @@ describe OctopusDeployTentacle do
         allow_any_instance_of(OctopusDeployTentacle).to receive(:`).and_return("D577F1B4D70D24E1356EF5B75CD7542BB049A073")
         stub_request(:get, "https://octopus.example.com/api/Spaces-1/machines/all?api-key=API-1234567890").
             to_return(status: 200, body: example_tentacle_response, headers: {})
+
         listening_tentacle = OctopusDeployTentacle.new('https://octopus.example.com', 'API-1234567890', 'ListeningTentacle', 'Spaces-1')
         expect(listening_tentacle.listening_tentacle? ).to be true
       end

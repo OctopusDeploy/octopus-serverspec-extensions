@@ -142,6 +142,7 @@ module Serverspec::Type
       @machine["Endpoint"]["CommunicationStyle"] == "TentaclePassive"
     end
 
+
     def polling_tentacle?
       return false if @machine.nil?
       puts "Expected CommunicationStyle 'TentacleActive' for Tentacle #{@name}, but got '#{@machine["Endpoint"]["CommunicationStyle"]}'" if (@machine["Endpoint"]["CommunicationStyle"] != "TentacleActive")
