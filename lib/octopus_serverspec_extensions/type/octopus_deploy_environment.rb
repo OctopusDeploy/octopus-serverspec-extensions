@@ -21,7 +21,7 @@ module Serverspec::Type
       @serverUrl = serverUrl
       @apiKey = apiKey
 
-      if (environment_name.nil?)
+      if environment_name.nil?
         raise "'environment_name' was not provided. Unable to connect to Octopus server to validate configuration."
       end
 
@@ -33,13 +33,13 @@ module Serverspec::Type
       (!@environment.nil?) && (@environment != [])
     end
 
-    def uses_guided_failure?
+    def use_guided_failure?
       load_resource_if_nil
       false if @environment.nil?
       @environment['UseGuidedFailure'] == true
     end
 
-    def allows_dynamic_infrastructure?
+    def allow_dynamic_infrastructure?
       load_resource_if_nil
       false if @environment.nil?
       @environment['AllowDynamicInfrastructure'] == true
