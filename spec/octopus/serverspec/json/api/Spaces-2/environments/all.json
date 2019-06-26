@@ -1,0 +1,30 @@
+{
+  "ItemType": "Environment",
+  "TotalResults": 1,
+  "ItemsPerPage": 10,
+  "NumberOfPages": 1,
+  "LastPageNumber": 0,
+  "Items": [
+    {
+      "Id": "Environments-19",
+      "Name": "The-Env",
+      "Description": "",
+      "SortOrder": 0,
+      "UseGuidedFailure": false,
+      "AllowDynamicInfrastructure": false,
+      "SpaceId": "Spaces-2",
+      "Links": {
+        "Self": "/api/Spaces-2/environments/Environments-19",
+        "Machines": "/api/Spaces-2/environments/Environments-19/machines{?skip,take,partialName,roles,isDisabled,healthStatuses,commStyles,tenantIds,tenantTags}",
+        "SinglyScopedVariableDetails": "/api/Spaces-2/environments/Environments-19/singlyScopedVariableDetails"
+      }
+    }
+  ],
+  "Links": {
+    "Self": "/api/Spaces-2/environments",
+    "Template": "/api/Spaces-2/environments{?skip,ids,take,partialName}",
+    "Page.All": "/api/Spaces-2/environments?skip=0&take=2147483647",
+    "Page.Current": "/api/Spaces-2/environments?skip=0&take=10",
+    "Page.Last": "/api/Spaces-2/environments?skip=0&take=10"
+  }
+}

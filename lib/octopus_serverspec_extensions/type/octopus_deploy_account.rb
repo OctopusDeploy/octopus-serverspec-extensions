@@ -124,6 +124,16 @@ module Serverspec::Type
         @account = get_account_via_api(@serverUrl, @apiKey, @accountName)
       end
     end
+
+    def get_space_id?(space_name)
+      return false if @serverSupportsSpaces.nil?
+      url = "#{@serverUrl}/api/Spaces/all?api-key=#{@apiKey}"
+      resp = Net::HTTP.get_response(URI.parse(url))
+      spaces = JSON.parse(resp.body)
+      space_id = spaces.select {|e| e["Name"] == space_name}.first["Id"]
+      space_id
+    end
+
   end
 
   def octopus_deploy_account(*url_and_api_key, account_name)
@@ -143,7 +153,7 @@ module Serverspec::Type
   def get_account_via_api(serverUrl, apiKey, account_name)
     account = nil
 
-    if @serverSupportsSpaces
+    unless @spaceId.nil?
       # set the spaceId correctly
       @spaceFragment = "#{@spaceId}/"
     end
@@ -161,14 +171,6 @@ module Serverspec::Type
     account
   end
 
-  def get_space_id?(space_name)
-    return false if @serverSupportsSpaces.nil?
-    url = "#{@serverUrl}/api/Spaces/all?api-key=#{@apiKey}"
-    resp = Net::HTTP.get_response(URI.parse(url))
-    spaces = JSON.parse(resp.body)
-    space_id = spaces.select {|e| e["Name"] == space_name}.first["Id"]
-    space_id
-  end
 
 end
 

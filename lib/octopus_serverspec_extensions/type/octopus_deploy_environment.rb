@@ -9,6 +9,8 @@ module Serverspec::Type
     @environment_name = nil
     @serverUrl = nil
     @apiKey = nil
+    @spaceId = nil
+    @spaceFragment = ""
 
     def initialize(*url_and_api_key, environment_name)
       serverUrl, apiKey = get_octopus_creds(url_and_api_key)
@@ -19,12 +21,11 @@ module Serverspec::Type
       @serverUrl = serverUrl
       @apiKey = apiKey
 
-      @serverSupportsSpaces = check_supports_spaces(serverUrl)
-
       if (environment_name.nil?)
         raise "'environment_name' was not provided. Unable to connect to Octopus server to validate configuration."
       end
 
+      @serverSupportsSpaces = check_supports_spaces(serverUrl)
     end
 
     def exists?
@@ -51,6 +52,9 @@ module Serverspec::Type
       if @environment_name.nil?
         raise "'environment_name' was not provided. Unable to connect to Octopus server to validate configuration."
       end
+      if(@spaceId.nil?)
+        raise "unable to resolve space '#{@spaceId}'"
+      end
       self
     end
 
@@ -60,6 +64,15 @@ module Serverspec::Type
       if @environment.nil?
         @environment = get_environment_via_api(@serverUrl, @apiKey, @environment_name)
       end
+    end
+
+    def get_space_id?(space_name)
+      return false if @serverSupportsSpaces.nil?
+      url = "#{@serverUrl}/api/Spaces/all?api-key=#{@apiKey}"
+      resp = Net::HTTP.get_response(URI.parse(url))
+      spaces = JSON.parse(resp.body)
+      space_id = spaces.select {|e| e["Name"] == space_name}.first["Id"]
+      space_id
     end
   end
 
@@ -79,7 +92,13 @@ module Serverspec::Type
 
   def get_environment_via_api(serverUrl, apiKey, environment_name)
     environment = nil
-    url = "#{serverUrl}/api/environments?name=#{environment_name}&api-key=#{apiKey}"
+
+    unless @spaceId.nil?
+      # set the spaceId correctly
+      @spaceFragment = "#{@spaceId}/"
+    end
+
+    url = "#{serverUrl}/api/#{@spaceFragment}environments?name=#{environment_name}&api-key=#{apiKey}"
 
     begin
       resp = Net::HTTP.get_response(URI.parse(url))
