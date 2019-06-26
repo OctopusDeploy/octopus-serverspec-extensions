@@ -6,25 +6,23 @@ require 'json'
 module Serverspec::Type
   class OctopusDeployTentacle < Base
     @machine = nil
+    @machine_name = nil
+    @machine_thumbprint = nil
     @serverUrl = nil
     @apiKey = nil
     @serverSupportsSpaces = nil
     @spaceId = nil
     @spaceFragment = ""
 
-    def initialize(*url_and_api_key, instance, spaceId)
-      serverUrl = get_octopus_url(url_and_api_key[0])
-      apiKey = get_octopus_api_key(url_and_api_key[1])
+    def initialize(*url_and_api_key, instance)
+      serverUrl, apiKey = get_octopus_creds(url_and_api_key)
 
-      if spaceId.nil?
-        spaceId = 'Spaces-1'
-      end
+      @machine_name = instance
 
       @name = "Octopus Deploy Tentacle #{instance}"
       @runner = Specinfra::Runner
       @serverUrl = serverUrl
       @apiKey = apiKey
-      @spaceId = spaceId
 
       if (serverUrl.nil?)
         raise "'serverUrl' was not provided. Unable to connect to Octopus server to validate configuration."
@@ -42,21 +40,21 @@ module Serverspec::Type
 
         @serverSupportsSpaces = check_supports_spaces(serverUrl)
 
-        if (@serverSupportsSpaces)
-          @spaceFragment = "#{@spaceId}/"
-        end
 
-        @machine = get_machine_via_api(serverUrl, apiKey, thumbprint)
+
+        @machine_thumbprint = thumbprint
       else
         raise "tentacle.exe does not exist"
       end
     end
 
     def registered_with_the_server?
+      load_resource_if_nil
       !@machine.nil?
     end
 
     def online?
+      load_resource_if_nil
       return nil if @machine.nil?
       @machine = poll_until_machine_has_completed_healthcheck(@serverUrl, @apiKey, @machine["Thumbprint"])
       status = @machine['Status']
@@ -71,6 +69,7 @@ module Serverspec::Type
     end
 
     def in_environment?(environment_name)
+      load_resource_if_nil
       return false if @machine.nil?
       url = "#{@serverUrl}/api/#{@spaceFragment}environments/all?api-key=#{@apiKey}"
       resp = Net::HTTP.get_response(URI.parse(url))
@@ -80,6 +79,7 @@ module Serverspec::Type
     end
 
     def in_space?(space_name)
+      load_resource_if_nil
       return false if @machine.nil?
       return false if @serverSupportsSpaces
       url = "#{@serverUrl}/api/spaces/all?api-key=#{@apiKey}"
@@ -90,6 +90,7 @@ module Serverspec::Type
     end
 
     def has_tenant?(tenant_name)
+      load_resource_if_nil
       return false if @machine.nil?
       url = "#{@serverUrl}/api/#{@spaceFragment}tenants/all?api-key=#{@apiKey}"
       resp = Net::HTTP.get_response(URI.parse(url))
@@ -99,12 +100,14 @@ module Serverspec::Type
     end
 
     def has_tenant_tag?(tag_set, tag)
+      load_resource_if_nil
       return false if @machine.nil?
       tenant_tags = @machine["TenantTags"]
       !tenant_tags.select {|e| e == "#{tag_set}/#{tag}"}.empty?
     end
 
     def has_policy?(policy_name)
+      load_resource_if_nil
       return false if @machine.nil?
       url = "#{@serverUrl}/api/#{@spaceFragment}machinepolicies/all?api-key=#{@apiKey}"
       resp = Net::HTTP.get_response(URI.parse(url))
@@ -114,17 +117,20 @@ module Serverspec::Type
     end
 
     def has_role?(role_name)
+      load_resource_if_nil
       return false if @machine.nil?
       roles = @machine["Roles"]
       !roles.select {|e| e == role_name}.empty?
     end
 
     def has_display_name?(name)
+      load_resource_if_nil
       return false if @machine.nil?
       @machine["Name"] == name
     end
 
     def has_endpoint?(uri)
+      load_resource_if_nil
       return false if @machine.nil?
       return false if @machine["Uri"].nil? # polling tentacles have null endpoint. catch that.
       puts "Expected uri '#{uri}' for Tentacle #{@name}, but got '#{@machine["Uri"]}'" unless (@machine["Uri"].casecmp(uri) == 0)
@@ -132,11 +138,13 @@ module Serverspec::Type
     end
 
     def has_tenanted_deployment_participation?(mode)
+      load_resource_if_nil
       return false if @machine.nil?
       @machine["TenantedDeploymentParticipation"] == mode
     end
 
     def listening_tentacle?
+      load_resource_if_nil
       return false if @machine.nil?
       puts "Expected CommunicationStyle 'TentaclePassive' for Tentacle #{@name}, but got '#{@machine["Endpoint"]["CommunicationStyle"]}'" if (@machine["Endpoint"]["CommunicationStyle"] != "TentaclePassive")
       @machine["Endpoint"]["CommunicationStyle"] == "TentaclePassive"
@@ -144,6 +152,7 @@ module Serverspec::Type
 
 
     def polling_tentacle?
+      load_resource_if_nil
       return false if @machine.nil?
       puts "Expected CommunicationStyle 'TentacleActive' for Tentacle #{@name}, but got '#{@machine["Endpoint"]["CommunicationStyle"]}'" if (@machine["Endpoint"]["CommunicationStyle"] != "TentacleActive")
       @machine["Endpoint"]["CommunicationStyle"] == "TentacleActive"
@@ -152,6 +161,36 @@ module Serverspec::Type
     def exists?
       ::File.exists?("c:\\program files\\Octopus Deploy\\Tentacle\\Tentacle.exe")
     end
+
+    def in_space(space_name)
+      # allows us to tag .in_space() onto the end of the resource. as in
+      # describe octopus_account("account name").in_space("MyNewSpace") do
+      @spaceId = get_space_id(space_name)
+      if @machine_name.nil?
+        raise "'machine_name' was not provided. Unable to connect to Octopus server to validate configuration."
+      end
+      self
+    end
+
+    private
+
+    def get_space_id(space_name)
+      return false if @serverSupportsSpaces.nil?
+      url = "#{@serverUrl}/api/Spaces/all?api-key=#{@apiKey}"
+      resp = Net::HTTP.get_response(URI.parse(url))
+      spaces = JSON.parse(resp.body)
+      space_id = spaces.select {|e| e["Name"] == space_name}.first["Id"]
+      space_id
+    end
+
+    def load_resource_if_nil
+      if @machine.nil?
+        @machine = get_machine_via_api(@serverUrl, @apiKey, @machine_thumbprint)
+      end
+    end
+
+
+
   end
 
   def octopus_deploy_tentacle(*url_and_api_key, instance)
@@ -189,6 +228,11 @@ module Serverspec::Type
 
   def get_machine_via_api(serverUrl, apiKey, thumbprint)
     machine = nil
+
+    if (@serverSupportsSpaces)
+      @spaceFragment = "#{@spaceId}/"
+    end
+
     url = "#{serverUrl}/api/#{@spaceFragment}machines/all?api-key=#{apiKey}"
 
     begin
