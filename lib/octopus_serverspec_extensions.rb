@@ -18,6 +18,8 @@ require 'octopus_serverspec_extensions/matcher/have_version.rb'
 require 'octopus_serverspec_extensions/matcher/run_under_account.rb'
 require 'octopus_serverspec_extensions/matcher/have_windows_line_endings.rb'
 require 'octopus_serverspec_extensions/matcher/have_linux_line_endings.rb'
+require 'octopus_serverspec_extensions/matcher/use_guided_failure.rb'
+require 'octopus_serverspec_extensions/matcher/allow_dynamic_infrastructure.rb'
 require 'octopus_serverspec_extensions/version.rb'
 
 # shared

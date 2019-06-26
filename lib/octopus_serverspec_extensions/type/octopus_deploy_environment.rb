@@ -48,7 +48,7 @@ module Serverspec::Type
     def in_space(space_name)
       # allows us to tag .in_space() onto the end of the resource. as in
       # describe octopus_account("account name").in_space("MyNewSpace") do
-      @spaceId = get_space_id?(space_name)
+      @spaceId = get_space_id(space_name)
       if @environment_name.nil?
         raise "'environment_name' was not provided. Unable to connect to Octopus server to validate configuration."
       end
@@ -66,7 +66,7 @@ module Serverspec::Type
       end
     end
 
-    def get_space_id?(space_name)
+    def get_space_id(space_name)
       return false if @serverSupportsSpaces.nil?
       url = "#{@serverUrl}/api/Spaces/all?api-key=#{@apiKey}"
       resp = Net::HTTP.get_response(URI.parse(url))
