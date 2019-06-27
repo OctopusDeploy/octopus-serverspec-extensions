@@ -32,7 +32,7 @@ octopus_tentacle([url, api_key], instance_name).in_space('Octopus')
 | should be_in_environment(env_name) | Tests if the tentacle is registered to a given [Environment](octopus_deploy_environment.md) |
 | should be_in_space(space_name) | Tests if a tentacle appears in a given space. _deprecated_. | 
 | should have_tenant(tenant_name) | Tests if a tentacle is registered to a given tenant |
-| should have_tentant_tag(tag_name) | Tests if a tentacle is registered to a given tenant tag |
+| should have_tenant_tag(tag_name) | Tests if a tentacle is registered to a given tenant tag |
 | should have_policy(policy_name) | Tests if a tentacle has a give policy applied |
 | should have_role(role_name) | Tests if a tentacle has a given role applied |
 | should have_display_name |  Tests if a tentacle has a given display name |
