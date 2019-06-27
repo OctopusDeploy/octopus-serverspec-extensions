@@ -22,8 +22,15 @@ describe OctopusDeployProjectGroup do
   end
 
   it "throws if `ProjectGroupName` not supplied" do
-    expect { OctopusDeployProjectGroup.new("https://someserver.com", "API-kllkjhasdkljhasdfkjsafd", nil, 'Default') }.
-        to raise_error(/projectgroup_name/)
+    ex_does_not_support_spaces = get_api_example('/api/2018.7.9')
+    ex_pg_found_response = get_api_example('/api/projectgroups/all')
+    stub_request(:get, "https://someserver.com/api/").
+        to_return(status: 200, body: ex_does_not_support_spaces, headers: {})
+    stub_request(:get, "https://someserver.com/api/projectgroups/all?api-key=API-kllkjhasdkljhasdfkjsafd").
+        to_return(status: 200, body: ex_pg_found_response, headers: {})
+
+    expect { OctopusDeployProjectGroup.new("https://someserver.com", "API-kllkjhasdkljhasdfkjsafd", nil, ).exists? }.
+        to raise_error(/project_group_name/)
   end
 
   context "Server does not support spaces" do
@@ -40,40 +47,37 @@ describe OctopusDeployProjectGroup do
       stub_request(:get, "https://octopus.example.local/api/projectgroups/all?api-key=API-1234567890").
           to_return(status: 200, body: ex_pg_found_response, headers: {})
 
-      pg = OctopusDeployProjectGroup.new("Octopus Projects", 'Default')
-      expect(pg.exists?).to be true
+      pg = OctopusDeployProjectGroup.new("Octopus Projects")
     end
 
-    it "handles projectgroup found, in a specific space" do
+    it "handles project group found" do
       stub_request(:get, "https://octopus.example.com/api/").
           to_return(status: 200, body: ex_does_not_support_spaces, headers: {})
       stub_request(:get, "https://octopus.example.com/api/projectgroups/all?api-key=API-1234567890").
           to_return(status: 200, body: ex_pg_found_response, headers: {})
 
-      pg = OctopusDeployProjectGroup.new("https://octopus.example.com", "API-1234567890", "Octopus Projects", "Default")
+      pg = OctopusDeployProjectGroup.new("https://octopus.example.com", "API-1234567890", "Octopus Projects")
       expect(pg.exists?).to be true
     end
 
     ex_pg_notfound_response = get_api_example('/api/projectgroups/all')
 
-    it "handles projectgroup not found" do
+    it "handles project group not found" do
       stub_request(:get, "https://octopus2.example.com/api/").
           to_return(status: 200, body: ex_does_not_support_spaces, headers: {})
       stub_request(:get, "https://octopus2.example.com/api/projectgroups/all?api-key=API-0987654321").
           to_return(status: 200, body: ex_pg_notfound_response, headers: {})
 
-      pg = OctopusDeployProjectGroup.new("https://octopus2.example.com", "API-0987654321", "Nonexistent projectgroup", 'Default')
+      pg = OctopusDeployProjectGroup.new("https://octopus2.example.com", "API-0987654321", "Nonexistent projectgroup")
       expect(pg.exists?).to be false
     end
 
-    it "doesn't crash badly if handed a bad URL" do
-      stub_request(:get, "https://nonexistentdomain.com/api/").
-          to_return(status: 200, body: ex_does_not_support_spaces, headers: {}).to_raise(SocketError)
+    it "doesn't crash badly if handed a bad URL" do  # not a very meaningful test these days
+      stub_request(:get, "https://nonexistentdomain.com/api/").to_raise(SocketError)
       stub_request(:get, "https://nonexistentdomain.com/api/projectgroups/all?api-key=API-1234567890").to_raise(SocketError)
 
-      expect { OctopusDeployProjectGroup.new("https://nonexistentdomain.com", "API-1234567890", "Octopus Projects", "Default") }.to raise_error(StandardError)
+      expect { OctopusDeployProjectGroup.new("https://nonexistentdomain.com", "API-1234567890", "Octopus Projects") }.to raise_error(StandardError)
     end
-
   end
 
   context "Server supports spaces" do
@@ -91,7 +95,7 @@ describe OctopusDeployProjectGroup do
           to_return(status: 200, body: ex_spaces_all, headers: {})
 
 
-      pg = OctopusDeployProjectGroup.new("https://octopus.example.com", "API-1234567890", "Octopus Projects", "Octopus")
+      pg = OctopusDeployProjectGroup.new("https://octopus.example.com", "API-1234567890", "Octopus Projects").in_space('Octopus')
       expect(pg.exists?).to be true
 
     end
@@ -106,7 +110,7 @@ describe OctopusDeployProjectGroup do
       stub_request(:get, "https://octopus2.example.com/api/Spaces-1/projectgroups/all?api-key=API-0987654321").
           to_return(status: 200, body: ex_pg_notfound_response, headers: {})
 
-      pg = OctopusDeployProjectGroup.new("https://octopus2.example.com", "API-0987654321", "Nonexistent projectgroup", "Default")
+      pg = OctopusDeployProjectGroup.new("https://octopus2.example.com", "API-0987654321", "Nonexistent projectgroup").in_space('Default')
       expect(pg.exists?).to be false
     end
 
@@ -119,7 +123,7 @@ describe OctopusDeployProjectGroup do
           to_return(status: 200, body: ex_spaces_all, headers: {})
 
 
-      pg = OctopusDeployProjectGroup.new("https://octopus2.example.com", "API-0987654321", "Octopus Projects", "Octopus")
+      pg = OctopusDeployProjectGroup.new("https://octopus2.example.com", "API-0987654321", "Octopus Projects").in_space('Octopus')
       expect(pg.has_description?("This is a group of Octopus-related Projects")).to be true
     end
 
