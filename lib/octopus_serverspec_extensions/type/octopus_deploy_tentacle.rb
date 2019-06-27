@@ -179,14 +179,16 @@ module Serverspec::Type
         @machine = get_machine_via_api(@serverUrl, @apiKey, @machine_thumbprint)
       end
     end
-
-
-
   end
 
   def octopus_deploy_tentacle(*url_and_api_key, instance)
-    serverUrl = get_octopus_url(url_and_api_key[0])
-    apiKey = get_octopus_api_key(url_and_api_key[1])
+    serverUrl, apiKey = get_octopus_creds(url_and_api_key)
+
+    OctopusDeployTentacle.new(serverUrl, apiKey, instance)
+  end
+
+  def octopus_tentacle(*url_and_api_key, instance)
+    serverUrl, apiKey = get_octopus_creds(url_and_api_key)
 
     OctopusDeployTentacle.new(serverUrl, apiKey, instance)
   end
