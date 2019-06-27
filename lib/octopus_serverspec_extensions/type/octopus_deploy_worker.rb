@@ -149,13 +149,11 @@ module Serverspec::Type
 
   def octopus_deploy_worker(*url_and_api_key, instance)
     serverUrl, apiKey = get_octopus_creds(url_and_api_key)
-
     OctopusDeployWorker.new(serverUrl, apiKey, instance)
   end
 
   def octopus_worker(*url_and_api_key, instance)
     serverUrl, apiKey = get_octopus_creds(url_and_api_key)
-
     OctopusDeployWorker.new(serverUrl, apiKey, instance)
   end
 

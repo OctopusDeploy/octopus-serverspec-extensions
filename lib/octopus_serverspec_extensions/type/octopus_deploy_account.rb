@@ -13,7 +13,6 @@ module Serverspec::Type
     @spaceId = nil
     @spaceFragment = ""
 
-
     # constants for account types
     AZURE = 'AzureSubscription'.freeze
     AWS = 'AmazonWebServicesAccount'.freeze
