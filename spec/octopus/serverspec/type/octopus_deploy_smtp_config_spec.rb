@@ -14,8 +14,8 @@ describe OctopusDeploySmtpConfig do
         to_return(status: 200, body: example_smtp_response, headers: {})
 
     my_smtp_config = OctopusDeploySmtpConfig.new(nil, nil)
-    expect( my_smtp_config.on_host?('smtp.fictionaldomain.com')).to be true
-    expect( my_smtp_config.on_host?('smtp.notfictionaldomain.com')).to be false
+    expect( my_smtp_config.on_host?('smtp.example.com')).to be true
+    expect( my_smtp_config.on_host?('not.smtp.example.com')).to be false
   end
 
   it "Can detect the DNS name in our dummy config" do
@@ -23,8 +23,8 @@ describe OctopusDeploySmtpConfig do
         to_return(status: 200, body: example_smtp_response, headers: {})
 
     my_smtp_config = OctopusDeploySmtpConfig.new('https://octopus.example.com', 'API-1234567890')
-    expect( my_smtp_config.on_host?('smtp.fictionaldomain.com')).to be true
-    expect( my_smtp_config.on_host?('smtp.notfictionaldomain.com')).to be false
+    expect( my_smtp_config.on_host?('smtp.example.com')).to be true
+    expect( my_smtp_config.on_host?('not.smtp.example.com')).to be false
   end
 
   it "Should know we're on port 25" do

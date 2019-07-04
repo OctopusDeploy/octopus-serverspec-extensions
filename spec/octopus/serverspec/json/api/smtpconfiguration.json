@@ -1,9 +1,9 @@
 {
 
   "Id": "smtp",
-  "SmtpHost": "smtp.fictionaldomain.com",
+  "SmtpHost": "smtp.example.com",
   "SmtpPort": 25,
-  "SendEmailFrom": "hello@fictionaldomain.com",
+  "SendEmailFrom": "hello@example.com",
   "SmtpLogin": "username",
   "EnableSsl": true,
   "SmtpPassword": {

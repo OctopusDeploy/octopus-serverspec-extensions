@@ -22,7 +22,7 @@ require 'octopus_serverspec_extensions/version.rb'
 private
 
 def get_env_var(name)
-  raise 'non-approved env var' if name != 'OCTOPUS_CLI_API_KEY' && name != 'OCTOPUS_CLI_SERVER'
+  raise 'unexpected env var' if name != 'OCTOPUS_CLI_API_KEY' && name != 'OCTOPUS_CLI_SERVER'
   raise "env var #{name} not found" if ENV[name].nil?
   ENV[name]
 end
