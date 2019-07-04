@@ -17,8 +17,6 @@ require 'octopus_serverspec_extensions/matcher/have_windows_line_endings.rb'
 require 'octopus_serverspec_extensions/matcher/have_linux_line_endings.rb'
 require 'octopus_serverspec_extensions/version.rb'
 
-# shared
-
 private
 
 def get_env_var(name)
@@ -64,7 +62,7 @@ def get_octopus_creds(args)
   # are they still nil? raise an error
   if api_key.nil? or server.nil?
     raise "Supplied credentials invalid. One or more of [server, api_key] was null. " +
-              "If you intended to use Environment Variables, please check the value of OCTOPUS_CLI_SERVER and OCTOPUS_CLI_API_KEY"
+      "If you intended to use Environment Variables, please check the value of OCTOPUS_CLI_SERVER and OCTOPUS_CLI_API_KEY"
   end
 
   server = server.chomp("/") # remove the trailing slash if it exists

@@ -1,17 +1,17 @@
 # octopus_deploy_smtp_config
 
-Tests the server-wide SMTP configuration. This can be found in the UI under Configuration -> SMTP
+Tests the server-wide SMTP configuration. This can be found in the Octopus Portal under Configuration -> SMTP
 
 ## Example
 
 ```ruby
 describe octopus_deploy_smtp_config do
   it { should be_configured }
-  it { should have_from_address('hello@my.email.domain') }
+  it { should have_from_address('hello@example.com') }
   it { should be_using_credentials('myusername') }
   it { should_not be_using_credentials('myspecialusername') }
   it { should be_on_port(25) }
-  it { should be_on_host('smtp.my.email.domain')}
+  it { should be_on_host('smtp.example.com')}
   it { should be_using_ssl }
 end
 ```

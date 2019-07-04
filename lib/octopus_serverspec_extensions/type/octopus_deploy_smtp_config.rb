@@ -46,7 +46,6 @@ module Serverspec::Type
       end
 
       smtp["IsConfigured"]
-
     end
 
     def using_ssl?
@@ -76,34 +75,33 @@ module Serverspec::Type
     end
   end
 
-
-    def octopus_deploy_smtp_config(*url_and_api_key)
-      serverUrl, apiKey = get_octopus_creds(url_and_api_key)
-      OctopusDeploySmtpConfig.new(serverUrl, apiKey)
-    end
-
-    def octopus_smtp_config(*url_and_api_key)
-      serverUrl, apiKey = get_octopus_creds(url_and_api_key)
-      octopus_deploy_smtp_config(serverUrl, apiKey)
-    end
-
-    private
-
-    def get_smtp_config_via_api(serverUrl, apiKey)
-      smtp = nil
-
-      url = "#{serverUrl}/api/smtpconfiguration?api-key=#{apiKey}"
-
-      begin
-        resp = Net::HTTP.get_response(URI.parse(url))
-        body = JSON.parse(resp.body)
-        smtp = body unless body.nil?
-      rescue => e
-        raise "get_smtp_config_via_api: Unable to connect to #{url}: #{e}"
-      end
-
-      smtp
-    end
+  def octopus_deploy_smtp_config(*url_and_api_key)
+    serverUrl, apiKey = get_octopus_creds(url_and_api_key)
+    OctopusDeploySmtpConfig.new(serverUrl, apiKey)
   end
+
+  def octopus_smtp_config(*url_and_api_key)
+    serverUrl, apiKey = get_octopus_creds(url_and_api_key)
+    octopus_deploy_smtp_config(serverUrl, apiKey)
+  end
+
+  private
+
+  def get_smtp_config_via_api(serverUrl, apiKey)
+    smtp = nil
+
+    url = "#{serverUrl}/api/smtpconfiguration?api-key=#{apiKey}"
+
+    begin
+      resp = Net::HTTP.get_response(URI.parse(url))
+      body = JSON.parse(resp.body)
+      smtp = body unless body.nil?
+    rescue => e
+      raise "get_smtp_config_via_api: Unable to connect to #{url}: #{e}"
+    end
+
+    smtp
+  end
+end
 
 include Serverspec::Type
