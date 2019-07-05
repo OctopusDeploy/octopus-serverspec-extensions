@@ -18,10 +18,12 @@ end
 
 #### Type
 
+This type can be instantiated in several ways, depending on [how you authenticate](authentication.md).
+
 ```ruby
-octopus_deploy_smtp_config(server_url, api_key)
-octopus_deploy_smtp_config
-octopus_smtp_config(server_url, api_key)
+octopus_deploy_smtp_config(server_url, api_key)  # url and apikey provided
+octopus_deploy_smtp_config                       # using environment vars
+octopus_smtp_config(server_url, api_key)         # shorthand
 octopus_smtp_config
 ```
 

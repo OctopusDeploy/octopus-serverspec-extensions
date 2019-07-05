@@ -75,6 +75,8 @@ module Serverspec::Type
     end
   end
 
+  # module-level constructors/entrypoints
+
   def octopus_deploy_smtp_config(*url_and_api_key)
     serverUrl, apiKey = get_octopus_creds(url_and_api_key)
     OctopusDeploySmtpConfig.new(serverUrl, apiKey)
