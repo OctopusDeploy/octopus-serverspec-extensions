@@ -54,6 +54,8 @@ module Serverspec::Type
     end
   end
 
+  # module-level constructors/entrypoints
+
   def octopus_deploy_space(*url_and_api_key, space_name)
     serverUrl, apiKey = get_octopus_creds(url_and_api_key)
     OctopusDeploySpace.new(serverUrl, apiKey, space_name)
@@ -65,7 +67,6 @@ module Serverspec::Type
   end
 
   private
-
 
   def get_space_via_api
     space = nil

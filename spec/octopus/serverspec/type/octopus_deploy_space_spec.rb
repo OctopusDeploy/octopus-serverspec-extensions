@@ -15,7 +15,6 @@ describe OctopusDeploySpace do
         to_return(status: 200, body: example_supports_spaces, headers: {})
   end
 
-
   it "can use the environment vars instead of literal args" do
     allow_any_instance_of(OctopusDeploySpace).to receive(:get_env_var).with('OCTOPUS_CLI_API_KEY').and_return("API-1234567890")
     allow_any_instance_of(OctopusDeploySpace).to receive(:get_env_var).with('OCTOPUS_CLI_SERVER').and_return("https://octopus.example.com")
