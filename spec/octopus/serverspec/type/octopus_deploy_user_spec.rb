@@ -53,6 +53,4 @@ describe OctopusDeployUser do
       expect(OctopusDeployUser.new('github').has_api_key?('Never Be Batman')).to be false
     end
   end
-
-
 end

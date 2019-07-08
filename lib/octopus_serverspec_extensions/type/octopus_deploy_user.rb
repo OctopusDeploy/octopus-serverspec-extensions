@@ -106,7 +106,6 @@ module Serverspec::Type
 
     user
   end
-
 end
 
 include Serverspec::Type
