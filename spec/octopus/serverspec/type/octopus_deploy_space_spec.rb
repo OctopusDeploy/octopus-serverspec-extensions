@@ -53,6 +53,11 @@ describe OctopusDeploySpace do
     expect( my_space.default?).to be false
   end
 
+  it 'should detect a description' do
+    my_space = OctopusDeploySpace.new('https://octopus.example.com/', 'API-1234567890', "Octopus")
+    expect( my_space.has_description?('A Space for Octopus-related Projects')).to be true
+  end
+
   context 'does not support spaces' do
     it "Should raise if we don't support spaces" do
 

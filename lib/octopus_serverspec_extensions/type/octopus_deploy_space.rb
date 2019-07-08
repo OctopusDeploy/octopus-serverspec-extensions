@@ -23,23 +23,35 @@ module Serverspec::Type
 
       @spaceName = space_name
     end
-  end
 
-  def exists?
-    load_if_required
-    @space.nil? == false
-  end
+    def exists?
+      load_resource_if_nil
+      @space.nil? == false
+    end
 
-  def default?
-    load_if_required
-    false if @space.nil?
-    @space['IsDefault'] == true
-  end
+    def default?
+      load_resource_if_nil
+      false if @space.nil?
+      @space['IsDefault'] == true
+    end
 
-  def has_running_task_queue?
-    load_if_required
-    false if @space.nil?
-    @space['TaskQueueStopped'] == false
+    def has_running_task_queue?
+      load_resource_if_nil
+      false if @space.nil?
+      @space['TaskQueueStopped'] == false
+    end
+
+    def has_description?(description)
+      load_resource_if_nil
+      false if @space.nil?
+      @space['Description'] == description
+    end
+
+    def load_resource_if_nil
+      if @space.nil?
+        @space = get_space_via_api
+      end
+    end
   end
 
   def octopus_deploy_space(*url_and_api_key, space_name)
@@ -54,11 +66,6 @@ module Serverspec::Type
 
   private
 
-  def load_if_required
-    if @space.nil?
-      @space = get_space_via_api()
-    end
-  end
 
   def get_space_via_api
     space = nil

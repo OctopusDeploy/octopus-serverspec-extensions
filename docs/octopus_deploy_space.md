@@ -13,9 +13,13 @@ end
 
 #### Type
 
+This type can be instantiated in several ways, depending on [how you authenticate](authentication.md).
+
 ```ruby
-octopus_deploy_space([url, apikey], space_name)
-octopus_space([url, apikey], space_name)
+octopus_deploy_space(server_url, api_key, space_name)  # url and apikey provided
+octopus_deploy_space(space_name)                       # using environment variables
+octopus_space(server_url, api_key, space_name)
+octopus_space(space_name)                              # shorthand
 ```
 
 #### Matchers
@@ -25,3 +29,4 @@ octopus_space([url, apikey], space_name)
 | exist | test for existence of a given space |
 | be_default | Tests if this space is the default space |
 | have_running_task_queue | tests if the queue for this space is disabled |
+| have_description(description) | tests if the space has the specified description |
