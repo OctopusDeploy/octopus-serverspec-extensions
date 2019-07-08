@@ -34,6 +34,16 @@ describe OctopusDeployUser do
     expect(OctopusDeployUser.new('github').active?).to be true
   end
 
+  it "can detect an email address" do
+    expect(OctopusDeployUser.new('jasbro').has_email?('jasbro@example.com')).to be true
+    expect(OctopusDeployUser.new('github').has_email?('github@example.com')).to be false
+  end
+
+  it "can detect a display name" do
+    expect(OctopusDeployUser.new('github').has_display_name?('GitHub Service Account')).to be true
+    expect(OctopusDeployUser.new('jasbro').has_display_name?('GitHub Service Account')).to be false
+  end
+
   context "testing API Key detection" do
     example_api_key_response = get_api_example('/api/users/Users-61/apikeys')
     before(:each) do

@@ -60,7 +60,7 @@
     "DisplayName": "jasbro",
     "IsActive": true,
     "IsService": false,
-    "EmailAddress": "thisisnotmyemail@gmail.com",
+    "EmailAddress": "jasbro@example.com",
     "CanPasswordBeEdited": true,
     "IsRequestor": true,
     "Identities": [],
