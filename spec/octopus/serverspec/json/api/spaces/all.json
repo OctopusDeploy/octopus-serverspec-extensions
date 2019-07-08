@@ -43,5 +43,25 @@
       "Web": "/app#/spaces/Spaces-2",
       "Logo": "/api/spaces/Spaces-2/logo?cb=2019.4.5"
     }
+  },
+  {
+    "Id": "Spaces-3",
+    "Name": "Stopped",
+    "Description": null,
+    "IsDefault": false,
+    "TaskQueueStopped": true,
+    "SpaceManagersTeams": [
+      "teams-spacemanagers-Spaces-3",
+      "teams-administrators"
+    ],
+    "SpaceManagersTeamMembers": [
+      "Users-1"
+    ],
+    "Links": {
+      "Self": "/api/spaces/Spaces-3",
+      "SpaceHome": "/api/Spaces-3",
+      "Web": "/app#/spaces/Spaces-3",
+      "Logo": "/api/spaces/Spaces-3/logo?cb=2019.4.5"
+    }
   }
 ]
