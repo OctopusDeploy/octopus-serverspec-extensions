@@ -4,20 +4,20 @@ require 'json'
 
 module Serverspec::Type
   class OctopusDeployProjectGroup < Base
-    @projectgroup = nil
-    @projectgroup_name = nil
+    @project_group = nil
+    @project_group_name = nil
     @serverUrl = nil
     @apiKey = nil
     @serverSupportsSpaces = nil
     @spaceId = nil
     @spaceFragment = ""
 
-    def initialize(*url_and_api_key, projectgroup_name)
+    def initialize(*url_and_api_key, project_group_name)
       serverUrl, apiKey = get_octopus_creds(url_and_api_key)
 
-      @projectgroup_name = projectgroup_name
+      @project_group_name = project_group_name
 
-      @name = "Octopus Deploy Project Group #{projectgroup_name}"
+      @name = "Octopus Deploy Project Group #{project_group_name}"
       @runner = Specinfra::Runner
       @serverUrl = serverUrl
       @apiKey = apiKey
@@ -27,20 +27,20 @@ module Serverspec::Type
 
     def exists?
       load_resource_if_nil
-      (!@projectgroup.nil?) && (@projectgroup != [])
+      (!@project_group.nil?) && (@project_group != [])
     end
 
-    def has_description?(projectgroup_description)
+    def has_description?(project_group_description)
       load_resource_if_nil
-      return false if @projectgroup.nil?
-      @projectgroup["Description"] == projectgroup_description
+      return false if @project_group.nil?
+      @project_group["Description"] == project_group_description
     end
 
     def in_space(space_name)
       # allows us to tag .in_space() onto the end of the resource. as in
       # describe octopus_account("account name").in_space("MyNewSpace") do
       @spaceId = get_space_id(space_name)
-      if @projectgroup_name.nil?
+      if @project_group_name.nil?
         raise "'project_group_name' was not provided. Unable to connect to Octopus server to validate configuration."
       end
       self
@@ -58,8 +58,8 @@ module Serverspec::Type
     end
 
     def load_resource_if_nil
-      if @projectgroup.nil?
-        @projectgroup = get_project_group_via_api(@serverUrl, @apiKey, @projectgroup_name)
+      if @project_group.nil?
+        @project_group = get_project_group_via_api(@serverUrl, @apiKey, @project_group_name)
       end
     end
   end
