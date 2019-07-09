@@ -21,7 +21,6 @@ octopus_environment(environment_name).in_space(space_name)                 # usi
 octopus_environment(url, api_key, environment_name)
 octopus_environment(environment_name)
 octopus_environment(url, api_key, environment_name).in_space(space_name)
-
 ```
 
 #### Matchers
