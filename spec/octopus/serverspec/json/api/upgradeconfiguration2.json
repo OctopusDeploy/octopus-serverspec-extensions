@@ -1,0 +1,9 @@
+{
+  "Id": "upgrades",
+  "NotificationMode": "NeverShow",
+  "AllowChecking": false,
+  "IncludeStatistics": false,
+  "Links": {
+    "Self": "/api/upgradeconfiguration"
+  }
+}
