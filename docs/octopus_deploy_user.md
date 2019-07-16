@@ -1,6 +1,6 @@
 # octopus_deploy_user
 
-Describes an Octopus Deploy [User](https://octopus.com/docs/administration/managing-users-and-teams#Managingusersandteams-UserandServiceaccounts) resource
+Describes an Octopus Deploy [User](https://octopus.com/docs/administration/managing-users-and-teams#Managingusersandteams-UserandServiceaccounts) resource.
 
 ## Example
 
@@ -27,7 +27,8 @@ octopus_user(user_name)
 | Matcher | Description |
 |:--------|:------------|
 | should exist | Tests for existence of a User account with the given name |
-| should be_active | Tests if the user is enabled/has the 'Is Active' checkbox checked | 
-| should have_email(email) | Tests the email address associated with the user account |
-| should have_api_key(purpose) | Tests if the user has an API Key with the stated purpose field |
-| should have_display_name(name) | tests the Display name set for the user |
+| should be_active | Tests if the User is enabled/has the 'Is Active' checkbox checked | 
+| should have_email(email) | Tests the email address associated with the User account |
+| should have_api_key(purpose) | Tests if the User has an API Key with the stated purpose field |
+| should have_display_name(name) | Tests the Display Name set for the User |
+| should be_service_account | Tests if the User is a service account |
