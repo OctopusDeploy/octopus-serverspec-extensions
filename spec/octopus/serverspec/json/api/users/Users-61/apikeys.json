@@ -1,0 +1,56 @@
+{
+  "ItemType": "ApiKey",
+  "TotalResults": 4,
+  "ItemsPerPage": 30,
+  "NumberOfPages": 1,
+  "LastPageNumber": 0,
+  "Items": [
+    {
+      "Id": "apikeys-ZI30vwVlaLK0EOmwxaJewQbP7S4",
+      "Purpose": "My First API Key",
+      "UserId": "Users-61",
+      "ApiKey": null,
+      "Created": "2018-08-23T01:31:27.174+00:00",
+      "Links": {
+        "Self": "/api/users/Users-61/apikeys/apikeys-ZI30vwVlaLK0EOmwxaJewQbP7S4"
+      }
+    },
+    {
+      "Id": "apikeys-AOuopXLiqG5OB4PlWjXL3rh4HE",
+      "Purpose": "Always Be Batman",
+      "UserId": "Users-61",
+      "ApiKey": null,
+      "Created": "2018-08-22T06:43:03.931+00:00",
+      "Links": {
+        "Self": "/api/users/Users-61/apikeys/apikeys-AOuopXLiqG5OB4PlWjXL3rh4HE"
+      }
+    },
+    {
+      "Id": "apikeys-2pJKzHOjcRmUoZWpNkn5DxBGPGE",
+      "Purpose": "A testing API Key",
+      "UserId": "Users-61",
+      "ApiKey": null,
+      "Created": "2017-07-27T03:35:15.270+00:00",
+      "Links": {
+        "Self": "/api/users/Users-61/apikeys/apikeys-2pJKzHOjcRmUoZWpNkn5DxBGPGE"
+      }
+    },
+    {
+      "Id": "apikeys-eiNxob9tXfGiGZwImi0H85mnGU",
+      "Purpose": "serverspec extensions",
+      "UserId": "Users-61",
+      "ApiKey": null,
+      "Created": "2017-06-07T03:50:21.287+00:00",
+      "Links": {
+        "Self": "/api/users/Users-61/apikeys/apikeys-eiNxob9tXfGiGZwImi0H85mnGU"
+      }
+    }
+  ],
+  "Links": {
+    "Self": "/api/users/Users-61/apikeys",
+    "Template": "/api/users/{userId}/apikeys{/id}{?skip,take}",
+    "Page.All": "/api/users/Users-61/apikeys?skip=0&take=2147483647",
+    "Page.Current": "/api/users/Users-61/apikeys?skip=0&take=30",
+    "Page.Last": "/api/users/Users-61/apikeys?skip=0&take=30"
+  }
+}
