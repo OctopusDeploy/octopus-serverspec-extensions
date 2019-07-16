@@ -49,7 +49,7 @@ describe OctopusDeployUser do
     before(:each) do
       allow_any_instance_of(OctopusDeployUser).to receive(:get_env_var).with('OCTOPUS_CLI_API_KEY').and_return("API-1234567890")
       allow_any_instance_of(OctopusDeployUser).to receive(:get_env_var).with('OCTOPUS_CLI_SERVER').and_return("https://octopus.example.com")
-      stub_request(:get, "https://octopus.example.com/api/users/Users-61/apikeys?api-key=API-1234567890&take=200").
+      stub_request(:get, "https://octopus.example.com/api/users/Users-61/apikeys?api-key=API-1234567890&take=9999").
           to_return(status: 200, body: example_api_key_response, headers: {})
       stub_request(:get, "https://octopus.example.com/api/users/all?api-key=API-1234567890").
           to_return(status: 200, body: example_user_response, headers: {})

@@ -60,7 +60,7 @@ module Serverspec::Type
 
       user_api_key = nil
       user_id = @userAccount['Id']
-      url = "#{@serverUrl}/api/users/#{user_id}/apikeys?api-key=#{@apiKey}&take=200"
+      url = "#{@serverUrl}/api/users/#{user_id}/apikeys?api-key=#{@apiKey}&take=9999"
 
       begin
         resp = Net::HTTP.get_response(URI.parse(url))
