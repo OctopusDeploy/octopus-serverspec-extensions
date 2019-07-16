@@ -18,7 +18,7 @@ module Serverspec::Type
       @apiKey = apiKey
 
       if space_name.nil?
-        raise "'space_name' was not included. Cannot contact server to validate space"
+        raise "'space_name' was not included. Cannot contact server to validate space."
       end
 
       @spaceName = space_name

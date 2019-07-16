@@ -26,8 +26,8 @@
   },
   {
     "Id": "Spaces-2",
-    "Name": "Octopus",
-    "Description": "A Space for Octopus-related Projects",
+    "Name": "Second",
+    "Description": "A Second Active Space",
     "IsDefault": false,
     "TaskQueueStopped": false,
     "SpaceManagersTeams": [

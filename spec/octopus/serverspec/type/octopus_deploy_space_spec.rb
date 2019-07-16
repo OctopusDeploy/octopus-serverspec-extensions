@@ -19,42 +19,41 @@ describe OctopusDeploySpace do
     allow_any_instance_of(OctopusDeploySpace).to receive(:get_env_var).with('OCTOPUS_CLI_API_KEY').and_return("API-1234567890")
     allow_any_instance_of(OctopusDeploySpace).to receive(:get_env_var).with('OCTOPUS_CLI_SERVER').and_return("https://octopus.example.com")
 
-    my_space = OctopusDeploySpace.new(nil, nil, "Octopus")
-    expect( my_space.exists?).to be true
+    my_space = OctopusDeploySpace.new(nil, nil, "Second")
+    expect(my_space.exists?).to be true
   end
 
   it 'should detect a known non-existent space' do
     my_space = OctopusDeploySpace.new('https://octopus.example.com/', 'API-1234567890', "NonExistent")
-    expect( my_space.exists?).to be false
+    expect(my_space.exists?).to be false
   end
 
   it 'should detect a non-running task queue' do
     my_space = OctopusDeploySpace.new('https://octopus.example.com/', 'API-1234567890', "Stopped")
-    expect( my_space.has_running_task_queue?).to be false
+    expect(my_space.has_running_task_queue?).to be false
   end
 
   it 'should detect a running task queue' do
     allow_any_instance_of(OctopusDeploySpace).to receive(:get_env_var).with('OCTOPUS_CLI_API_KEY').and_return("API-1234567890")
     allow_any_instance_of(OctopusDeploySpace).to receive(:get_env_var).with('OCTOPUS_CLI_SERVER').and_return("https://octopus.example.com")
 
-
-    my_space = OctopusDeploySpace.new(nil, nil, "Octopus")
-    expect( my_space.has_running_task_queue?).to be true
+    my_space = OctopusDeploySpace.new(nil, nil, "Second")
+    expect(my_space.has_running_task_queue?).to be true
   end
 
   it 'should detect if a space is the default' do
     my_space = OctopusDeploySpace.new('https://octopus.example.com/', 'API-1234567890', "Default")
-    expect( my_space.default?).to be true
+    expect(my_space.default?).to be true
   end
 
   it 'should detect if a space is not the default' do
-    my_space = OctopusDeploySpace.new('https://octopus.example.com/', 'API-1234567890', "Octopus")
-    expect( my_space.default?).to be false
+    my_space = OctopusDeploySpace.new('https://octopus.example.com/', 'API-1234567890', "Second")
+    expect(my_space.default?).to be false
   end
 
   it 'should detect a description' do
-    my_space = OctopusDeploySpace.new('https://octopus.example.com/', 'API-1234567890', "Octopus")
-    expect( my_space.has_description?('A Space for Octopus-related Projects')).to be true
+    my_space = OctopusDeploySpace.new('https://octopus.example.com/', 'API-1234567890', "Second")
+    expect(my_space.has_description?('A Second Active Space')).to be true
   end
 
   context 'does not support spaces' do
