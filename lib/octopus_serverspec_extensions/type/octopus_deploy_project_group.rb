@@ -109,18 +109,6 @@ module Serverspec::Type
 
     pg
   end
-
-  def get_space_id(space_name)
-    url = "#{@serverUrl}/api/Spaces/all?api-key=#{@apiKey}"
-    begin
-      resp = Net::HTTP.get_response(URI.parse(url))
-      spaces = JSON.parse(resp.body)
-      space_id = spaces.select {|e| e["Name"] == space_name}.first["Id"]
-    rescue
-      raise "get_space_id: unable to connect to #{url}: #{e}"
-    end
-    space_id
-  end
 end
 
 include Serverspec::Type
