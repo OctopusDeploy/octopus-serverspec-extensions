@@ -38,7 +38,7 @@ module Serverspec::Type
 
     def in_space(space_name)
       # allows us to tag .in_space() onto the end of the resource. as in
-      # describe octopus_account("account name").in_space("MyNewSpace") do
+      # describe octopus_project_group("group name").in_space("MyNewSpace") do
       @spaceId = get_space_id(space_name)
       if @project_group_name.nil?
         raise "'project_group_name' was not provided. Unable to connect to Octopus server to validate configuration."
@@ -91,7 +91,7 @@ module Serverspec::Type
   def get_project_group_via_api(serverUrl, apiKey, project_group_name)
     pg = nil
 
-   raise "'project_group_name' not supplied" if(project_group_name.nil? || project_group_name == '')
+   raise "'project_group_name' not supplied" if (project_group_name.nil? || project_group_name == '')
 
     unless @spaceId.nil?
       @spaceFragment = "#{@spaceId}/"

@@ -1,6 +1,6 @@
 # octopus_deploy_project_group
 
-Describes an Octopus [Project Group](https://octopus.com/docs/deployment-process/projects#project-group) resource
+Describes an Octopus [Project Group](https://octopus.com/docs/deployment-process/projects#project-group) resource.
 
 ## Example
 
