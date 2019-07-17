@@ -6,7 +6,7 @@ Describes an Octopus [Project Group](https://octopus.com/docs/deployment-process
 
 ```ruby
 describe octopus_project_group('Important Projects') do
-  it { should have_description('These are my Very Important projects')}
+  it { should have_description('These are my Very Important projects') }
 end
 ```
 
@@ -22,7 +22,6 @@ octopus_deploy_project_group('Example Group')                        # using env
 octopus_project_group(server_url, api_key, 'Example Group')          # shorthand
 octopus_project_group('Example Group')
 octopus_deploy_projectgroup('Back Compat')                           # deprecated
-
 ```
 
 #### Matchers
