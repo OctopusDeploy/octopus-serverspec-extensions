@@ -1,6 +1,6 @@
 # octopus_deploy_environment
 
-Models/Tests an Octopus Deploy [Environment](https://octopus.com/docs/infrastructure/environments) resource
+Tests an Octopus Deploy [Environment](https://octopus.com/docs/infrastructure/environments) resource.
 
 ## Example
 
@@ -12,7 +12,7 @@ end
 
 #### Type
 
-This type can be instantiated in several ways, depending on [how you authenticate](authentication.md), and whether your target environment is in a [Space](https://octopus.com/blog/spaces-introduction)
+This type can be instantiated in several ways, depending on [how you authenticate](authentication.md), and whether your target environment is in a [Space](https://octopus.com/blog/spaces-introduction).
 
 ```ruby
 octopus_deploy_environment(url, api_key, environment_name)                 # url and apikey provided
