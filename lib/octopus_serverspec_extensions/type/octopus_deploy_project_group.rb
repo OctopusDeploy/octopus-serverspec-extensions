@@ -15,6 +15,8 @@ module Serverspec::Type
     def initialize(*url_and_api_key, project_group_name)
       serverUrl, apiKey = get_octopus_creds(url_and_api_key)
 
+      raise "'project_group_name' was not provided. Unable to connect to Octopus server to validate configuration."  if @project_group_name.nil?
+
       @project_group_name = project_group_name
 
       @name = "Octopus Deploy Project Group #{project_group_name}"
@@ -40,9 +42,8 @@ module Serverspec::Type
       # allows us to tag .in_space() onto the end of the resource. as in
       # describe octopus_project_group("group name").in_space("MyNewSpace") do
       @spaceId = get_space_id(space_name)
-      if @project_group_name.nil?
-        raise "'project_group_name' was not provided. Unable to connect to Octopus server to validate configuration."
-      end
+
+      raise "Unable to resolve Space Id for space name '#{space_name}'." if @spaceId.nil?
       self
     end
 
