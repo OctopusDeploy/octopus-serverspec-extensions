@@ -141,7 +141,7 @@ describe OctopusDeployAccount do
           to_return(status: 200, body: ex_accounts_spaces_two, headers: {})
 
 
-      wp = OctopusDeployAccount.new("https://octopus.example.com", "API-1234567890", "exampleorganisation-azure").in_space("Octopus")
+      wp = OctopusDeployAccount.new("https://octopus.example.com", "API-1234567890", "exampleorganisation-azure").in_space("Second")
       expect(wp.has_description?("This is an example Azure Subscription in Space 2")).to be true
       expect(wp.azure_account?).to be true
       expect(wp.account_type?(OctopusDeployAccount::AZURE))
