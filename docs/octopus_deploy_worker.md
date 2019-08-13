@@ -2,7 +2,7 @@
 
 Describes the state of an [Octopus Deploy Worker](https://octopus.com/docs/infrastructure/workers) Agent resource
 
-A worker is essentially a specialised version of the Tentacle Agent resource, so this Type has much in common.
+A worker is essentially a specialised version of the [Tentacle Agent](octopus_deploy_tentacle.md) resource, so this Type has much in common.
 
 ## Example
 
