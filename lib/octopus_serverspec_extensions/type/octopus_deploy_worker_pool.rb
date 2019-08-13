@@ -36,7 +36,7 @@ module Serverspec::Type
 
     def in_space(space_name)
       # allows us to tag .in_space() onto the end of the resource. as in
-      # describe octopus_account("account name").in_space("MyNewSpace") do
+      # describe octopus_worker_pool("account name").in_space("MyNewSpace") do
       @spaceId = get_space_id?(space_name)
       if @worker_pool_name.nil?
         raise "'worker_pool_name' was not provided. Unable to connect to Octopus server to validate configuration."

@@ -10,6 +10,8 @@ describe octopus_deploy_worker_pool('My Worker Pool').in_space("My Space") do
 end
 ```
 
+This type can be instantiated in several ways, depending on [how you authenticate](authentication.md).
+
 #### Type
 
 ```ruby
