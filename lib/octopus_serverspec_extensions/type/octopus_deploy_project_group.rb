@@ -15,7 +15,7 @@ module Serverspec::Type
     def initialize(*url_and_api_key, project_group_name)
       serverUrl, apiKey = get_octopus_creds(url_and_api_key)
 
-      raise "'project_group_name' was not provided. Unable to connect to Octopus server to validate configuration."  if @project_group_name.nil?
+      raise "'project_group_name' was not provided. Unable to connect to Octopus server to validate configuration."  if project_group_name.nil?
 
       @project_group_name = project_group_name
 

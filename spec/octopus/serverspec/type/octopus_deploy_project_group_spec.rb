@@ -120,12 +120,7 @@ describe OctopusDeployProjectGroup do
       stub_request(:get, "https://octopus2.example.com/api/Spaces/all?api-key=API-0987654321").
           to_return(status: 200, body: ex_spaces_all, headers: {})
 
-
-<<<<<<< HEAD
-      pg = OctopusDeployProjectGroup.new("https://octopus2.example.com", "API-0987654321", "Octopus Projects").in_space('Octopus')
-=======
-      pg = OctopusDeployProjectGroup.new("https://octopus2.example.com", "API-0987654321", "Octopus Projects", "Second")
->>>>>>> master
+      pg = OctopusDeployProjectGroup.new("https://octopus2.example.com", "API-0987654321", "Octopus Projects").in_space("Second")
       expect(pg.has_description?("This is a group of Octopus-related Projects")).to be true
     end
 
