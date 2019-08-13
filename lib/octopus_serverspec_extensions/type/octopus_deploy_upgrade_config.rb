@@ -29,7 +29,7 @@ module Serverspec::Type
       @upgradeConfig = get_upgrade_config_via_api(serverUrl, apiKey)
     end
 
-    def has_notification_mode?(mode)  # probably needs an enum
+    def has_notification_mode?(mode)  # probably needs an enum?
       false if @upgradeConfig.nil?
       @upgradeConfig['NotificationMode'] == mode
     end

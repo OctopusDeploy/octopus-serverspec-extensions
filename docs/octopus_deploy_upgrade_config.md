@@ -25,9 +25,9 @@ octopus_upgrade_config                              # shorthand, using env vars
 
 | Matcher | Description |
 |:--------|:------------|
-| should be_configured | Tests if the SMTP configuration has been set
-| should be_on_host(host) | Tests the "SMTP Host" field |
-| should be_on_port(port) | Tests the "SMTP Port" field |
-| should be_using_ssl | Tests the "Use SSL/TLS" field |
-| should have_from_address(address) | Tests the "From Address" field |
-| should be_using_credentials(username) | Tests the "Credentials" field (username only) |
+| should have_notification_mode(mode) | Tests if the Notification mode is set to the given value. Possible values: ['AlwaysShow', 'ShowOnlyMajorMinor', 'NeverShow'] |
+| should never_show_notifications | equivalent to `should_have_notification_mode('NeverShow')` | 
+| should always_show_notifications | equivalent to `should_have_notification_mode('AlwaysShow')` | 
+| should show_major_minor_notifications | equivalent to `should_have_notification_mode('ShowOnlyMajorMinor')` |
+| should include_statistics | Tests if the IncludeStatistics setting is set to `true` |
+| should allow_checking | Tests if the AllowChecking setting is set to `true` |  
