@@ -1,12 +1,13 @@
 # octopus_deploy_upgrade_config
 
-Tests the server-wide upgrade configuration. This can be found in the UI at Configuration->Settings->Updates & Usage Telemetry
+Tests the server-wide upgrade configuration. This can be found in the UI at Configuration->Settings->Updates & Usage Telemetry.
 
 ## Example
 
 ```ruby
 describe octopus_deploy_upgrade_config do
-  
+  it { should include_statistics }
+  it { should never_show_notifications }  
 end
 ```
 
