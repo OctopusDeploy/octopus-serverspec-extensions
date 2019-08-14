@@ -7,10 +7,13 @@ describe OctopusDeployUpgradeConfig do
 
   example_config_response = get_api_example('/api/upgradeconfiguration')
   example_config_response2 = get_api_example('/api/upgradeconfiguration2')
+  example_root_response = get_api_example('/api/2019.4.5')
 
   before(:each) do
     stub_request(:get, "https://octopus.example.com/api/upgradeconfiguration?api-key=API-1234567890").
         to_return(status: 200, body: example_config_response, headers: {})
+    stub_request(:get, "https://octopus.example.com/api/").
+        to_return(status: 200, body: example_root_response, headers: {})
   end
 
   it 'should handle being give no creds' do
@@ -28,7 +31,7 @@ describe OctopusDeployUpgradeConfig do
     expect( my_upgrade_config.show_major_minor_notifications?).to be false
   end
 
-  it 'should be able to detect NotificationMode test 2' do
+  it 'should be able to detect NotificationMode (inverse test)' do
     stub_request(:get, "https://octopus.example.com/api/upgradeconfiguration?api-key=API-1234567890").
         to_return(status: 200, body: example_config_response2, headers: {})
 

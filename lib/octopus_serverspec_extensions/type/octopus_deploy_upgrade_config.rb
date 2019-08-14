@@ -29,7 +29,7 @@ module Serverspec::Type
       @upgradeConfig = get_upgrade_config_via_api(serverUrl, apiKey)
     end
 
-    def has_notification_mode?(mode)  # probably needs an enum?
+    def has_notification_mode?(mode)
       false if @upgradeConfig.nil?
       @upgradeConfig['NotificationMode'] == mode
     end
@@ -74,10 +74,28 @@ module Serverspec::Type
 
   private
 
+  def get_upgrade_config_endpoint(serverUrl)
+    endpoint = nil
+
+    url = "#{serverUrl}/api/"
+
+    begin
+      resp = Net::HTTP.get_response(URI.parse(url))
+      body = JSON.parse(resp.body)
+      json = body unless body.nil?
+      endpoint = json['Links']['UpgradeConfiguration']
+    rescue => e
+      raise "get_upgrade_config_endpoint: Unable to connect to #{url}: #{e}"
+    end
+
+    endpoint
+  end
+
   def get_upgrade_config_via_api(serverUrl, apiKey)
     smtp = nil
 
-    url = "#{serverUrl}/api/upgradeconfiguration?api-key=#{apiKey}"
+    stem = get_upgrade_config_endpoint(serverUrl)
+    url = "#{serverUrl}#{stem}?api-key=#{apiKey}"
 
     begin
       resp = Net::HTTP.get_response(URI.parse(url))
