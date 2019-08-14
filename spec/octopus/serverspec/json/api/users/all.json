@@ -1,0 +1,130 @@
+[
+  {
+    "Id": "Users-41",
+    "Username": "cvondongle",
+    "DisplayName": "Christopher Von Dongle",
+    "IsActive": true,
+    "IsService": false,
+    "EmailAddress": "chris@example.com",
+    "CanPasswordBeEdited": true,
+    "IsRequestor": false,
+    "Identities": [],
+    "Links": {
+      "Self": "/api/users/Users-41",
+      "Permissions": "/api/users/Users-41/permissions{?spaces,includeSystem}",
+      "PermissionsConfiguration": "/api/users/Users-41/permissions/configuration{?spaces,includeSystem}",
+      "Spaces": "/api/users/Users-41/spaces",
+      "ApiKeys": "/api/users/Users-41/apikeys{/id}{?skip,take}",
+      "Avatar": "https://www.gravatar.com/avatar/8e6e8b38a1afd57d75d44ac8c4c26d2f?d=blank"
+    }
+  },
+  {
+    "Id": "Users-61",
+    "Username": "github",
+    "DisplayName": "GitHub Service Account",
+    "IsActive": true,
+    "IsService": true,
+    "EmailAddress": null,
+    "CanPasswordBeEdited": false,
+    "IsRequestor": false,
+    "Identities": [],
+    "Links": {
+      "Self": "/api/users/Users-61",
+      "Permissions": "/api/users/Users-61/permissions{?spaces,includeSystem}",
+      "PermissionsConfiguration": "/api/users/Users-61/permissions/configuration{?spaces,includeSystem}",
+      "Spaces": "/api/users/Users-61/spaces",
+      "ApiKeys": "/api/users/Users-61/apikeys{/id}{?skip,take}"
+    }
+  },
+  {
+    "Id": "Users-21",
+    "Username": "hugo",
+    "DisplayName": "hugo service account",
+    "IsActive": true,
+    "IsService": true,
+    "EmailAddress": "",
+    "CanPasswordBeEdited": false,
+    "IsRequestor": false,
+    "Identities": [],
+    "Links": {
+      "Self": "/api/users/Users-21",
+      "Permissions": "/api/users/Users-21/permissions{?spaces,includeSystem}",
+      "PermissionsConfiguration": "/api/users/Users-21/permissions/configuration{?spaces,includeSystem}",
+      "Spaces": "/api/users/Users-21/spaces",
+      "ApiKeys": "/api/users/Users-21/apikeys{/id}{?skip,take}"
+    }
+  },
+  {
+    "Id": "Users-1",
+    "Username": "jasbro",
+    "DisplayName": "jasbro",
+    "IsActive": true,
+    "IsService": false,
+    "EmailAddress": "jasbro@example.com",
+    "CanPasswordBeEdited": true,
+    "IsRequestor": true,
+    "Identities": [],
+    "Links": {
+      "Self": "/api/users/Users-1",
+      "Permissions": "/api/users/Users-1/permissions{?spaces,includeSystem}",
+      "PermissionsConfiguration": "/api/users/Users-1/permissions/configuration{?spaces,includeSystem}",
+      "Spaces": "/api/users/Users-1/spaces",
+      "ApiKeys": "/api/users/Users-1/apikeys{/id}{?skip,take}",
+      "Avatar": "https://www.gravatar.com/avatar/d346343143cd745d00330f528eeee8df?d=blank"
+    }
+  },
+  {
+    "Id": "Users-22",
+    "Username": "pooley",
+    "DisplayName": "pooley service user",
+    "IsActive": true,
+    "IsService": true,
+    "EmailAddress": null,
+    "CanPasswordBeEdited": false,
+    "IsRequestor": false,
+    "Identities": [],
+    "Links": {
+      "Self": "/api/users/Users-22",
+      "Permissions": "/api/users/Users-22/permissions{?spaces,includeSystem}",
+      "PermissionsConfiguration": "/api/users/Users-22/permissions/configuration{?spaces,includeSystem}",
+      "Spaces": "/api/users/Users-22/spaces",
+      "ApiKeys": "/api/users/Users-22/apikeys{/id}{?skip,take}"
+    }
+  },
+  {
+    "Id": "Users-101",
+    "Username": "ReadOnly",
+    "DisplayName": "ReadOnly User",
+    "IsActive": true,
+    "IsService": false,
+    "EmailAddress": null,
+    "CanPasswordBeEdited": true,
+    "IsRequestor": false,
+    "Identities": [],
+    "Links": {
+      "Self": "/api/users/Users-101",
+      "Permissions": "/api/users/Users-101/permissions{?spaces,includeSystem}",
+      "PermissionsConfiguration": "/api/users/Users-101/permissions/configuration{?spaces,includeSystem}",
+      "Spaces": "/api/users/Users-101/spaces",
+      "ApiKeys": "/api/users/Users-101/apikeys{/id}{?skip,take}"
+    }
+  },
+  {
+    "Id": "Users-81",
+    "Username": "inactive",
+    "DisplayName": "Inactive Service User",
+    "IsActive": false,
+    "IsService": true,
+    "EmailAddress": null,
+    "CanPasswordBeEdited": false,
+    "IsRequestor": false,
+    "Identities": [],
+    "Links": {
+      "Self": "/api/users/Users-81",
+      "Permissions": "/api/users/Users-81/permissions{?spaces,includeSystem}",
+      "PermissionsConfiguration": "/api/users/Users-81/permissions/configuration{?spaces,includeSystem}",
+      "Spaces": "/api/users/Users-81/spaces",
+      "ApiKeys": "/api/users/Users-81/apikeys{/id}{?skip,take}"
+    }
+  }
+]
