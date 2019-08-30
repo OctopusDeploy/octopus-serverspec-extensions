@@ -21,7 +21,6 @@ octopus_deploy project_group(server_url, api_key, 'Example Group')   # url and a
 octopus_deploy_project_group('Example Group')                        # using env vars
 octopus_project_group(server_url, api_key, 'Example Group')          # shorthand
 octopus_project_group('Example Group')
-octopus_deploy_projectgroup('Back Compat')                           # deprecated
 ```
 
 #### Matchers

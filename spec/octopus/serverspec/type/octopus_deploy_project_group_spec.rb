@@ -94,6 +94,7 @@ describe OctopusDeployProjectGroup do
       stub_request(:get, "https://octopus.example.com/api/Spaces/all?api-key=API-1234567890").
           to_return(status: 200, body: ex_spaces_all, headers: {})
 
+
       pg = OctopusDeployProjectGroup.new("https://octopus.example.com", "API-1234567890", "Octopus Projects").in_space('Second')
       expect(pg.exists?).to be true
     end
