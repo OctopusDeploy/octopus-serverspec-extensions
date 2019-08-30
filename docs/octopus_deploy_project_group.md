@@ -15,7 +15,7 @@ end
 ```ruby
 octopus_deploy_project_group('my group')
 octopus_project_group('my terse group')
-octopus_deploy_projectgroup('back compat to 1.5.x')
+octopus_deploy_projectgroup('my group')
 octopus_project_group('terse')
 
 ```
