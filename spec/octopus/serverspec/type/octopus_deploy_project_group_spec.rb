@@ -97,7 +97,6 @@ describe OctopusDeployProjectGroup do
 
       pg = OctopusDeployProjectGroup.new("https://octopus.example.com", "API-1234567890", "Octopus Projects").in_space('Second')
       expect(pg.exists?).to be true
-
     end
 
     ex_pg_notfound_response = get_api_example('/api/Spaces-1/projectgroups/all')
@@ -122,8 +121,7 @@ describe OctopusDeployProjectGroup do
       stub_request(:get, "https://octopus2.example.com/api/Spaces/all?api-key=API-0987654321").
           to_return(status: 200, body: ex_spaces_all, headers: {})
 
-
-      pg = OctopusDeployProjectGroup.new("https://octopus2.example.com", "API-0987654321", "Octopus Projects").in_space('Second')
+      pg = OctopusDeployProjectGroup.new("https://octopus2.example.com", "API-0987654321", "Octopus Projects").in_space("Second")
       expect(pg.has_description?("This is a group of Octopus-related Projects")).to be true
     end
 
