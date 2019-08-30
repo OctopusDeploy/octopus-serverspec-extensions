@@ -40,35 +40,9 @@ module Serverspec::Type
 
     def in_space(space_name)
       # allows us to tag .in_space() onto the end of the resource. as in
-      # describe octopus_project_group("group name").in_space("MyNewSpace") do
-      @spaceId = get_space_id(space_name)
-
-      raise "Unable to resolve Space Id for space name '#{space_name}'." if @spaceId.nil?
-      self
-    end
-
-    private
-
-    def get_space_id(space_name)
-      return false if @serverSupportsSpaces.nil?
-      url = "#{@serverUrl}/api/Spaces/all?api-key=#{@apiKey}"
-      resp = Net::HTTP.get_response(URI.parse(url))
-      spaces = JSON.parse(resp.body)
-      space_id = spaces.select {|e| e["Name"] == space_name}.first["Id"]
-      space_id
-    end
-
-    def load_resource_if_nil
-      if @project_group.nil?
-        @project_group = get_project_group_via_api(@serverUrl, @apiKey, @project_group_name)
-      end
-    end
-
-    def in_space(space_name)
-      # allows us to tag .in_space() onto the end of the resource. as in
       # describe octopus_account("account name").in_space("MyNewSpace") do
       @spaceId = get_space_id(space_name)
-      if @projectgroup_name.nil?
+      if @project_group_name.nil?
         raise "'project_group_name' was not provided. Please provide a project group name and try again."
       end
       self
@@ -86,8 +60,8 @@ module Serverspec::Type
     end
 
     def load_resource_if_nil
-      if @projectgroup.nil?
-        @projectgroup = get_projectgroup_via_api(@serverUrl, @apiKey, @projectgroup_name)
+      if @project_group.nil?
+        @project_group = get_project_group_via_api(@serverUrl, @apiKey, @project_group_name)
       end
     end
   end
@@ -118,10 +92,8 @@ module Serverspec::Type
 
   def get_project_group_via_api(serverUrl, apiKey, project_group_name)
     pg = nil
-  def get_projectgroup_via_api(serverUrl, apiKey, projectgroup_name)
-    pg = nil
 
-   raise "'project_group_name' not supplied" if(projectgroup_name.nil? || projectgroup_name == '')
+   raise "'project_group_name' not supplied" if(project_group_name.nil? || project_group_name == '')
 
     unless @spaceId.nil?
       @spaceFragment = "#{@spaceId}/"
@@ -132,9 +104,9 @@ module Serverspec::Type
     begin
       resp = Net::HTTP.get_response(URI.parse(url))
       body = JSON.parse(resp.body)
-      pg = body.select {|i| i['Name'] == projectgroup_name }.first unless body.nil?
+      pg = body.select {|i| i['Name'] == project_group_name }.first unless body.nil?
     rescue => e
-      raise "get_projectgroup_via_api: Unable to connect to #{url}: #{e}"
+      raise "get_project_group_via_api: Unable to connect to #{url}: #{e}"
     end
 
     pg
