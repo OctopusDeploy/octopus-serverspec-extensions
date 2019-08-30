@@ -44,7 +44,7 @@ module Serverspec::Type
       # describe octopus_account("account name").in_space("MyNewSpace") do
       @spaceId = get_space_id(space_name)
       if @projectgroup_name.nil?
-        raise "'project_group_name' was not provided. Unable to connect to Octopus server to validate configuration."
+        raise "'project_group_name' was not provided. Please provide a project group name and try again."
       end
       self
     end

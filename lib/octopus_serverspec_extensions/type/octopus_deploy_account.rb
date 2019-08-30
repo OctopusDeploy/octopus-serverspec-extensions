@@ -45,7 +45,7 @@ module Serverspec::Type
     def has_description?(account_description)
       load_resource_if_nil()
       return false if @account.nil?
-      @account["Description"] == account_description  # this seems to be case sensitive. Is that good?
+      @account["Description"] == account_description
     end
 
     def account_type?(account_type_name)
@@ -111,7 +111,7 @@ module Serverspec::Type
       # describe octopus_account("account name").in_space("MyNewSpace") do
       @spaceId = get_space_id?(space_name)
       if @accountName.nil?
-        raise "'account_name' was not provided. Unable to connect to Octopus server to validate configuration."
+        raise "'account_name' was not provided. Please provide an account name and try again."
       end
       self
     end
