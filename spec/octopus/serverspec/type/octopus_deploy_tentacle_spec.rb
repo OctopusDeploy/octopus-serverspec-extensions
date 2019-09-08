@@ -15,10 +15,10 @@ describe OctopusDeployTentacle do
         to raise_error(/apiKey/)
   end
 
-  it "throws if the tentacle executable doesn't exist" do
+  it "does not throw if the tentacle executable doesn't exist" do
     allow(File).to receive(:exists?).and_return(false)
-    expect { OctopusDeployTentacle.new("https://someserver.com", "API-someapikey", "Tentacle1") }.
-        to raise_error(/tentacle\.exe/)
+    tentacle = OctopusDeployTentacle.new("https://someserver.com", "API-someapikey", "Tentacle1")
+    expect(tentacle.exists?).to be false
   end
 
   example_tentacle_response = get_api_example('/api/machines/all')

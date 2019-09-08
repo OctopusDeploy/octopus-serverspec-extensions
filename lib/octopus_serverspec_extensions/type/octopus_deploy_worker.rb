@@ -41,7 +41,7 @@ module Serverspec::Type
 
         @worker = get_worker_via_api(serverUrl, apiKey, thumbprint)
       else
-        raise "tentacle.exe does not exist"
+        puts "tentacle.exe does not exist"
       end
     end
 
