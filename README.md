@@ -1,6 +1,11 @@
+
 # Octopus::Serverspec::Extensions
 
 SeverSpec extensions for Windows, adding support for chocolatey packages, npm packages, service accounts and more.
+
+## Deprecated
+
+This library is deprecated and no longer supported.
 
 ## Installation
 
